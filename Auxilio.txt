@@ -1,0 +1,21 @@
+/* 
+
+DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+ dataset.setValue('numero de impressoes', 'Impressoras, com o propósito de agrupar', 'Datas a apresentar');
+ 
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+numDatas = "Select COUNT(Data) AS NumDatas 
+              FROM Utilizacao
+                WHERE Data BETWEEN DATE '"+dataInicio+"'
+                               AND DATE '"+dataFim+"'";
+                               
+                               
+
+
+ 
+ for(int i =1; i< numDatas; i++)
+{
+     dataset.setValue(numImpressoes, );
+}
+*/
