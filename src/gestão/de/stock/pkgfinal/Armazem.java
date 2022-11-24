@@ -52,7 +52,6 @@ public final class Armazem extends javax.swing.JInternalFrame {
         tabela = new javax.swing.JTable();
         dados = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        stock = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -60,8 +59,9 @@ public final class Armazem extends javax.swing.JInternalFrame {
         codFab = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        sig = new javax.swing.JTextField();
         comboNome = new javax.swing.JComboBox<>();
+        stock = new javax.swing.JSpinner();
+        sig = new javax.swing.JSpinner();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -122,42 +122,92 @@ public final class Armazem extends javax.swing.JInternalFrame {
             tabela.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        dados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jLabel1.setLabelFor(stock);
         jLabel1.setText("STOCK");
-        dados.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 14, 80, -1));
-
-        stock.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                stockKeyTyped(evt);
-            }
-        });
-        dados.add(stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 12, 148, -1));
-        dados.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 37, 240, 10));
 
         jLabel2.setText("NOME");
-        dados.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 60, 80, -1));
-        dados.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 87, 240, 10));
 
         jLabel3.setText("CODIGO FAB.");
-        dados.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 105, 80, -1));
 
         codFab.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 codFabKeyTyped(evt);
             }
         });
-        dados.add(codFab, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 103, 148, -1));
-        dados.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 128, 240, 10));
 
         jLabel4.setText("SIG");
-        dados.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 144, 80, -1));
-        dados.add(sig, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 144, 148, -1));
 
         comboNome.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboNome.setPreferredSize(new java.awt.Dimension(5, 19));
-        dados.add(comboNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 53, 148, 28));
+
+        stock.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        stock.setMinimumSize(new java.awt.Dimension(28, 20));
+        stock.setPreferredSize(new java.awt.Dimension(28, 20));
+
+        sig.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sig.setMinimumSize(new java.awt.Dimension(28, 20));
+        sig.setPreferredSize(new java.awt.Dimension(28, 20));
+
+        javax.swing.GroupLayout dadosLayout = new javax.swing.GroupLayout(dados);
+        dados.setLayout(dadosLayout);
+        dadosLayout.setHorizontalGroup(
+            dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboNome, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(codFab, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        dadosLayout.setVerticalGroup(
+            dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosLayout.createSequentialGroup()
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel1))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel3))
+                    .addComponent(codFab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(sig, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(287, Short.MAX_VALUE))
+        );
 
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +238,7 @@ public final class Armazem extends javax.swing.JInternalFrame {
             .addGroup(butoesLayout.createSequentialGroup()
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         butoesLayout.setVerticalGroup(
             butoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,17 +266,16 @@ public final class Armazem extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))))
         );
 
         pack();
@@ -262,9 +311,9 @@ public final class Armazem extends javax.swing.JInternalFrame {
     
     public void limparCampos(){
         
-        stock.setText("");
+        stock.setValue(0);
         codFab.setText("");
-        sig.setText("");
+        sig.setValue(0);
     }
     
     void buscarDados(){
@@ -275,17 +324,17 @@ public final class Armazem extends javax.swing.JInternalFrame {
          }else{
             int row = tabela.getSelectedRow();
             
-            stock.setText(tabela.getModel().getValueAt(row, 1).toString());
+            stock.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 1).toString()));
             comboNome.setSelectedItem(tabela.getModel().getValueAt(row, 2).toString());
             codFab.setText(tabela.getModel().getValueAt(row, 3).toString());
-            sig.setText(tabela.getModel().getValueAt(row, 4).toString());
+            sig.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 4).toString()));
         }
     }
     
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         // TODO add your handling code here:
         
-        if(stock.getText().isEmpty() ||  codFab.getText().isEmpty() || sig.getText().isEmpty() )
+        if( codFab.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
@@ -301,7 +350,7 @@ public final class Armazem extends javax.swing.JInternalFrame {
         try{
              
              
-        stm.executeUpdate("UPDATE ARMAZEM SET STOCK = '"+Integer.parseInt(stock.getText())+"' ,NOME = '"+comboNome.getSelectedItem().toString()+"' , CODFABRICANTE = "+Integer.parseInt(codFab.getText())+" , SIG = "+Integer.parseInt(sig.getText())+" WHERE ID_ARMAZEM = "+Integer.parseInt(value)+"");
+        stm.executeUpdate("UPDATE ARMAZEM SET STOCK = "+stock.getValue()+" ,NOME = '"+comboNome.getSelectedItem().toString()+"' , CODFABRICANTE = "+Integer.parseInt(codFab.getText())+" , SIG = "+sig.getValue()+" WHERE ID_ARMAZEM = "+Integer.parseInt(value)+"");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
@@ -368,7 +417,7 @@ public final class Armazem extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         //Verificar se os campos estão vazios.
-        if(stock.getText().isEmpty() ||  codFab.getText().isEmpty() || sig.getText().isEmpty())
+        if( codFab.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
@@ -381,7 +430,7 @@ public final class Armazem extends javax.swing.JInternalFrame {
         
         try {
              
-             stm.executeUpdate("INSERT INTO ARMAZEM(STOCK,NOME,CODFABRICANTE,SIG) VALUES('"+Integer.parseInt(stock.getText())+"' , '"+comboNome.getSelectedItem().toString()+"' , "+Integer.parseInt(codFab.getText())+" , "+Integer.parseInt(sig.getText())+")");
+             stm.executeUpdate("INSERT INTO ARMAZEM(STOCK,NOME,CODFABRICANTE,SIG) VALUES("+stock.getValue()+" , '"+comboNome.getSelectedItem().toString()+"' , "+Integer.parseInt(codFab.getText())+" , "+sig.getValue()+")");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
@@ -413,14 +462,6 @@ public final class Armazem extends javax.swing.JInternalFrame {
             // umc.setText(umc.getText().substring(0, 8));
         }
     }//GEN-LAST:event_codFabKeyTyped
-
-    private void stockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockKeyTyped
-        // TODO add your handling code here:
-        if(stock.getText().length()>=13)
-        {
-            //nna.setText(nna.getText().substring(0, 13));
-        }
-    }//GEN-LAST:event_stockKeyTyped
 
     public ArrayList listaNome() throws Exception{
         ArrayList list = new ArrayList<>();
@@ -470,8 +511,8 @@ public final class Armazem extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField sig;
-    private javax.swing.JTextField stock;
+    private javax.swing.JSpinner sig;
+    private javax.swing.JSpinner stock;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

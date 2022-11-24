@@ -166,19 +166,34 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarActionPerformed
-        try {
-            String imp = comboImpressora.getSelectedItem().toString();
+        String imp = comboImpressora.getSelectedItem().toString();
+        if(comboImpressora.getSelectedIndex() != 0)
+        {
+            try {
+            
             String dtIn = DateFormat.getDateInstance().format(dataInicio.getDate());
             String dtFm = DateFormat.getDateInstance().format(dataFim.getDate());
             
             
                 Analise hm = new Analise(imp,dtIn,dtFm);
-            hm.setVisible(true);
-            this.dispose();
+                
+                
+                if(hm.getTabela().getRowCount() != 0)
+                {
+                    hm.setVisible(true);
+                        this.dispose();
+                }else{
+                     JOptionPane.showMessageDialog(rootPane, "Não existem registos!");
+                }
+            
             
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "Todos os campos têm que ser preenchidos!"+ex);
+            JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!");
         }
+        }else{
+             JOptionPane.showMessageDialog(rootPane, "Tem que selecionar uma impressora!");
+        }
+        
     }//GEN-LAST:event_pesquisarActionPerformed
 
     

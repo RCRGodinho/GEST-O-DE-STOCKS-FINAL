@@ -8,11 +8,11 @@ import java.awt.BorderLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -45,10 +45,10 @@ public class Analise extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         
-        criaTabela();
+       criaTabela();
        criaGrafico();
-        
-        
+       
+       
     }
     
     private void criaGrafico() throws SQLException
@@ -70,20 +70,26 @@ public class Analise extends javax.swing.JFrame {
          JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+impressora+" || Entre: "+dataInicio+" - "+dataFim,"Data", "Impressões", dataset);
          grafico.setAntiAlias(false);
          ChartPanel panel = new ChartPanel(grafico);
-         panel.setBackground(tabela.getBackground());
+         panel.setBackground(getTabela().getBackground());
          
          
          painelGrafico.setLayout(new java.awt.BorderLayout());
          painelGrafico.add(panel, BorderLayout.CENTER);
          painelGrafico.validate();
+
          
     }
     
-    private void criaTabela() throws Exception
+    /**
+     *
+     * @throws Exception
+     * Cria tabela para análise
+     */
+    public void criaTabela() throws Exception
     {
         try{
              //definir a tabela
-             DefaultTableModel table = (DefaultTableModel) tabela.getModel();
+             DefaultTableModel table = (DefaultTableModel) getTabela().getModel();
              table.setRowCount(0);
              
              //criar uma query e executar
@@ -196,4 +202,11 @@ public class Analise extends javax.swing.JFrame {
     private javax.swing.JPanel painelGrafico;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the tabela
+     */
+    public javax.swing.JTable getTabela() {
+        return tabela;
+    }
 }
