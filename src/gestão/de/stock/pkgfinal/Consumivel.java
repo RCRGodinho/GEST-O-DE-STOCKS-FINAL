@@ -123,7 +123,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
         }
 
         jLabel1.setLabelFor(nna);

@@ -408,7 +408,6 @@ public final class Armazem extends javax.swing.JInternalFrame {
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         // TODO add your handling code here:
         buscarDados();
-        
     }//GEN-LAST:event_tabelaMouseClicked
 
      

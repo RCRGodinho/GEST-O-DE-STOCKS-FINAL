@@ -29,16 +29,18 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
     Conexao c = new Conexao();
         Statement stm = c.fazerConexao().createStatement();
         
-    
+    boolean en;
     
     public Utilizacao() throws Exception {
         initComponents();
         setPainelFixo();
         tabelaUtilizacao();
         
+        comboOracle(lista("ic"),comboIc);
         comboOracle(lista("consumivel"),comboConsumivel);
         comboOracle(lista("localizacao"),comboLocalizacao);
-        comboOracle(lista("impressora"),comboIc);
+        comboConsumivel.setEnabled(false);
+        en = false;
         
     }
     
@@ -137,8 +139,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setResizable(false);
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(8);
             tabela.getColumnModel().getColumn(1).setResizable(false);
             tabela.getColumnModel().getColumn(2).setResizable(false);
             tabela.getColumnModel().getColumn(2).setPreferredWidth(10);
@@ -182,9 +183,9 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         quantidade.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         comboIc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboIc.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboIcItemStateChanged(evt);
+        comboIc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIcActionPerformed(evt);
             }
         });
 
@@ -238,7 +239,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         dadosLayout.setVerticalGroup(
             dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dadosLayout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addContainerGap()
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboIc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -285,7 +286,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jLabel7))
                     .addComponent(comboLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnAdicionar.setText("Adicionar");
@@ -357,9 +358,9 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -394,7 +395,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                
        }
          }
-       catch(Exception exp)
+       catch(SQLException exp)
        {
            throw new Exception (exp.getMessage());
        }
@@ -465,7 +466,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         try{
              stm = c.fazerConexao().createStatement();
              
-             stm.executeUpdate("UPDATE Utilizacao SET QUANTIDADE = "+quantidade.getValue()+" , DATA_UTIL = TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , PRETO = "+preto.getValue()+" , COR = "+cor.getValue()+" , ID_CONSUMIVEL ="+comboSplit("consumivel")+", ID_CENTRO_CUSTO = "+comboSplit("centro_custo")+", ID_IC = "+comboSplit("impressora")+" WHERE ID_UTILIZACAO = "+Integer.parseInt(value)+"");
+             stm.executeUpdate("UPDATE Utilizacao SET QUANTIDADE = "+quantidade.getValue()+" , DATA_UTIL = TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , PRETO = "+preto.getValue()+" , COR = "+cor.getValue()+" , ID_CONSUMIVEL ="+comboId("consumivel")+", ID_CENTRO_CUSTO = "+comboId("centro_custo")+", ID_IC = "+comboId("impressora")+" WHERE ID_UTILIZACAO = "+Integer.parseInt(value)+"");
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
                 
@@ -547,7 +548,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         
         try {
              
-             stm.executeUpdate("INSERT INTO UTILIZACAO(QUANTIDADE,DATA_UTIL,PRETO,COR,ID_CONSUMIVEL,ID_CENTRO_CUSTO, ID_IC) VALUES("+quantidade.getValue()+" , TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , "+preto.getValue()+" , "+cor.getValue()+" , "+comboSplit("consumivel")+" , "+comboSplit("centro_custo")+", "+comboSplit("impressora")+")");
+             stm.executeUpdate("INSERT INTO UTILIZACAO(QUANTIDADE,DATA_UTIL,PRETO,COR,ID_CONSUMIVEL,ID_CENTRO_CUSTO, ID_IC) VALUES("+quantidade.getValue()+" , TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , "+preto.getValue()+" , "+cor.getValue()+" , "+comboId("consumivel")+" , "+comboId("centro_custo")+", "+comboId("impressora")+")");
              
              
              
@@ -572,24 +573,10 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         btnAdicionar.setEnabled(true);
     }//GEN-LAST:event_tabelaFocusLost
 
-    private void comboIcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboIcItemStateChanged
-        /*
-        try {
-            
-            if(en)
-            {
-                
-            }else{
-                comboOracle(lista("consumivelDif"), comboConsumivel);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(Utilizacao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-*/
-    }//GEN-LAST:event_comboIcItemStateChanged
-
     private void comboConsumivelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboConsumivelItemStateChanged
         // TODO add your handling code here:
+        
+        
         
         
     }//GEN-LAST:event_comboConsumivelItemStateChanged
@@ -606,6 +593,27 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_analiseActionPerformed
 
+    private void comboIcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIcActionPerformed
+        // TODO add your handling code here:
+        
+         if(comboIc.getSelectedIndex() == -1 || comboIc.getSelectedIndex() == 0)
+        {
+            comboConsumivel.setSelectedIndex(0);
+            comboConsumivel.setEnabled(false);
+        } 
+         else {
+             comboConsumivel.setEnabled(true);
+             
+             try {
+                 comboOracle(lista("consumivelDiff"),comboConsumivel);
+                 
+        }    catch (Exception ex) {
+                 Logger.getLogger(Utilizacao.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         } 
+    }//GEN-LAST:event_comboIcActionPerformed
+
+         
     public ArrayList lista(String x) throws Exception{
         ArrayList list = new ArrayList<>();
         ResultSet rs;
@@ -622,6 +630,15 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                 list.add(rs.getString("NOME"));
             }
             }
+            case "consumivelDiff" -> {
+                
+               rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_IMPRESSORA = "+comboId("impressora")+"");
+
+            while(rs.next())
+            {
+                list.add(rs.getString("NOME"));
+            }
+            }
             
             case "localizacao" -> {
                
@@ -632,7 +649,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                     list.add(rs.getString("LOCALIZACAO"));
                 }
             }
-            case "impressora" -> {
+            case "ic" -> {
                 
                 rs = stm.executeQuery("SELECT IC FROM IC");
 
@@ -660,12 +677,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         }
     }
      
-    private int comboSplit(String x){
-        
-        String[] result =comboConsumivel.getSelectedItem().toString().split("_");
-            String marca = result[0];
-            String modelo = result[1];
-            String cons = result[2];
+    private int comboId(String x){
         
         try{
             ResultSet rs;
@@ -674,6 +686,11 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             switch(x)
             {
                 case "consumivel" -> {
+                    String[] result =comboConsumivel.getSelectedItem().toString().split("_");
+                        String marca = result[0];
+                        String modelo = result[1];
+                        String cons = result[2];
+                    
                     rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '"+cons+"' AND MARCA = '"+marca+"' AND MODELO = '"+modelo+"'");
                     while(rs.next())
                     {
@@ -689,8 +706,16 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                     }  
                     
                 }
-                case "impressora" -> {
+                case "ic" -> {
                     rs = stm.executeQuery("SELECT ID_IC FROM IC WHERE IC = '"+comboIc.getSelectedItem()+"'");
+                    while(rs.next())
+                    {
+                       id = rs.getInt(1);
+                    }
+             
+                }
+                case "impressora" -> {
+                    rs = stm.executeQuery("SELECT a.ID_Impressora FROM IMPRESSORA a, IC b  WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.IC = '"+comboIc.getSelectedItem()+"'");
                     while(rs.next())
                     {
                        id = rs.getInt(1);
@@ -699,7 +724,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                 }
                
                 default -> {
-                    System.out.println("DUMB");
+                    System.out.println("comboID Erro");
                     return -1;
                 }
             }

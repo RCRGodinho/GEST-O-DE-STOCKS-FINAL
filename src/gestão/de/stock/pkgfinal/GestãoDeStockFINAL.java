@@ -308,11 +308,12 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              painelConsumivel.setBackground(preto);
              painelCentroCusto.setBackground(preto);
              painelArmazem.setBackground(preto);
-             jLabel2.setBackground(preto);
+             painelUtilizacao.setBackground(preto);
              
              btnConsumivel.setForeground(branco);
              btnArmazem.setForeground(branco);
              btnCentroCusto.setForeground(branco);
+             btnUtil.setForeground(branco);
               
              
              //Remover a pagina antiga
@@ -359,11 +360,12 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              painelImpressora.setBackground(preto);
              painelCentroCusto.setBackground(preto);
              painelConsumivel.setBackground(preto);
-             jLabel2.setBackground(preto);
+             painelUtilizacao.setBackground(preto);
              
              btnImpressora.setForeground(branco);
              btnConsumivel.setForeground(branco);
              btnCentroCusto.setForeground(branco);
+             btnUtil.setForeground(branco);
              
              //Remover a pagina antiga
              paginas.removeAll();
@@ -409,7 +411,6 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              painelConsumivel.setBackground(preto);
              painelImpressora.setBackground(preto);
              painelArmazem.setBackground(preto);
-             jLabel2.setBackground(preto);
              painelUtilizacao.setBackground(preto);
              
              btnConsumivel.setForeground(branco);
