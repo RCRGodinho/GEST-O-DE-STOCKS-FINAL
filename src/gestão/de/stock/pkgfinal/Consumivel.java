@@ -22,11 +22,14 @@ import javax.swing.table.DefaultTableModel;
 public final class Consumivel extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
-    Conexao c = new Conexao();
-    Statement stm = c.fazerConexao().createStatement();
+    Conexao c;
+    Statement stm ;
     
     
-    public Consumivel() throws Exception {
+    public Consumivel(Conexao c) throws Exception {
+        this.c = c;
+        stm = this.c.fazerConexao().createStatement();
+        
         initComponents();
         setPainelFixo();
         tabelaConsumivel();
@@ -57,9 +60,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         nome = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        umc = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         preco = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
@@ -81,20 +81,20 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         tabela.setForeground(new java.awt.Color(0, 0, 0));
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NNA", "NOME", "UMC", "PRECO", "REFERENCIA", "IMPRESSORA"
+                "ID", "NNA", "NOME", "PRECO", "REFERENCIA", "IMPRESSORA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -124,6 +124,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
             tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tabela.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jLabel1.setLabelFor(nna);
@@ -136,14 +137,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         });
 
         jLabel2.setText("NOME");
-
-        jLabel3.setText("UMC");
-
-        umc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                umcKeyTyped(evt);
-            }
-        });
 
         jLabel4.setText("PREÇO");
 
@@ -177,11 +170,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                         .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(umc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -195,7 +183,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(comboImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dadosLayout.setVerticalGroup(
             dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,14 +204,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                     .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel3))
-                    .addComponent(umc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -301,16 +281,14 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))))
+                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -325,13 +303,13 @@ public final class Consumivel extends javax.swing.JInternalFrame {
              
          
              //criar uma query e executar
-         ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL, NNA, NOME, UMC, PRECO, REFERENCIA, (MARCA || '_' || MODELO) AS IMPRESSORA FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
+         ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL, NNA, NOME, PRECO, REFERENCIA, (MARCA || '_' || MODELO) AS IMPRESSORA FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
              
            while(rs.next())
            {
                //passar os dados da BD para um object
-               Object o[] = {rs.getInt("ID_CONSUMIVEL"),rs.getString("NNA"), rs.getString("NOME"),
-               rs.getString("UMC"), rs.getDouble("PRECO"), rs.getString("REFERENCIA"), rs.getString("IMPRESSORA")};
+               Object o[] = {rs.getInt("ID_CONSUMIVEL"),rs.getString("NNA"), rs.getString("NOME"), 
+                   rs.getDouble("PRECO"), rs.getString("REFERENCIA"), rs.getString("IMPRESSORA")};
                //Adicionar os dados à tabela
                table.addRow(o);
        }
@@ -348,7 +326,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         
         nna.setText("");
         nome.setText("");
-        umc.setText("");
         preco.setText("");
         referencia.setText("");
     }
@@ -363,22 +340,21 @@ public final class Consumivel extends javax.swing.JInternalFrame {
             
             nna.setText(tabela.getModel().getValueAt(row, 1).toString());
             nome.setText(tabela.getModel().getValueAt(row, 2).toString());
-            umc.setText(tabela.getModel().getValueAt(row, 3).toString());
-            preco.setText(tabela.getModel().getValueAt(row, 4).toString());
-            referencia.setText(tabela.getModel().getValueAt(row, 5).toString());
-            comboImpressora.setSelectedItem(tabela.getValueAt(row, 6).toString());
+            preco.setText(tabela.getModel().getValueAt(row, 3).toString());
+            referencia.setText(tabela.getModel().getValueAt(row,4).toString());
+            comboImpressora.setSelectedItem(tabela.getValueAt(row, 5).toString());
         }
     }
     
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         // TODO add your handling code here:
         
-        if(nna.getText().isEmpty() || nome.getText().isEmpty() || umc.getText().isEmpty() || preco.getText().isEmpty() || referencia.getText().isEmpty())
+        if(nna.getText().isEmpty() || nome.getText().isEmpty() || preco.getText().isEmpty() || referencia.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
             //Verificar se todos têm o mesmo tamanho.
-            if(nna.getText().length()<13 || umc.getText().length()<8 || referencia.getText().length()<8){
+            if(nna.getText().length()<13|| referencia.getText().length()<8){
              JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
             }
             else{
@@ -390,7 +366,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
              stm = c.fazerConexao().createStatement();
              
              
-        stm.executeUpdate("UPDATE Consumivel SET NNA = '"+nna.getText().toUpperCase()+"' ,NOME = '"+nome.getText().toUpperCase()+"' , UMC = "+Integer.parseInt(umc.getText())+" , PRECO = "+Float.parseFloat(preco.getText())+" , REFERENCIA = "+Integer.parseInt(referencia.getText())+" , ID_IMPRESSORA ="+comboSplit()+" WHERE ID_CONSUMIVEL = "+Integer.parseInt(value)+"");
+        stm.executeUpdate("UPDATE Consumivel SET NNA = '"+nna.getText().toUpperCase()+"' ,NOME = '"+nome.getText().toUpperCase()+"' , PRECO = "+Float.parseFloat(preco.getText())+" , REFERENCIA = "+Integer.parseInt(referencia.getText())+" , ID_IMPRESSORA ="+comboSplit()+" WHERE ID_CONSUMIVEL = "+Integer.parseInt(value)+"");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
@@ -452,26 +428,18 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaMouseClicked
 
-    private void nnaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nnaKeyTyped
-        // TODO add your handling code here:
-        if(nna.getText().length()>=13)
-    {
-        //nna.setText(nna.getText().substring(0, 13));
-    }
-    }//GEN-LAST:event_nnaKeyTyped
-
      
     
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
         
         //Verificar se os campos estão vazios.
-        if(nna.getText().isEmpty() || nome.getText().isEmpty() || umc.getText().isEmpty() || preco.getText().isEmpty() || referencia.getText().isEmpty())
+        if(nna.getText().isEmpty() || nome.getText().isEmpty() || preco.getText().isEmpty() || referencia.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
             //Verificar se todos têm o mesmo tamanho.
-            if(nna.getText().length()<12 || umc.getText().length()<7 || referencia.getText().length()<7){
+            if(nna.getText().length()<12 || referencia.getText().length()<7){
              JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
             }
             else{
@@ -479,7 +447,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         
         try {
              
-             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,UMC,Preco,Referencia,ID_Impressora) VALUES('"+nna.getText().toUpperCase()+"' , '"+nome.getText().toUpperCase()+"' , "+Integer.parseInt(umc.getText())+" , "+Float.parseFloat(preco.getText())+" , "+Integer.parseInt(referencia.getText())+" , "+comboSplit()+")");
+             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora) VALUES('"+nna.getText().toUpperCase()+"' , '"+nome.getText().toUpperCase()+"' , "+Float.parseFloat(preco.getText())+" , "+Integer.parseInt(referencia.getText())+" , "+comboSplit()+")");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
@@ -504,21 +472,21 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaFocusLost
 
-    private void umcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_umcKeyTyped
-        // TODO add your handling code here:
-        if(umc.getText().length()>=8)
-    {
-       // umc.setText(umc.getText().substring(0, 8));
-    }
-    }//GEN-LAST:event_umcKeyTyped
-
     private void referenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_referenciaKeyTyped
         // TODO add your handling code here:
         if(referencia.getText().length()>=8)
-    {
-        //referencia.setText(referencia.getText().substring(0, 8));
-    }
+        {
+            //referencia.setText(referencia.getText().substring(0, 8));
+        }
     }//GEN-LAST:event_referenciaKeyTyped
+
+    private void nnaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nnaKeyTyped
+        // TODO add your handling code here:
+        if(nna.getText().length()>=13)
+        {
+            //nna.setText(nna.getText().substring(0, 13));
+        }
+    }//GEN-LAST:event_nnaKeyTyped
 
     public ArrayList listaImpressora() throws Exception{
         ArrayList list = new ArrayList<>();
@@ -582,14 +550,12 @@ public final class Consumivel extends javax.swing.JInternalFrame {
     private javax.swing.JPanel dados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTextField nna;
@@ -597,6 +563,5 @@ public final class Consumivel extends javax.swing.JInternalFrame {
     private javax.swing.JTextField preco;
     private javax.swing.JTextField referencia;
     private javax.swing.JTable tabela;
-    private javax.swing.JTextField umc;
     // End of variables declaration//GEN-END:variables
 }

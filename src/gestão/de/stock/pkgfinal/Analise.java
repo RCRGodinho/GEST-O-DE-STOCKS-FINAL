@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -26,21 +25,24 @@ public class Analise extends javax.swing.JFrame {
     String dataInicio;
     String dataFim;
     
-     Conexao c = new Conexao();
-        Statement stm = c.fazerConexao().createStatement();
+     Conexao c;
+        Statement stm;
 
     /**
      * Creates new form Analise
      * @param impressora
      * @param dataInicio
      * @param dataFim
+     * @param c
      * @throws java.lang.Exception
      */
-    public Analise(String impressora, String dataInicio, String dataFim) throws Exception {
+    public Analise(String impressora, String dataInicio, String dataFim, Conexao c) throws Exception {
         initComponents();
         this.impressora = impressora;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
+        this.c = c;
+        stm = this.c.fazerConexao().createStatement();
         
         setLocationRelativeTo(null);
         
@@ -85,7 +87,7 @@ public class Analise extends javax.swing.JFrame {
      * @throws Exception
      * Cria tabela para análise
      */
-    public void criaTabela() throws Exception
+    private void criaTabela() throws Exception
     {
         try{
              //definir a tabela

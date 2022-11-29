@@ -22,11 +22,14 @@ import javax.swing.table.DefaultTableModel;
 public final class Armazem extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
-    Conexao c = new Conexao();
-    Statement stm = c.fazerConexao().createStatement();
+    Conexao c ;
+    Statement stm;
     
     
-    public Armazem() throws Exception {
+    public Armazem(Conexao c) throws Exception {
+        this.c = c;
+        stm = this.c.fazerConexao().createStatement();
+        
         initComponents();
         setPainelFixo();
         tabelaArmazem();
@@ -206,7 +209,7 @@ public final class Armazem extends javax.swing.JInternalFrame {
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(sig, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(287, Short.MAX_VALUE))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
 
         btnAdicionar.setText("Adicionar");
@@ -266,9 +269,9 @@ public final class Armazem extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()

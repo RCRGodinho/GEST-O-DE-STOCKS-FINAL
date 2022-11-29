@@ -26,24 +26,32 @@ import javax.swing.table.DefaultTableModel;
 public final class Utilizacao extends javax.swing.JInternalFrame {
 //Inicializar os contrutores
     
-    Conexao c = new Conexao();
-        Statement stm = c.fazerConexao().createStatement();
+    Conexao c;
+        Statement stm ;
         
     boolean en;
     
-    public Utilizacao() throws Exception {
+    public Utilizacao(Conexao c) throws Exception {
+        //variaveis de conexao
+        this.c = c;
+        stm = c.fazerConexao().createStatement();
+        
+        //painel fixo
         initComponents();
         setPainelFixo();
-        tabelaUtilizacao();
         
+        //definir as comboboxes
+        tabelaUtilizacao();
         comboOracle(lista("ic"),comboIc);
         comboOracle(lista("consumivel"),comboConsumivel);
         comboOracle(lista("localizacao"),comboLocalizacao);
+        
+        //opcional de controlo
         comboConsumivel.setEnabled(false);
         en = false;
         
     }
-    
+    //tornal painel fixo
     private void setPainelFixo(){
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi =(BasicInternalFrameUI)this.getUI();  
@@ -200,41 +208,45 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dadosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(PRETO, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(preto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cor, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboConsumivel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboIc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(comboIc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quantidade))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(PRETO, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(preto))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cor))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboConsumivel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(dadosLayout.createSequentialGroup()
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(comboLocalizacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(dadosLayout.createSequentialGroup()
+                            .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         dadosLayout.setVerticalGroup(
             dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +298,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jLabel7))
                     .addComponent(comboLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         btnAdicionar.setText("Adicionar");
@@ -318,7 +330,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             .addGroup(butoesLayout.createSequentialGroup()
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         butoesLayout.setVerticalGroup(
             butoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,7 +339,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnApagar, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                .addComponent(btnApagar, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
         );
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -357,18 +369,18 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(butoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(41, Short.MAX_VALUE))))
         );
 
         pack();
@@ -390,6 +402,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                //passar os dados da BD para um object
                Object o[] = {rs.getInt("ID_UTILIZACAO"),rs.getString("IC"), rs.getInt("QUANTIDADE"),
                rs.getString("DATA_Util"), rs.getInt("PRETO"), rs.getString("COR"), rs.getString("CONSUMIVEL"), rs.getString("LOCALIZACAO")};
+               
                //Adicionar os dados à tabela
                table.addRow(o);
                
@@ -404,6 +417,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
     
     
     public void limparCampos(){
+        //tornar todos os campos indefinidos
         
         comboConsumivel.setSelectedIndex(0);
         comboIc.setSelectedIndex(0);
@@ -424,23 +438,29 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
          }else{
             int row = tabela.getSelectedRow();
             
+            ////////////////////////////////DADOS NORMAIS///////////////////////
             comboIc.setSelectedItem(tabela.getModel().getValueAt(row, 1).toString());
                 quantidade.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 2).toString()));
             
-            ///////////////////////Data/////////////////////////////////////////
+            ///////////////////////////////////FIM//////////////////////////////
+            /////////////////////////// Buscar Data/////////////////////////////
             
             String databela = tabela.getModel().getValueAt(row, 3).toString();
                 java.util.Date date2 = new SimpleDateFormat("dd/MM/yy").parse(databela);
                     data.setDate(date2);
-           /////////////////////////////////////////////////////////////////////
+           //////////////////////////////FIM/////////////////////////////////////
+           /////////////////////////////INTS////////////////////////////////////
            
             preto.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 4).toString()));
                 cor.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 5).toString()));
-            ///////////////////////////COMBOS///////////////////////////////////
+            
+            ////////////////////////////FIM/////////////////////////////////////    
+            ///////////////////////BUSCAR COMBOS À TABELA///////////////////////
             
                 comboConsumivel.setSelectedItem(tabela.getValueAt(row, 6).toString());
                 System.out.println(tabela.getValueAt(row, 1).toString());
                 comboLocalizacao.setSelectedItem(tabela.getValueAt(row, 7).toString());
+            ///////////////////////////////////FIM////////////////////////////////////////    
             
         }
     }
@@ -450,10 +470,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         
-        if(quantidade.getValue().equals(0) || data.getDate() == null || preto.getValue().equals(0) || cor.getValue().equals(0))
-        {
-            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
-        }else{
+       
             //Verificar se todos têm o mesmo tamanho.
             if(data.getDate().toString().isEmpty()){
              JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
@@ -482,7 +499,6 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             Logger.getLogger(Utilizacao.class.getName()).log(Level.SEVERE, null, ex);
         } 
             }
-        }
         
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -501,7 +517,6 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                 
              
              try {
-                 stm = c.fazerConexao().createStatement();
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
@@ -585,7 +600,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             
-            Pop_Up_Analise hm = new Pop_Up_Analise();
+            Pop_Up_Analise hm = new Pop_Up_Analise(c);
             //Adicionar a nova página
             hm.setVisible(true);
         } catch (Exception ex) {

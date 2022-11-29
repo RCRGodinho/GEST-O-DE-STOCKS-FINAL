@@ -22,13 +22,18 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
     
     //Variaveis
     
-    Conexao c = new Conexao();
-    Statement stm = c.fazerConexao().createStatement();
+    Conexao c;
+    Statement stm ;
 
     /**
      * Creates new form Pop_Up_Analise
+     * @param c
+     * @throws java.lang.Exception
      */
-    public Pop_Up_Analise() throws Exception{
+    public Pop_Up_Analise(Conexao c) throws Exception{
+        this.c = c;
+        stm = c.fazerConexao().createStatement();
+        
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -175,7 +180,7 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
             String dtFm = DateFormat.getDateInstance().format(dataFim.getDate());
             
             
-                Analise hm = new Analise(imp,dtIn,dtFm);
+                Analise hm = new Analise(imp,dtIn,dtFm,c);
                 
                 
                 if(hm.getTabela().getRowCount() != 0)
