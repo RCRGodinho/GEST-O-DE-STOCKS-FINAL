@@ -583,7 +583,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             Armazem hm = new Armazem(c);
+             Stock hm = new Stock(c);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {
