@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import javax.swing.JTextArea;
 
 /**
- *
- * @author PAT
+ *Classe Conexão:
+ *  Contém as funções necessárias para fazer as devidas conexões.
  */
 public class Conexao {
     
@@ -39,6 +39,7 @@ public class Conexao {
      * @return
      * @throws SQLException
      * @throws ClassNotFoundException
+     * retorna a conexao
      */
     public Connection fazerConexao() throws SQLException, ClassNotFoundException
     {
@@ -51,6 +52,17 @@ public class Conexao {
         }
     }
     
+    /**
+     *
+     * @param orcUrl
+     * @param user
+     * @param pass
+     * @param a
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * retorna a conexão com os parametros inseridos
+     */
     public Connection fazerConexao(String orcUrl, String user, String pass, JTextArea a) throws SQLException, ClassNotFoundException
     {
         

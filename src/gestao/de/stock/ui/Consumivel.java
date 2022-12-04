@@ -406,7 +406,8 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
-                     ResultSet rs = stm.executeQuery("DELETE FROM Consumivel WHERE ID_CONSUMIVEL = "+Integer.parseInt(value));
+                      stm.executeQuery("DELETE FROM Consumivel WHERE ID_CONSUMIVEL = "+Integer.parseInt(value));
+                      
                      JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
                      tabelaConsumivel();
                      tabela.clearSelection();
@@ -448,8 +449,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         
         try {
              
-             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora) VALUES('"+nna.getText().toUpperCase()+"' , '"+nome.getText().toUpperCase()+"' , "+Float.parseFloat(preco.getText())+" , "+Integer.parseInt(referencia.getText())+" , "+comboSplit()+")");
-             
+             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora,STOCK,SIG) VALUES('"+nna.getText().toUpperCase()+"' , '"+nome.getText().toUpperCase()+"' , "+Float.parseFloat(preco.getText())+" , "+Integer.parseInt(referencia.getText())+" , "+comboSplit()+",0,0)");
              
              JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
     

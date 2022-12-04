@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public final class Stock extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
-    Conexao c ;
+    Conexao c;
     Statement stm;
     int stockAtivo;
     int sigAtivo;
@@ -64,7 +64,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         abaterStock = new javax.swing.JSpinner();
         btnAbaterStock = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        painelSig = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         sig = new javax.swing.JSpinner();
         btnAbaterSig = new javax.swing.JButton();
@@ -117,8 +117,9 @@ public final class Stock extends javax.swing.JInternalFrame {
         tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tabela.getColumnModel().getColumn(3).setResizable(false);
+            tabela.getColumnModel().getColumn(0).setMinWidth(0);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tabela.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -213,13 +214,13 @@ public final class Stock extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelSigLayout = new javax.swing.GroupLayout(painelSig);
+        painelSig.setLayout(painelSigLayout);
+        painelSigLayout.setHorizontalGroup(
+            painelSigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSigLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(painelSigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(igualar, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                     .addComponent(btnAbaterSig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sig)
@@ -227,9 +228,9 @@ public final class Stock extends javax.swing.JInternalFrame {
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        painelSigLayout.setVerticalGroup(
+            painelSigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelSigLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -243,7 +244,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        ABATER.addTab("ABATER SIG", jPanel3);
+        ABATER.addTab("ABATER SIG", painelSig);
 
         jLabel4.setText("NOME:");
 
@@ -331,12 +332,13 @@ public final class Stock extends javax.swing.JInternalFrame {
              
          
              //criar uma query e executar
-         ResultSet rs = stm.executeQuery("SELECT ID_ARMAZEM, STOCK, NOME, SIG FROM ARMAZEM");
+         ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL,( MARCA|| '' || MODELO || '_' || NOME) AS NOME, "+
+                 "STOCK, SIG FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
              
            while(rs.next())
            {
                //passar os dados da BD para um object
-               Object o[] = {rs.getInt("ID_ARMAZEM"), rs.getString("NOME"), rs.getInt("STOCK"),
+               Object o[] = {rs.getInt("ID_CONSUMIVEL"), rs.getString("NOME"), rs.getInt("STOCK"),
                rs.getInt("SIG")};
                //Adicionar os dados à tabela a partir do object
                 table.addRow(o);
@@ -346,14 +348,16 @@ public final class Stock extends javax.swing.JInternalFrame {
              tabela.setDefaultRenderer(Object.class, renderer);
            
          }
-       catch(Exception exp)
+       catch(SQLException exp)
        {
            throw new Exception (exp.getMessage());
        }
 
     }
     
-    
+    /**
+     *Limpa todos os campos em que valores podem ser inseridos.
+     */
     public void limparCampos(){
         
         stock.setValue(0);
@@ -375,8 +379,8 @@ public final class Stock extends javax.swing.JInternalFrame {
             int somaSig = sigAtivo+Integer.parseInt(stock.getValue().toString());
                 
             //query para adicionar
-                String q = "UPDATE ARMAZEM SET STOCK = "+somaStock+", SIG = "+somaSig+" "+
-                    "WHERE ID_ARMAZEM = "+getId()+"";
+                String q = "UPDATE CONSUMIVEL SET STOCK = "+somaStock+", SIG = "+somaSig+" "+
+                    "WHERE ID_CONSUMIVEL = "+getId()+"";
              
              stm.executeUpdate(q);
              
@@ -408,8 +412,8 @@ public final class Stock extends javax.swing.JInternalFrame {
                   {
                        int subSig = sigAtivo - Integer.parseInt(sig.getValue().toString());
                  
-                     stm.executeUpdate("UPDATE ARMAZEM SET SIG = "+subSig+" "+
-                                      "WHERE ID_ARMAZEM = "+getId());
+                     stm.executeUpdate("UPDATE CONSUMIVEL SET SIG = "+subSig+" "+
+                                      "WHERE ID_CONSUMIVEL = "+getId());
                      
                      JOptionPane.showMessageDialog(rootPane, "Consumiveis abatidos!");
                      
@@ -438,8 +442,8 @@ public final class Stock extends javax.swing.JInternalFrame {
                       //query para abater stock
                       int subStock = stockAtivo - Integer.parseInt(abaterStock.getValue().toString());
                  
-                     stm.executeUpdate("UPDATE ARMAZEM SET STOCK = "+subStock+" "+
-                                      "WHERE ID_ARMAZEM = "+getId());
+                     stm.executeUpdate("UPDATE CONSUMIVEL SET STOCK = "+subStock+" "+
+                                      "WHERE ID_CONSUMIVEL = "+getId());
                     
                      JOptionPane.showMessageDialog(rootPane, "Stock abatido!");
                      
@@ -463,8 +467,8 @@ public final class Stock extends javax.swing.JInternalFrame {
                  
                   if(getId() != 0)
                   {
-                      stm.executeUpdate("UPDATE ARMAZEM SET SIG = "+stockAtivo+" "+
-                                      "WHERE ID_ARMAZEM = "+getId());
+                      stm.executeUpdate("UPDATE CONSUMIVEL SET SIG = "+stockAtivo+" "+
+                                      "WHERE ID_CONSUMIVEL = "+getId());
                     
                      JOptionPane.showMessageDialog(rootPane, "SIG igualado!");
                      
@@ -489,12 +493,13 @@ public final class Stock extends javax.swing.JInternalFrame {
             
             
             //criar uma query e executar
-            ResultSet rs = stm.executeQuery("SELECT ID_ARMAZEM, STOCK, NOME, SIG FROM ARMAZEM WHERE NOME LIKE '%"+filtro.getText().toUpperCase()+"%'");
+            ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL,( MARCA|| '' || MODELO || '_' || NOME) AS NOME, "+
+                 "STOCK, SIG FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND NOME LIKE '%"+filtro.getText().toUpperCase()+"%'");
             
             while(rs.next())
             {
                 //passar os dados da BD para um object
-                Object o[] = {rs.getInt("ID_ARMAZEM"), rs.getString("NOME"), rs.getInt("STOCK"),
+                Object o[] = {rs.getInt("ID_CONSUMIVEL"), rs.getString("NOME"), rs.getInt("STOCK"),
                     rs.getInt("SIG")};
                 //Adicionar os dados à tabela
                 table.addRow(o);
@@ -533,7 +538,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     public void buscarDados() throws SQLException
     {
         //buscar dados já existentes e inserir-los nas respetivas vaariaveis
-        ResultSet rs = stm.executeQuery("SELECT STOCK, SIG FROM ARMAZEM WHERE ID_ARMAZEM = "+getId()+"");
+        ResultSet rs = stm.executeQuery("SELECT STOCK, SIG FROM CONSUMIVEL WHERE ID_CONSUMIVEL = "+getId()+"");
             
             while(rs.next())
             {
@@ -559,10 +564,10 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPanel painelSig;
     private javax.swing.JSpinner sig;
     private javax.swing.JSpinner stock;
     private javax.swing.JTable tabela;
