@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package gestão.de.stock.pkgfinal;
+package gestao.de.stock.ui;
 
+import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.TableColourCellRenderer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -119,7 +121,8 @@ public final class Stock extends javax.swing.JInternalFrame {
             tabela.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jLabel1.setText("STOCK");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ADICIONAR STOCK");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAdicionar.setText("ADICIONAR");
@@ -155,7 +158,8 @@ public final class Stock extends javax.swing.JInternalFrame {
 
         ABATER.addTab("ADD", jPanel1);
 
-        jLabel2.setText("STOCK");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("ABATER STOCK");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAbaterStock.setText("ABATER");
@@ -191,6 +195,7 @@ public final class Stock extends javax.swing.JInternalFrame {
 
         ABATER.addTab("ABATER STOCK", jPanel2);
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("SIG");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -225,17 +230,17 @@ public final class Stock extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(sig, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAbaterSig, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(igualar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         ABATER.addTab("ABATER SIG", jPanel3);
@@ -282,7 +287,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addComponent(btnFiltrar)
                 .addGap(18, 18, 18)
                 .addComponent(btnRepor)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -333,9 +338,10 @@ public final class Stock extends javax.swing.JInternalFrame {
                //passar os dados da BD para um object
                Object o[] = {rs.getInt("ID_ARMAZEM"), rs.getString("NOME"), rs.getInt("STOCK"),
                rs.getInt("SIG")};
-               //Adicionar os dados à tabela
+               //Adicionar os dados à tabela a partir do object
                 table.addRow(o);
            }
+           //criar objeto da class TableColourCellRenderer a fim de alterar a cor do campo sig //VER CLASSE TableColourCellRenderer
             TableColourCellRenderer renderer = new TableColourCellRenderer();
              tabela.setDefaultRenderer(Object.class, renderer);
            
@@ -364,9 +370,11 @@ public final class Stock extends javax.swing.JInternalFrame {
             
             if(getId() != 0)
             {
+                //buscasr e calcular o valor da soma do stock e sig existentes com os introduzidos
                 int somaStock = stockAtivo+Integer.parseInt(stock.getValue().toString());
             int somaSig = sigAtivo+Integer.parseInt(stock.getValue().toString());
                 
+            //query para adicionar
                 String q = "UPDATE ARMAZEM SET STOCK = "+somaStock+", SIG = "+somaSig+" "+
                     "WHERE ID_ARMAZEM = "+getId()+"";
              
@@ -427,6 +435,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                   
                   if(getId() != 0)
                   {
+                      //query para abater stock
                       int subStock = stockAtivo - Integer.parseInt(abaterStock.getValue().toString());
                  
                      stm.executeUpdate("UPDATE ARMAZEM SET STOCK = "+subStock+" "+
@@ -463,8 +472,6 @@ public final class Stock extends javax.swing.JInternalFrame {
                      tabela.clearSelection();
                      limparCampos();
                   }
-                     
-                 
                  
              } catch (SQLException | ClassNotFoundException ex) {
                  JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);

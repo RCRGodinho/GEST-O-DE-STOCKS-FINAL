@@ -1,4 +1,4 @@
-package gestão.de.stock.pkgfinal;
+package gestao.de.stock.api;
 
 
 import java.awt.Color;

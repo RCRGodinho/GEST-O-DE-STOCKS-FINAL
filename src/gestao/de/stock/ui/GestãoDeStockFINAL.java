@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestão.de.stock.pkgfinal;
+package gestao.de.stock.ui;
 
+import gestao.de.stock.api.Conexao;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.util.logging.Level;
