@@ -5,6 +5,7 @@
 package gestao.de.stock.ui;
 
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,17 +25,24 @@ public final class Consumivel extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
+    Util u;
     Statement stm ;
     
-    
-    public Consumivel(Conexao c) throws Exception {
+    /**
+     *
+     * @param c
+     * @param u
+     * @throws Exception
+     */
+    public Consumivel(Conexao c,Util u) throws Exception {
         this.c = c;
+        this.u = u;
         stm = this.c.fazerConexao().createStatement();
         
         initComponents();
         setPainelFixo();
         tabelaConsumivel();
-        comboOracle();
+        u.comboOracle(u.lista("impressora"),comboImpressora);
     }
     
     private void setPainelFixo(){
@@ -489,37 +497,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_nnaKeyTyped
 
-    public ArrayList listaImpressora() throws Exception{
-        ArrayList list = new ArrayList<>();
-        
-        try{
-            
-            ResultSet rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO) AS IMPRESSORA FROM IMPRESSORA");
-
-            while(rs.next())
-            {
-                list.add(rs.getString("IMPRESSORA"));
-            }
-            
-            
-        }catch(SQLException exp){
-            throw new Exception (exp.getMessage());
-        }
-        
-        return list;
-    }
-    
-    private void comboOracle() throws SQLException, ClassNotFoundException, Exception{
-        
-        comboImpressora.removeAllItems();
-        Iterable<String> lista = listaImpressora();
-        
-        for(String impressora : lista)
-        {
-            comboImpressora.addItem(impressora);
-        }
-    }
-    
     private int comboSplit(){
         
         String[] result =comboImpressora.getSelectedItem().toString().split("_");

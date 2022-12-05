@@ -5,6 +5,7 @@
 package gestao.de.stock.ui;
 
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.Util;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +24,7 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
     //Variaveis
     
     Conexao c;
+    Util u;
     Statement stm ;
 
     /**
@@ -31,15 +32,16 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
      * @param c
      * @throws java.lang.Exception
      */
-    public Pop_Up_Analise(Conexao c) throws Exception{
+    public Pop_Up_Analise(Conexao c,Util u) throws Exception{
         this.c = c;
+        this.u = u;
         stm = c.fazerConexao().createStatement();
         
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
         
-        comboOracle(lista("impressora"), comboImpressora);
+        u.comboOracle(lista("impressora"), comboImpressora);
     }
 
     /**
@@ -181,7 +183,7 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
             String dtFm = DateFormat.getDateInstance().format(dataFim.getDate());
             
             
-                Analise hm = new Analise(imp,dtIn,dtFm,c);
+                Analise hm = new Analise(imp,dtIn,dtFm,c,u);
                 
                 
                 if(hm.getTabela().getRowCount() != 0)
@@ -316,18 +318,6 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
             }
         }     
         return list;
-    }
-    
-    private void comboOracle(ArrayList x, JComboBox c) throws SQLException, ClassNotFoundException, Exception{
-        
-        c.removeAllItems();
-        Iterable<String> lista = x;
-        
-        c.addItem("----");
-        for(String s : lista)
-        {
-            c.addItem(s);
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

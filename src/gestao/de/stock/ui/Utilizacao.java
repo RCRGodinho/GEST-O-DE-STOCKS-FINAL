@@ -5,6 +5,7 @@
 package gestao.de.stock.ui;
 
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -28,13 +28,15 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
 //Inicializar os contrutores
     
     Conexao c;
-        Statement stm ;
+    Util u;
+    Statement stm ;
         
     boolean en;
     
-    public Utilizacao(Conexao c) throws Exception {
+    public Utilizacao(Conexao c, Util u) throws Exception {
         //variaveis de conexao
         this.c = c;
+        this.u = u;
         stm = c.fazerConexao().createStatement();
         
         //painel fixo
@@ -43,9 +45,9 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         
         //definir as comboboxes
         tabelaUtilizacao();
-        comboOracle(lista("ic"),comboIc);
-        comboOracle(lista("consumivel"),comboConsumivel);
-        comboOracle(lista("localizacao"),comboLocalizacao);
+        u.comboOracle(u.lista("ic"),comboIc);
+        u.comboOracle(u.lista("consumivel"),comboConsumivel);
+        u.comboOracle(u.lista("localizacao"),comboLocalizacao);
         
         //opcional de controlo
         comboConsumivel.setEnabled(false);
@@ -484,7 +486,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         try{
              stm = c.fazerConexao().createStatement();
              
-             stm.executeUpdate("UPDATE Utilizacao SET QUANTIDADE = "+quantidade.getValue()+" , DATA_UTIL = TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , PRETO = "+preto.getValue()+" , COR = "+cor.getValue()+" , ID_CONSUMIVEL ="+comboId("consumivel")+", ID_CENTRO_CUSTO = "+comboId("centro_custo")+", ID_IC = "+comboId("impressora")+" WHERE ID_UTILIZACAO = "+Integer.parseInt(value)+"");
+             stm.executeUpdate("UPDATE Utilizacao SET QUANTIDADE = "+quantidade.getValue()+" , DATA_UTIL = TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , PRETO = "+preto.getValue()+" , COR = "+cor.getValue()+" , ID_CONSUMIVEL ="+u.comboId("consumivel", comboConsumivel)+", ID_CENTRO_CUSTO = "+u.comboId("localizacao", comboLocalizacao)+", ID_IC = "+u.comboId("ic", comboIc)+" WHERE ID_UTILIZACAO = "+Integer.parseInt(value)+"");
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
                 
@@ -564,7 +566,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         
         try {
              
-             stm.executeUpdate("INSERT INTO UTILIZACAO(QUANTIDADE,DATA_UTIL,PRETO,COR,ID_CONSUMIVEL,ID_CENTRO_CUSTO, ID_IC) VALUES("+quantidade.getValue()+" , TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , "+preto.getValue()+" , "+cor.getValue()+" , "+comboId("consumivel")+" , "+comboId("centro_custo")+", "+comboId("impressora")+")");
+             stm.executeUpdate("INSERT INTO UTILIZACAO(QUANTIDADE,DATA_UTIL,PRETO,COR,ID_CONSUMIVEL,ID_CENTRO_CUSTO, ID_IC) VALUES("+quantidade.getValue()+" , TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , "+preto.getValue()+" , "+cor.getValue()+" , "+u.comboId("consumivel", comboConsumivel)+" , "+u.comboId("localizacao", comboLocalizacao)+", "+u.comboId("ic", comboIc)+")");
              
              
              
@@ -601,7 +603,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             
-            Pop_Up_Analise hm = new Pop_Up_Analise(c);
+            Pop_Up_Analise hm = new Pop_Up_Analise(c,u);
             //Adicionar a nova página
             hm.setVisible(true);
         } catch (Exception ex) {
@@ -621,7 +623,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
              comboConsumivel.setEnabled(true);
              
              try {
-                 comboOracle(lista("consumivelDiff"),comboConsumivel);
+                 u.comboOracle(u.lista("consumivelDiff"),comboConsumivel);
                  
         }    catch (Exception ex) {
                  Logger.getLogger(Utilizacao.class.getName()).log(Level.SEVERE, null, ex);
@@ -629,128 +631,6 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
          } 
     }//GEN-LAST:event_comboIcActionPerformed
 
-         
-    public ArrayList lista(String x) throws Exception{
-        ArrayList list = new ArrayList<>();
-        ResultSet rs;
-        
-        
-        switch(x)
-        {
-            case "consumivel" -> {
-                
-               rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
-
-            while(rs.next())
-            {
-                list.add(rs.getString("NOME"));
-            }
-            }
-            case "consumivelDiff" -> {
-                
-               rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_IMPRESSORA = "+comboId("impressora")+"");
-
-            while(rs.next())
-            {
-                list.add(rs.getString("NOME"));
-            }
-            }
-            
-            case "localizacao" -> {
-               
-                rs = stm.executeQuery("SELECT LOCALIZACAO FROM CENTRO_CUSTO");
-
-                while(rs.next())
-                {
-                    list.add(rs.getString("LOCALIZACAO"));
-                }
-            }
-            case "ic" -> {
-                
-                rs = stm.executeQuery("SELECT IC FROM IC");
-
-                while(rs.next())
-                {
-                    list.add(rs.getString("IC"));
-                }
-            }
-            default -> {
-                System.out.println("Erro Lista");
-            }
-        }     
-        return list;
-    }
-    
-    private void comboOracle(ArrayList x, JComboBox c) throws SQLException, ClassNotFoundException, Exception{
-        
-        c.removeAllItems();
-        Iterable<String> lista = x;
-        
-        c.addItem("----");
-        for(String s : lista)
-        {
-            c.addItem(s);
-        }
-    }
-     
-    private int comboId(String x){
-        
-        try{
-            ResultSet rs;
-            int id = 0;
-            
-            switch(x)
-            {
-                case "consumivel" -> {
-                    String[] result =comboConsumivel.getSelectedItem().toString().split("_");
-                        String marca = result[0];
-                        String modelo = result[1];
-                        String cons = result[2];
-                    
-                    rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '"+cons+"' AND MARCA = '"+marca+"' AND MODELO = '"+modelo+"'");
-                    while(rs.next())
-                    {
-                        id = rs.getInt(1);
-                    }
-                    
-                }
-                case "centro_custo" -> {
-                    rs = stm.executeQuery("SELECT ID_CENTRO_CUSTO FROM CENTRO_CUSTO WHERE LOCALIZACAO = '"+comboLocalizacao.getSelectedItem()+"'");
-                    while(rs.next())
-                    {
-                        id = rs.getInt(1);
-                    }  
-                    
-                }
-                case "ic" -> {
-                    rs = stm.executeQuery("SELECT ID_IC FROM IC WHERE IC = '"+comboIc.getSelectedItem()+"'");
-                    while(rs.next())
-                    {
-                       id = rs.getInt(1);
-                    }
-             
-                }
-                case "impressora" -> {
-                    rs = stm.executeQuery("SELECT a.ID_Impressora FROM IMPRESSORA a, IC b  WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.IC = '"+comboIc.getSelectedItem()+"'");
-                    while(rs.next())
-                    {
-                       id = rs.getInt(1);
-                    }
-             
-                }
-               
-                default -> {
-                    System.out.println("comboID Erro");
-                    return -1;
-                }
-            }
-             
-             return id;
-             
-        }catch(SQLException exp){
-            return 0;
-        }
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

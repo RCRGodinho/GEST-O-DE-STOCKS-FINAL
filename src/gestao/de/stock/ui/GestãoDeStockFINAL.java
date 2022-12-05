@@ -5,8 +5,10 @@
 package gestao.de.stock.ui;
 
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.Util;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,20 +19,24 @@ import java.util.logging.Logger;
 public class GestãoDeStockFINAL extends javax.swing.JFrame {
     
     Conexao c = new Conexao();
+    Util u;
 
      Color preto = new Color(0,0,0);; 
      Color branco = new Color(232, 236, 244);
+     boolean click1;
+     boolean click2;
      boolean click3;
      boolean click4;
-     boolean click2;
      boolean click5;
-     boolean click1;
      boolean click6;
     
     /**
      * Creates new form Main
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
-    public GestãoDeStockFINAL() {
+    public GestãoDeStockFINAL() throws SQLException, ClassNotFoundException {
+        this.u = new Util(c);
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -65,7 +71,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         painel6 = new javax.swing.JPanel();
         pagina6 = new javax.swing.JLabel();
         paginas = new javax.swing.JDesktopPane();
-        menu = new javax.swing.JMenuBar();
+        menuBar = new javax.swing.JMenuBar();
         jMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -212,10 +218,12 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         painel1.add(pagina1, java.awt.BorderLayout.CENTER);
 
         painel6.setBackground(new java.awt.Color(0, 0, 0));
+        painel6.setForeground(new java.awt.Color(255, 255, 255));
         painel6.setLayout(new java.awt.BorderLayout());
 
         pagina6.setBackground(new java.awt.Color(0, 0, 0));
         pagina6.setFont(new java.awt.Font("Gadugi", 1, 14)); // NOI18N
+        pagina6.setForeground(new java.awt.Color(255, 255, 255));
         pagina6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pagina6.setText("SIG");
         pagina6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -304,9 +312,9 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         });
         jMenu.add(jMenuItem1);
 
-        menu.add(jMenu);
+        menuBar.add(jMenu);
 
-        setJMenuBar(menu);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,11 +335,11 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              // TODO add your handling code here:
              //Definir cores
              
-             click4 = false;
              click1 = false;
-             click3 = true;
-             click5 = false;
              click2 = false;
+             click3 = true;
+             click4 = false;
+             click5 = false;
              click6 = false;
              
              painel3.setBackground(branco);
@@ -353,7 +361,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             Consumivel hm = new Consumivel(c);
+             Consumivel hm = new Consumivel(c,u);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {
@@ -382,26 +390,26 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
     private void pagina4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagina4MouseClicked
          try {
              // TODO add your handling code here:
-             click5 = false;
              click1 = false;
              click2 = false;
-             click4 = true;
              click3 = false;
+             click4 = true;
+             click5 = false;
              click6 = false;
              
              painel4.setBackground(branco);
              pagina4.setForeground(preto);
              
+             painel1.setBackground(preto);
+             painel2.setBackground(preto);
              painel3.setBackground(preto);
              painel5.setBackground(preto);
-             painel2.setBackground(preto);
-             painel1.setBackground(preto);
              painel6.setBackground(preto);
              
-             pagina3.setForeground(branco);
-             pagina2.setForeground(branco);
-             pagina5.setForeground(branco);
              pagina1.setForeground(branco);
+             pagina2.setForeground(branco);
+             pagina3.setForeground(branco);
+             pagina5.setForeground(branco);
              pagina6.setForeground(branco);
              
              //Remover a pagina antiga
@@ -436,26 +444,26 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
     private void pagina5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagina5MouseClicked
          try {
              // TODO add your handling code here:
-             click5 = true;
              click1 = false;
              click2 = false;
-             click4 = false;
-             click6 = false;
              click3 = false;
+             click4 = false;
+             click5 = true;
+             click6 = false;
              
              painel5.setBackground(branco);
              pagina5.setForeground(preto);
              
+             painel1.setBackground(preto);
              painel2.setBackground(preto);
              painel3.setBackground(preto);
              painel4.setBackground(preto);
-             painel1.setBackground(preto);
              painel6.setBackground(preto);
              
-             pagina2.setForeground(branco);
-             pagina4.setForeground(branco);
-             pagina3.setForeground(branco);
              pagina1.setForeground(branco);
+             pagina2.setForeground(branco);
+             pagina3.setForeground(branco);
+             pagina4.setForeground(branco);
              pagina6.setForeground(branco);
              
              //Remover a pagina antiga
@@ -489,28 +497,28 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
     private void logoMainnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoMainnMouseClicked
         // TODO add your handling code here:
         
-         click5 = false;
-         click1 = false;
+        click1 = false;
         click2 = false;
-        click4 = false;
         click3 = false;
+        click4 = false;
+        click5 = false;
         click6 = false;
         
         
             
-             painel5.setBackground(preto);
+            painel1.setBackground(preto);
             painel2.setBackground(preto);
             painel3.setBackground(preto);
             painel4.setBackground(preto);
-            painel1.setBackground(preto);
+            painel5.setBackground(preto);
             painel6.setBackground(preto);
             
             
-            pagina5.setForeground(branco);
-            pagina2.setForeground(branco);
-            pagina4.setForeground(branco);
-            pagina3.setForeground(branco);
             pagina1.setForeground(branco);
+            pagina2.setForeground(branco);
+            pagina3.setForeground(branco);
+            pagina4.setForeground(branco);
+            pagina5.setForeground(branco);
             pagina6.setForeground(branco);
             
             ////////////////////////////////////////////////////////////
@@ -529,33 +537,33 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              // TODO add your handling code here:
              //Definir cores
              
-             click4 = false;
              click1 = true;
-             click3 = false;
-             click5 = false;
              click2 = false;
+             click3 = false;
+             click4 = false;
+             click5 = false;
              click6 = false;
              
              painel1.setBackground(branco);
              pagina1.setForeground(preto);
              
              painel2.setBackground(preto);
-             painel5.setBackground(preto);
-             painel4.setBackground(preto);
              painel3.setBackground(preto);
+             painel4.setBackground(preto);
+             painel5.setBackground(preto);
              painel6.setBackground(preto);
              
              pagina2.setForeground(branco);
+             pagina3.setForeground(branco);
              pagina4.setForeground(branco);
              pagina5.setForeground(branco);
-             pagina3.setForeground(branco);
              pagina6.setForeground(branco);
               
              
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             Utilizacao hm = new Utilizacao(c);
+             Utilizacao hm = new Utilizacao(c,u);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {
@@ -567,6 +575,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
     private void pagina1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagina1MouseEntered
         // TODO add your handling code here:
         painel1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
          painel1.setBackground(branco);
             pagina1.setForeground(preto);
     }//GEN-LAST:event_pagina1MouseEntered
@@ -576,7 +585,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         if(!click1)
         {
              painel1.setBackground(preto);
-            pagina1.setForeground(branco);
+             pagina1.setForeground(branco);
         }
     }//GEN-LAST:event_pagina1MouseExited
 
@@ -586,34 +595,34 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              // TODO add your handling code here:
              //Definir cores
              
-             click4 = false;
              click1 = false;
-             click3 = false;
-             click5 = false;
              click2 = true;
+             click3 = false;
+             click4 = false;
+             click5 = false;
              click6 = false;
              
              painel2.setBackground(branco);
              pagina2.setForeground(preto);
              
              
-             painel5.setBackground(preto);
-             painel4.setBackground(preto);
              painel1.setBackground(preto);
              painel3.setBackground(preto);
+             painel4.setBackground(preto);
+             painel5.setBackground(preto);
              painel6.setBackground(preto);
              
              pagina1.setForeground(branco);
+             pagina3.setForeground(branco);
              pagina4.setForeground(branco);
              pagina5.setForeground(branco);
-             pagina3.setForeground(branco);
              pagina6.setForeground(branco);
               
              
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             Stock hm = new Stock(c);
+             Stock hm = new Stock(c,u);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {
@@ -666,33 +675,33 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              // TODO add your handling code here:
              //Definir cores
              
-             click4 = false;
              click1 = false;
-             click3 = false;
-             click5 = false;
              click2 = false;
+             click3 = false;
+             click4 = false;
+             click5 = false;
              click6 = true;
              
              
              painel6.setBackground(branco);
              pagina6.setForeground(preto);
              
-             painel2.setBackground(preto);
-             painel5.setBackground(preto);
-             painel4.setBackground(preto);
              painel1.setBackground(preto);
+             painel2.setBackground(preto);
              painel3.setBackground(preto);
+             painel4.setBackground(preto);
+             painel5.setBackground(preto);
              
              pagina1.setForeground(branco);
+             pagina2.setForeground(branco);
+             pagina3.setForeground(branco);
              pagina4.setForeground(branco);
              pagina5.setForeground(branco);
-             pagina3.setForeground(branco);
-             pagina2.setForeground(branco);
              
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             Sig hm = new Sig(c);
+             Sig hm = new Sig(c,u);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {
@@ -752,7 +761,11 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GestãoDeStockFINAL().setVisible(true);
+                try {
+                    new GestãoDeStockFINAL().setVisible(true);
+                } catch (SQLException | ClassNotFoundException ex) {
+                    Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -762,7 +775,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel logoMainn;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JMenuBar menu;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel pagina1;
     private javax.swing.JLabel pagina2;
