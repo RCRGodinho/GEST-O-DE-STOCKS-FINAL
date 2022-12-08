@@ -23,9 +23,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class AnaliseStock extends javax.swing.JFrame {
     
     ResultSet rs;
-    String ic;
-    String Consumivel;
-    String custo;
+    String objeto;
+    String tipo;
     String dataInicio;
     String dataFim;
     
@@ -35,20 +34,18 @@ public class AnaliseStock extends javax.swing.JFrame {
 
     /**
      * Creates new form Analise
-     * @param ic
-     * @param consumivel
-     * @param custo
+     * @param tipo
      * @param dataInicio
+     * @param objeto
      * @param dataFim
      * @param c
      * @param u
      * @throws java.lang.Exception
      */
-    public AnaliseStock(String ic, String consumivel, String custo, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
+    public AnaliseStock(String objeto, String tipo, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
         initComponents();
-        this.ic = ic;
-        this.Consumivel = consumivel;
-        this.custo = custo;
+        this.objeto = objeto;
+        this.tipo = tipo;
         
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
@@ -73,13 +70,14 @@ public class AnaliseStock extends javax.swing.JFrame {
          
          while(rs.next())
          {
+             //dados para inserir na tabela
              dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
          
          }
          
          
-         
-         JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+ic+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ABATES", dataset);
+         //define o gráfico e o tipo de dados que vai utilizar
+         JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+objeto+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ABATES", dataset);
          grafico.setAntiAlias(false);
          ChartPanel panel = new ChartPanel(grafico);
          panel.setBackground(getTabela().getBackground());
@@ -123,20 +121,38 @@ public class AnaliseStock extends javax.swing.JFrame {
        }
     }
     
+    //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
     public String query()
     {
-        String[] result =Consumivel.split("_");
-            String marca = result[0];
-            String modelo = result[1];
-            String nome = result[2];
-        
-        return "SELECT NNA , IC, to_char(DATA,'DD/MM/YYYY') DATA, "
-                 + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, CUSTO "
+        String q = "SELECT NNA , IC, to_char(DATA,'DD/MM/YYYY') DATA, "
+                 + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, LOCALIZACAO "
                  + "FROM Sig a, Consumivel b, centro_custo c, IC d, Impressora e "
                  + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC "
-                + "AND IC LIKE '%"+ic+"%' AND CUSTO LIKE '%"+custo+"%' AND MARCA LIKE '%"+marca+"%'" 
-                + " AND MODELO LIKE '"+modelo+"' AND NOME LIKE '%"+nome+"%' AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') "+
-                "ORDER BY DATA";
+                 + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') ";
+        
+        switch(tipo){
+            case("consumivel")->{
+                String[] result =objeto.split("_");
+                    String marca = result[0];
+                    String modelo = result[1];
+                    String nome = result[2];
+            
+            q =  q + "AND MARCA LIKE '%"+marca+"%' AND MODELO LIKE '"+modelo+"' AND NOME LIKE '%"+nome+"%' ";
+            }
+             case("centro_custo")->{
+                 
+            q =  q+ "AND CUSTO LIKE '%"+objeto+"%' ";
+             }
+             case("ic")->{
+                 
+            q =  q+ "AND IC LIKE '%"+objeto+"%' ";
+             }
+             default->{
+                 
+             }
+        }
+        
+        return q+ "ORDER BY DATA";
     }
     
     /**
@@ -209,7 +225,7 @@ public class AnaliseStock extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(exportar)
+                .addComponent(exportar, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

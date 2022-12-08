@@ -8,6 +8,8 @@ import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Util;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,9 +38,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         
-        u.comboOracle(u.lista("ic"), comboIc);
-        u.comboOracle(u.lista("consumivel"), comboConsumivel);
-        u.comboOracle(u.lista("centro_custo"), comboCusto);
+        u.comboOracle(u.lista("tabelas"), comboSelecao);
+        comboAnalise.setVisible(false);
     }
 
     /**
@@ -51,29 +52,27 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        comboIc = new javax.swing.JComboBox<>();
+        selecao = new javax.swing.JLabel();
+        comboSelecao = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         dataFim = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         dataInicio = new com.toedter.calendar.JDateChooser();
-        jLabel4 = new javax.swing.JLabel();
-        pesquisar = new javax.swing.JButton();
-        sair = new javax.swing.JButton();
+        analise = new javax.swing.JLabel();
+        analisar = new javax.swing.JButton();
+        anual = new javax.swing.JButton();
         marca = new javax.swing.JLabel();
-        comboCusto = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        comboConsumivel = new javax.swing.JComboBox<>();
+        comboAnalise = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setText("IC:");
+        selecao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        selecao.setText("ANALISAR:");
 
-        comboIc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboIc.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboIcItemStateChanged(evt);
+        comboSelecao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSelecao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSelecaoActionPerformed(evt);
             }
         });
 
@@ -83,86 +82,76 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("INICIO:");
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setText("CENTRO CUSTO:");
+        analise.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
-        pesquisar.setText("PESQUISAR");
-        pesquisar.addActionListener(new java.awt.event.ActionListener() {
+        analisar.setText("ANALISAR");
+        analisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesquisarActionPerformed(evt);
+                analisarActionPerformed(evt);
             }
         });
 
-        sair.setText("SAIR");
+        anual.setText("ANUAL");
+        anual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anualActionPerformed(evt);
+            }
+        });
 
         marca.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-
-        comboCusto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel5.setText("CONSUMIVEL:");
-
-        comboConsumivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(80, 80, 80)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                             .addComponent(dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboCusto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboIc, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(comboConsumivel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(analise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selecao, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboSelecao, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboAnalise, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(90, 90, 90)
                 .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(pesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(sair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(analisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(anual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboIc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(selecao, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(comboSelecao))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboCusto, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboConsumivel, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(analise, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(comboAnalise))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(pesquisar)
+                .addComponent(analisar)
                 .addGap(18, 18, 18)
-                .addComponent(sair)
+                .addComponent(anual)
                 .addGap(65, 65, 65))
         );
 
@@ -171,9 +160,9 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addGap(90, 90, 90)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,16 +172,24 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarActionPerformed
-        String ic = comboIc.getSelectedItem().toString();
-        String consumivel = comboConsumivel.getSelectedItem().toString();
-        String custo = comboCusto.getSelectedItem().toString();
+    private void analisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analisarActionPerformed
+        String tipo;
+        String objeto;
+        
+        if(comboSelecao.getSelectedItem() == null || comboAnalise.getSelectedItem() == null)
+        {
+            tipo = "";
+            objeto = "";
+                   
+        }else{
+        tipo = comboSelecao.getSelectedItem().toString().toLowerCase();
+        objeto = comboAnalise.getSelectedItem().toString();
+        }
         
         String dtIn = null;
         String dtFm = null;
         
-        if(comboIc.getSelectedIndex() != 0)
-        {
+        
             try {
              dtIn= DateFormat.getDateInstance().format(dataInicio.getDate());
              dtFm= DateFormat.getDateInstance().format(dataFim.getDate());
@@ -200,10 +197,43 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!");
         }
-            try{
-                
-                AnaliseStock hm = new AnaliseStock(ic,consumivel,custo,dtIn,dtFm,c,u);
-                System.out.println("............");
+           construirPagina( objeto,  tipo,  dtIn,  dtFm);
+    }//GEN-LAST:event_analisarActionPerformed
+
+    private void comboSelecaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSelecaoActionPerformed
+        // TODO add your handling code here:
+        
+        if(comboSelecao.getSelectedIndex() == -1 || comboSelecao.getSelectedIndex() == 0)
+        {
+            analise.setText("");
+            comboAnalise.setEnabled(false);
+        } 
+         else {
+            analise.setText(comboSelecao.getSelectedItem().toString()+":");
+            comboAnalise.setVisible(true);
+             comboAnalise.setEnabled(true);
+             
+            try {
+                u.comboOracle(u.lista(comboSelecao.getSelectedItem().toString().toLowerCase()), comboAnalise);
+            } catch (Exception ex) {
+                Logger.getLogger(Pop_Up_AnaliseStock.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+         } 
+    }//GEN-LAST:event_comboSelecaoActionPerformed
+
+    private void anualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anualActionPerformed
+        // TODO add your handling code here:
+        
+        String ano = JOptionPane.showInputDialog(rootPane, "Ano:", "Escolha o ano", JOptionPane.QUESTION_MESSAGE);
+         
+        
+    }//GEN-LAST:event_anualActionPerformed
+
+    public void construirPagina(String objeto, String tipo, String dtIn, String dtFm)
+    {
+         try{
+                AnaliseStock hm = new AnaliseStock(objeto,tipo,dtIn,dtFm,c,u);
                 
                 
                 if(hm.getTabela().getRowCount() != 0)
@@ -213,39 +243,27 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
                 }else{
                      JOptionPane.showMessageDialog(rootPane, "Não existem registos!");
                 }
+                
             } catch(Exception ex)
             {
                  JOptionPane.showMessageDialog(rootPane, "Erro a construir");
             }
-            
-        }else{
-             JOptionPane.showMessageDialog(rootPane, "Tem que selecionar uma impressora!");
-        }
-        
-    }//GEN-LAST:event_pesquisarActionPerformed
-
-    
-    private void comboIcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboIcItemStateChanged
-        
-    }//GEN-LAST:event_comboIcItemStateChanged
-
+    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> comboConsumivel;
-    private javax.swing.JComboBox<String> comboCusto;
-    private javax.swing.JComboBox<String> comboIc;
+    private javax.swing.JButton analisar;
+    private javax.swing.JLabel analise;
+    private javax.swing.JButton anual;
+    private javax.swing.JComboBox<String> comboAnalise;
+    private javax.swing.JComboBox<String> comboSelecao;
     private com.toedter.calendar.JDateChooser dataFim;
     private com.toedter.calendar.JDateChooser dataInicio;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel marca;
-    private javax.swing.JButton pesquisar;
-    private javax.swing.JButton sair;
+    private javax.swing.JLabel selecao;
     // End of variables declaration//GEN-END:variables
 
 

@@ -31,9 +31,6 @@ public class TableColourCellRenderer implements TableCellRenderer{
                 int stock = Integer.parseInt(table.getModel().getValueAt(row, column-1).toString());
                 int sig = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
                 
-                
-                System.out.println(stock+" "+sig);
-                
                 if(stock != sig){
                      c.setBackground(Color.RED);
                      c.setForeground(table.getForeground());

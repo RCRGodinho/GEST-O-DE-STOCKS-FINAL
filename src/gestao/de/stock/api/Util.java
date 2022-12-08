@@ -4,6 +4,7 @@
  */
 package gestao.de.stock.api;
 
+import java.awt.Font;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,14 +13,18 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import static org.apache.poi.hssf.usermodel.HeaderFooter.font;
+import org.apache.poi.ss.usermodel.CellStyle;
+import static org.apache.poi.ss.usermodel.FillPatternType.SOLID_FOREGROUND;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -35,7 +40,6 @@ public class Util {
 
     public Util(Conexao c) throws SQLException, ClassNotFoundException{
         this.c = c;
-        
         stm = c.fazerConexao().createStatement();
     }
     
@@ -59,19 +63,39 @@ public class Util {
             
             //Importar bibliotecas de excel
                 XSSFWorkbook excelJTableExporter = new XSSFWorkbook();
-                XSSFSheet excelSheet = excelJTableExporter.createSheet("AUGH");
+                XSSFSheet excelSheet = excelJTableExporter.createSheet("Página 1");
             try {
-                
+                XSSFRow excelRow;
+                XSSFCell excelCell;
                 //Buscar linhas e colunas da tabela
                 
-                for(int i = 0; i<tabela.getRowCount();i++)
-                {
-                    XSSFRow excelRow = excelSheet.createRow(i);
+                CellStyle style = excelJTableExporter.createCellStyle();
+                    XSSFFont font = excelJTableExporter.createFont();
+                             font.setBold(true);
+                             
+                    style.setFont(font); 
+                    style.setAlignment(HorizontalAlignment.CENTER);
+                
+                    excelRow = excelSheet.createRow(0);
+                
                     for(int j = 0; j<tabela.getColumnCount();j++)
                     {
-                        XSSFCell excelCell = excelRow.createCell(j);
-                        
+                        excelCell = excelRow.createCell(j);
+                        excelCell.setCellValue(tabela.getColumnName(j));
+                        excelCell.setCellStyle(style);
+                    }
+                    
+                    
+                    
+                    
+                for(int i = 0; i<tabela.getRowCount();i++)
+                {
+                    excelRow = excelSheet.createRow(i+1);
+                    for(int j = 0; j<tabela.getColumnCount();j++)
+                    {
+                        excelCell = excelRow.createCell(j);
                         excelCell.setCellValue(tabela.getValueAt(i, j).toString());
+                        
                     }
                 }   
                 excelFOU = new FileOutputStream(excelFileChooser.getSelectedFile() + ".xlsx");
@@ -80,9 +104,8 @@ public class Util {
                 
                 JOptionPane.showMessageDialog(null, "Exportado com sucesso!");
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+               
             } finally {
                 try {
                     if(excelBOU != null)
@@ -95,7 +118,6 @@ public class Util {
                     }
                         excelJTableExporter.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             
@@ -147,6 +169,15 @@ public class Util {
                     list.add(rs.getString("CUSTO"));
                 }
             }
+            case "localizacao" -> {
+               
+                rs = stm.executeQuery("SELECT LOCALIZACAO FROM CENTRO_CUSTO");
+
+                while(rs.next())
+                {
+                    list.add(rs.getString("LOCALIZACAO"));
+                }
+            }
             case "ic" -> {
                 
                 rs = stm.executeQuery("SELECT IC FROM IC");
@@ -155,6 +186,12 @@ public class Util {
                 {
                     list.add(rs.getString("IC"));
                 }
+            }
+            case "tabelas" -> {
+
+               list.add("centro_custo".toUpperCase());
+               list.add("consumivel".toUpperCase());
+               list.add("ic".toUpperCase());
             }
             default -> {
                 System.out.println("Erro Lista");

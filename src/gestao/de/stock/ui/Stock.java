@@ -39,9 +39,9 @@ public final class Stock extends javax.swing.JInternalFrame {
         
         initComponents();
         setPainelFixo();
-        tabelaArmazem();
+        tabelaStock();
         u.comboOracle(u.lista("ic"), comboIC);
-        u.comboOracle(u.lista("centro_custo"), comboCusto);
+        u.comboOracle(u.lista("localizacao"), comboCusto);
     }
     
     private void setPainelFixo(){
@@ -390,7 +390,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void tabelaArmazem() throws Exception{
+    public void tabelaStock() throws Exception{
         
          try{
              //definir a tabela
@@ -457,10 +457,10 @@ public final class Stock extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(rootPane, "Stock adicionado!");
     
                     limparCampos();
-                    tabelaArmazem();
+                    tabelaStock();
                     tabela.clearSelection();
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Selecione dado da tabela!");
+                JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", HEIGHT);
             }
             
         } catch (SQLException | ClassNotFoundException ex) {
@@ -487,11 +487,11 @@ public final class Stock extends javax.swing.JInternalFrame {
                      
                      JOptionPane.showMessageDialog(rootPane, "Consumiveis abatidos!");
                      
-                     tabelaArmazem();
+                     tabelaStock();
                      tabela.clearSelection();
                      limparCampos();
                   }else{
-                       JOptionPane.showMessageDialog(rootPane, "Selecione dado da tabela!");
+                       JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", HEIGHT);
                   }
              } catch (SQLException | ClassNotFoundException ex) {
                  JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
@@ -523,11 +523,11 @@ public final class Stock extends javax.swing.JInternalFrame {
                           
                           stm.executeQuery("INSERT INTO SIG (QUANTIDADE,DATA,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
                                   + "VALUES("+abaterStock.getValue()+", TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY'), "
-                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("centro_custo", comboCusto)+", "+getId()+")");
+                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getId()+")");
                      
                      JOptionPane.showMessageDialog(rootPane, "Stock abatido!");
                      
-                     tabelaArmazem();
+                     tabelaStock();
                      tabela.clearSelection();
                      limparCampos();
                       }
@@ -554,7 +554,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                     
                      JOptionPane.showMessageDialog(rootPane, "SIG igualado!");
                      
-                     tabelaArmazem();
+                     tabelaStock();
                      tabela.clearSelection();
                      limparCampos();
                   }
@@ -599,7 +599,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     private void btnReporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporActionPerformed
         try {
             // TODO add your handling code here:
-            tabelaArmazem();
+            tabelaStock();
             filtro.setText("");
         } catch (Exception ex) {
             Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
@@ -632,6 +632,11 @@ public final class Stock extends javax.swing.JInternalFrame {
                 sigAtivo = rs.getInt("SIG");
             }
     }
+    
+    public void retirarStockSig()
+    {
+        
+    }   
     
     
     
