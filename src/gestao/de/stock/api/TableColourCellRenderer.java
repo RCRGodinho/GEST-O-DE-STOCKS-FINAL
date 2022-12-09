@@ -17,6 +17,15 @@ import javax.swing.table.TableCellRenderer;
  * @author PAT
  */
 public class TableColourCellRenderer implements TableCellRenderer{
+    String tabela;
+    Util u;
+    
+    public TableColourCellRenderer(String tabela,Util u) {
+        this.tabela = tabela;
+        this.u = u;
+    }
+    
+    
     private static final TableCellRenderer RENDERER = new DefaultTableCellRenderer();
 
     @Override
@@ -26,22 +35,15 @@ public class TableColourCellRenderer implements TableCellRenderer{
         Component c = RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
        
-        if(column == 3)
+        if(tabela.equals("Stock"))
         {
-                int stock = Integer.parseInt(table.getModel().getValueAt(row, column-1).toString());
-                int sig = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
-                
-                if(stock != sig){
-                     c.setBackground(Color.RED);
-                     c.setForeground(table.getForeground());
-                }
-               
-        }else{
-            c.setBackground(table.getBackground());
-            c.setForeground(table.getForeground());
+            c = u.tableStockColourRenderer(c, row, column, table);
+        }else if(tabela.equals("Sig")){
+            c = u.tableSigColourRenderer(c, row, column, table);
         }
         
         return c;
     }
+    
     
 }

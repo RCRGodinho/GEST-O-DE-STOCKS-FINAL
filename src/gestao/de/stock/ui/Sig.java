@@ -5,12 +5,15 @@
 package gestao.de.stock.ui;
 
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.TableColourCellRenderer;
 import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,7 +27,8 @@ public final class Sig extends javax.swing.JInternalFrame {
     
     Conexao c;
     Util u;
-        Statement stm ;
+    Statement stm ;
+    TableColourCellRenderer renderer;
         
     
     public Sig(Conexao c,Util u) throws Exception {
@@ -32,13 +36,15 @@ public final class Sig extends javax.swing.JInternalFrame {
         this.c = c;
         this.u = u;
         stm = c.fazerConexao().createStatement();
+        renderer = new TableColourCellRenderer("Sig",u);
         
         //painel fixo
         initComponents();
         setPainelFixo();
         
         //definir as comboboxes
-        tabelaSig();
+        tabelaTodos();
+        tabelaPorAbater();
         
     }
     //tornal painel fixo
@@ -57,19 +63,90 @@ public final class Sig extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        tabbedPane = new javax.swing.JTabbedPane();
+        porAbater = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaSig = new javax.swing.JTable();
+        todos = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaTodos = new javax.swing.JTable();
         analise = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(232, 236, 244));
         setBorder(null);
         setPreferredSize(new java.awt.Dimension(1070, 610));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabela.setBackground(getBackground());
-        tabela.setForeground(new java.awt.Color(0, 0, 0));
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(281, 619, -1, -1));
+
+        tabelaSig.setBackground(getBackground());
+        tabelaSig.setForeground(new java.awt.Color(0, 0, 0));
+        tabelaSig.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "NNA", "IC", "DATA", "CONSUMIVEL", "CENTRO_CUSTO", "QUANTIDADE", "PROGRESSO"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaSig.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tabelaSig.setRowHeight(25);
+        tabelaSig.setRowMargin(5);
+        tabelaSig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaSig.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaSig.setShowGrid(true);
+        jScrollPane1.setViewportView(tabelaSig);
+        if (tabelaSig.getColumnModel().getColumnCount() > 0) {
+            tabelaSig.getColumnModel().getColumn(0).setMinWidth(0);
+            tabelaSig.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tabelaSig.getColumnModel().getColumn(0).setMaxWidth(0);
+            tabelaSig.getColumnModel().getColumn(6).setPreferredWidth(10);
+            tabelaSig.getColumnModel().getColumn(7).setResizable(false);
+        }
+
+        javax.swing.GroupLayout porAbaterLayout = new javax.swing.GroupLayout(porAbater);
+        porAbater.setLayout(porAbaterLayout);
+        porAbaterLayout.setHorizontalGroup(
+            porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(porAbaterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1041, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        porAbaterLayout.setVerticalGroup(
+            porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(porAbaterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
+
+        tabbedPane.addTab("POR ABATER", porAbater);
+
+        tabelaTodos.setBackground(getBackground());
+        tabelaTodos.setForeground(new java.awt.Color(0, 0, 0));
+        tabelaTodos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -95,21 +172,19 @@ public final class Sig extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tabela.setRowHeight(25);
-        tabela.setRowMargin(5);
-        tabela.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabela.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabela.setShowGrid(true);
-        jScrollPane1.setViewportView(tabela);
-        if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setMinWidth(0);
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-            tabela.getColumnModel().getColumn(4).setPreferredWidth(10);
+        tabelaTodos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tabelaTodos.setRowHeight(25);
+        tabelaTodos.setRowMargin(5);
+        tabelaTodos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaTodos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaTodos.setShowGrid(true);
+        jScrollPane2.setViewportView(tabelaTodos);
+        if (tabelaTodos.getColumnModel().getColumnCount() > 0) {
+            tabelaTodos.getColumnModel().getColumn(0).setMinWidth(0);
+            tabelaTodos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tabelaTodos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tabelaTodos.getColumnModel().getColumn(4).setPreferredWidth(10);
         }
-
-        jPanel1.setLayout(new java.awt.BorderLayout());
 
         analise.setText("Análise");
         analise.addActionListener(new java.awt.event.ActionListener() {
@@ -125,48 +200,44 @@ public final class Sig extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout todosLayout = new javax.swing.GroupLayout(todos);
+        todos.setLayout(todosLayout);
+        todosLayout.setHorizontalGroup(
+            todosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(todosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1054, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(todosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1041, Short.MAX_VALUE)
+                    .addGroup(todosLayout.createSequentialGroup()
                         .addComponent(analise, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(443, 443, 443)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(analise)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        todosLayout.setVerticalGroup(
+            todosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(todosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(todosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(analise, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        tabbedPane.addTab("TODOS", todos);
+
+        getContentPane().add(tabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void tabelaSig() throws Exception{
+    public void tabelaTodos() throws Exception{
         
          try{
              //definir a tabela
-             DefaultTableModel table = (DefaultTableModel) tabela.getModel();
+             DefaultTableModel table = (DefaultTableModel) tabelaTodos.getModel();
              table.setRowCount(0);
              
          
@@ -193,6 +264,40 @@ public final class Sig extends javax.swing.JInternalFrame {
        }
 
      }
+    public void tabelaPorAbater() throws Exception{
+        
+         try{
+             //definir a tabela
+             DefaultTableModel table = (DefaultTableModel) tabelaSig.getModel();
+             table.setRowCount(0);
+             
+         
+             //criar uma query e executar
+         ResultSet rs = stm.executeQuery("SELECT ID_SIG_TEMP, NNA , IC, to_char(DATA,'DD/MM/YYYY') DATA, "
+                 + "f.QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, CUSTO, PROGRESSO "
+                 + "FROM Sig a, Consumivel b, centro_custo c, IC d, Impressora e, SIG_TEMP f "
+                 + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC "
+                 + "AND a.ID_SIG = f.ID_SIG");
+             
+           while(rs.next())
+           {
+               //passar os dados da BD para um object
+               Object o[] = {rs.getInt("ID_SIG_TEMP"),rs.getString("NNA"), rs.getString("IC"),
+               rs.getString("DATA"), rs.getString("CONSUMIVEL"),rs.getString("CUSTO"),rs.getInt("QUANTIDADE"),rs.getInt("PROGRESSO")};
+               
+               //Adicionar os dados à tabela
+               table.addRow(o);
+               
+       }
+           tabelaSig.setDefaultRenderer(Object.class, renderer);
+           
+         }
+       catch(SQLException exp)
+       {
+           throw new Exception (exp.getMessage());
+       }
+
+     }
     
       
     private void analiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analiseActionPerformed
@@ -209,15 +314,21 @@ public final class Sig extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        u.exportarExcel(tabela);
+        u.exportarExcel(tabelaSig);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton analise;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabela;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel porAbater;
+    private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JTable tabelaSig;
+    private javax.swing.JTable tabelaTodos;
+    private javax.swing.JPanel todos;
     // End of variables declaration//GEN-END:variables
 }

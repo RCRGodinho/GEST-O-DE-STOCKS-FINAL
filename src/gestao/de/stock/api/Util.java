@@ -4,7 +4,8 @@
  */
 package gestao.de.stock.api;
 
-import java.awt.Font;
+import java.awt.Color;
+import java.awt.Component;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,11 +19,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static org.apache.poi.hssf.usermodel.HeaderFooter.font;
 import org.apache.poi.ss.usermodel.CellStyle;
-import static org.apache.poi.ss.usermodel.FillPatternType.SOLID_FOREGROUND;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -267,8 +265,7 @@ public class Util {
         }
     }
     
-     public String comboString(String x, JComboBox c) throws SQLException
-     {
+     public String comboString(String x, JComboBox c) throws SQLException{
          ResultSet rs;
      
          switch(x)
@@ -292,6 +289,41 @@ public class Util {
          return null;
      }
      
+     public Component tableStockColourRenderer(Component c, int row, int column, JTable table){
+         if(column == 3)
+        {
+                int stock = Integer.parseInt(table.getModel().getValueAt(row, column-1).toString());
+                int sig = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+                
+                if(stock != sig){
+                     c.setBackground(Color.RED);
+                     c.setForeground(table.getForeground());
+                }
+               
+        }else{
+            c.setBackground(table.getBackground());
+            c.setForeground(table.getForeground());
+        }
+         return c;
+     }
      
+     public Component tableSigColourRenderer(Component c, int row, int column, JTable table){
+         
+         if(column == 7)
+        {
+                int quantidade = Integer.parseInt(table.getModel().getValueAt(row, column-1).toString());
+                int progresso = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+                
+                if(progresso != quantidade){
+                     c.setBackground(Color.RED);
+                     c.setForeground(table.getForeground());
+                }
+               
+        }else{
+            c.setBackground(table.getBackground());
+            c.setForeground(table.getForeground());
+        }
+         return c;
+     }
     
 }

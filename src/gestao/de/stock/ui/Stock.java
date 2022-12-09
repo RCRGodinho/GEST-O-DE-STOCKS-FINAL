@@ -8,6 +8,7 @@ import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.TableColourCellRenderer;
 import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -30,12 +31,13 @@ public final class Stock extends javax.swing.JInternalFrame {
     Statement stm;
     int stockAtivo;
     int sigAtivo;
-    
+    TableColourCellRenderer renderer;
     
     public Stock(Conexao c,Util u) throws Exception {
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();
+        renderer = new TableColourCellRenderer("Stock",u);
         
         initComponents();
         setPainelFixo();
@@ -414,7 +416,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                 table.addRow(o);
            }
            //criar objeto da class TableColourCellRenderer a fim de alterar a cor do campo sig //VER CLASSE TableColourCellRenderer
-            TableColourCellRenderer renderer = new TableColourCellRenderer();
+            
              tabela.setDefaultRenderer(Object.class, renderer);
            
          }
@@ -504,6 +506,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     private void btnAbaterStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbaterStockActionPerformed
         // TODO add your handling code here:
         
+        
         try {
                   buscarDados();
                   
@@ -521,11 +524,39 @@ public final class Stock extends javax.swing.JInternalFrame {
                           
                           //Inserir dados na tabela SIG
                           
-                          stm.executeQuery("INSERT INTO SIG (QUANTIDADE,DATA,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
+                          String q ="INSERT INTO SIG (QUANTIDADE,DATA,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
                                   + "VALUES("+abaterStock.getValue()+", TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY'), "
-                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getId()+")");
-                     
-                     JOptionPane.showMessageDialog(rootPane, "Stock abatido!");
+                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getId()+")";
+                          
+                          //Verificar se os dados são iguais entre a tebela temporaria e a de todos
+                          
+                          PreparedStatement ps = c.fazerConexao().prepareStatement(q,
+                                                new String[] { "ID_SIG" });
+
+                        // local variable to hold auto generated student id
+                        Long idSIG = null;
+
+                        // execute the insert statement, if success get the primary key value
+                        if (ps.executeUpdate() > 0) {
+
+                            // getGeneratedKeys() returns result set of keys that were auto
+                            // generated
+                            // in our case student_id column
+                            ResultSet generatedKeys = ps.getGeneratedKeys();
+
+                            // if resultset has data, get the primary key value
+                            // of last inserted record
+                            if (null != generatedKeys && generatedKeys.next()) {
+
+                                // voila! we got student id which was generated from sequence
+                                idSIG = generatedKeys.getLong(1);
+                            }
+                        }
+                          
+                        stm.executeQuery("INSERT INTO SIG_TEMP (QUANTIDADE,ID_SIG) "
+                                  + "VALUES("+abaterStock.getValue()+", "+idSIG+")");
+                        
+                     JOptionPane.showMessageDialog(rootPane, "Stock abatido!\nPOR ABATER EM SIG!");
                      
                      tabelaStock();
                      tabela.clearSelection();
@@ -586,7 +617,6 @@ public final class Stock extends javax.swing.JInternalFrame {
                 //Adicionar os dados à tabela
                 table.addRow(o);
             }
-            TableColourCellRenderer renderer = new TableColourCellRenderer();
             tabela.setDefaultRenderer(Object.class, renderer);
         } catch (SQLException ex) {
             Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
