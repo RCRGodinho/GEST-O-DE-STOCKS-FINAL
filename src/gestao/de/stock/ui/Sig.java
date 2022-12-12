@@ -263,7 +263,7 @@ public final class Sig extends javax.swing.JInternalFrame {
          
              //criar uma query e executar
          ResultSet rs = stm.executeQuery("SELECT ID_SIG, NNA , IC, to_char(DATA,'DD/MM/YYYY') DATA, "
-                 + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, CUSTO "
+                 + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, LOCALIZACAO "
                  + "FROM Sig a, Consumivel b, centro_custo c, IC d, Impressora e "
                  + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC");
              
@@ -271,7 +271,7 @@ public final class Sig extends javax.swing.JInternalFrame {
            {
                //passar os dados da BD para um object
                Object o[] = {rs.getInt("ID_SIG"),rs.getString("NNA"), rs.getString("IC"),
-               rs.getString("DATA"),rs.getInt("QUANTIDADE"), rs.getString("CONSUMIVEL"),rs.getString("CUSTO")};
+               rs.getString("DATA"),rs.getInt("QUANTIDADE"), rs.getString("CONSUMIVEL"),rs.getString("LOCALIZACAO")};
                
                //Adicionar os dados à tabela
                table.addRow(o);
@@ -397,15 +397,17 @@ public final class Sig extends javax.swing.JInternalFrame {
             
             if(valor == stock)
             {
-                u.apagar("SIG_TEMP", getIdConsumivel());
+                u.apagar("SIG_TEMP", getId());
                 u.abaterSig(valor, getIdConsumivel());
                 
                 JOptionPane.showMessageDialog(rootPane, "Quantidade abatida!", "Aviso", 1);
+                progresso.setValue(0);
             }else if(valor>stock){
                 JOptionPane.showMessageDialog(rootPane, "Valor utrapassado!", "Aviso", 0);
                 
             }else if(valor<stock){
                 stm.executeUpdate("UPDATE SIG_TEMP SET PROGRESSO = "+valor+" WHERE ID_SIG_TEMP = "+getId()+"");
+                progresso.setValue(0);
             }
             
             tabelaPorAbater();

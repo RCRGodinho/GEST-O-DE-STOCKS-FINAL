@@ -26,7 +26,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="60" max="32767" attributes="0"/>
+              <EmptySpace pref="98" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -63,8 +63,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboSelecao" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                              <Component id="comboAnalise" max="32767" attributes="0"/>
+                              <Component id="comboTipo" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="comboObjeto" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -82,16 +82,16 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="selecao" alignment="0" pref="31" max="32767" attributes="0"/>
                       <Component id="marca" pref="31" max="32767" attributes="0"/>
-                      <Component id="comboSelecao" alignment="0" max="32767" attributes="0"/>
+                      <Component id="comboTipo" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="analise" pref="31" max="32767" attributes="0"/>
-                      <Component id="comboAnalise" max="32767" attributes="0"/>
+                      <Component id="comboObjeto" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel3" pref="31" max="32767" attributes="0"/>
+                      <Component id="jLabel3" pref="33" max="32767" attributes="0"/>
                       <Component id="dataInicio" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
             <Property name="text" type="java.lang.String" value="ANALISAR:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="comboSelecao">
+        <Component class="javax.swing.JComboBox" name="comboTipo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -129,7 +129,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboSelecaoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboTipoActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -185,7 +185,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="comboAnalise">
+        <Component class="javax.swing.JComboBox" name="comboObjeto">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

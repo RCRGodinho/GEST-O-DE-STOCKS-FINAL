@@ -27,6 +27,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     /**
      * Creates new form Pop_Up_Analise
      * @param c
+     * @param u
      * @throws java.lang.Exception
      */
     public Pop_Up_AnaliseStock(Conexao c,Util u) throws Exception{
@@ -38,8 +39,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         
-        u.comboOracle(u.lista("tabelas"), comboSelecao);
-        comboAnalise.setVisible(false);
+        u.comboOracle(u.lista("tabelas"), comboTipo);
+        comboObjeto.setVisible(false);
     }
 
     /**
@@ -53,7 +54,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         selecao = new javax.swing.JLabel();
-        comboSelecao = new javax.swing.JComboBox<>();
+        comboTipo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         dataFim = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
@@ -62,17 +63,17 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         analisar = new javax.swing.JButton();
         anual = new javax.swing.JButton();
         marca = new javax.swing.JLabel();
-        comboAnalise = new javax.swing.JComboBox<>();
+        comboObjeto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         selecao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         selecao.setText("ANALISAR:");
 
-        comboSelecao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboSelecao.addActionListener(new java.awt.event.ActionListener() {
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboSelecaoActionPerformed(evt);
+                comboTipoActionPerformed(evt);
             }
         });
 
@@ -121,8 +122,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
                             .addComponent(selecao, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboSelecao, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboAnalise, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboObjeto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(90, 90, 90)
                 .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(analisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -135,14 +136,14 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(selecao, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(comboSelecao))
+                    .addComponent(comboTipo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(analise, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(comboAnalise))
+                    .addComponent(comboObjeto))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -162,7 +163,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(90, 90, 90)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,14 +177,15 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         String tipo;
         String objeto;
         
-        if(comboSelecao.getSelectedItem() == null || comboAnalise.getSelectedItem() == null)
+        if(comboTipo.getSelectedItem() == null || comboObjeto.getSelectedItem() == null)
         {
             tipo = "";
             objeto = "";
                    
         }else{
-        tipo = comboSelecao.getSelectedItem().toString().toLowerCase();
-        objeto = comboAnalise.getSelectedItem().toString();
+            
+        tipo = comboTipo.getSelectedItem().toString().toLowerCase();
+        objeto = comboObjeto.getSelectedItem().toString();
         }
         
         String dtIn = null;
@@ -200,39 +202,47 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
            construirPagina( objeto,  tipo,  dtIn,  dtFm);
     }//GEN-LAST:event_analisarActionPerformed
 
-    private void comboSelecaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSelecaoActionPerformed
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         // TODO add your handling code here:
         
-        if(comboSelecao.getSelectedIndex() == -1 || comboSelecao.getSelectedIndex() == 0)
+        if(comboTipo.getSelectedIndex() == -1 || comboTipo.getSelectedIndex() == 0)
         {
             analise.setText("");
-            comboAnalise.setEnabled(false);
+            comboObjeto.setEnabled(false);
         } 
          else {
-            analise.setText(comboSelecao.getSelectedItem().toString()+":");
-            comboAnalise.setVisible(true);
-             comboAnalise.setEnabled(true);
+            analise.setText(comboTipo.getSelectedItem().toString()+":");
+            comboObjeto.setVisible(true);
+             comboObjeto.setEnabled(true);
              
             try {
-                u.comboOracle(u.lista(comboSelecao.getSelectedItem().toString().toLowerCase()), comboAnalise);
+                String valor = comboTipo.getSelectedItem().toString().toLowerCase();
+                if(valor.equals("centro_custo"))
+                {
+                    u.comboOracle(u.lista("localizacao"), comboObjeto);
+                }else{
+                    u.comboOracle(u.lista(comboTipo.getSelectedItem().toString().toLowerCase()), comboObjeto);
+                }
+                
             } catch (Exception ex) {
                 Logger.getLogger(Pop_Up_AnaliseStock.class.getName()).log(Level.SEVERE, null, ex);
             }
              
          } 
-    }//GEN-LAST:event_comboSelecaoActionPerformed
+    }//GEN-LAST:event_comboTipoActionPerformed
 
     private void anualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anualActionPerformed
         // TODO add your handling code here:
         
         String ano = JOptionPane.showInputDialog(rootPane, "Ano:", "Escolha o ano", JOptionPane.QUESTION_MESSAGE);
-         
         
     }//GEN-LAST:event_anualActionPerformed
 
     public void construirPagina(String objeto, String tipo, String dtIn, String dtFm)
     {
          try{
+             System.out.println(objeto +"-"+ tipo +"-"+ dtIn +"-"+ dtFm);
+             
                 AnaliseStock hm = new AnaliseStock(objeto,tipo,dtIn,dtFm,c,u);
                 
                 
@@ -255,8 +265,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     private javax.swing.JButton analisar;
     private javax.swing.JLabel analise;
     private javax.swing.JButton anual;
-    private javax.swing.JComboBox<String> comboAnalise;
-    private javax.swing.JComboBox<String> comboSelecao;
+    private javax.swing.JComboBox<String> comboObjeto;
+    private javax.swing.JComboBox<String> comboTipo;
     private com.toedter.calendar.JDateChooser dataFim;
     private com.toedter.calendar.JDateChooser dataInicio;
     private javax.swing.JLabel jLabel2;

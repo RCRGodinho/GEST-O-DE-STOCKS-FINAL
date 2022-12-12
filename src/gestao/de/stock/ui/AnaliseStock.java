@@ -87,7 +87,7 @@ public class AnaliseStock extends javax.swing.JFrame {
          painelGrafico.add(panel, BorderLayout.CENTER);
          painelGrafico.validate();
 
-         
+         rs = null;
     }
     
     /**
@@ -110,7 +110,7 @@ public class AnaliseStock extends javax.swing.JFrame {
            {
                //passar os dados da BD para um object
                Object o[] = {rs.getString("NNA"),rs.getString("IC"),
-                    rs.getString("DATA"), rs.getInt("QUANTIDADE"), rs.getString("CONSUMIVEL"), rs.getString("CUSTO")};
+                    rs.getString("DATA"), rs.getInt("QUANTIDADE"), rs.getString("CONSUMIVEL"), rs.getString("LOCALIZACAO")};
                //Adicionar os dados à tabela
                table.addRow(o);
          }
@@ -119,6 +119,7 @@ public class AnaliseStock extends javax.swing.JFrame {
        {
            throw new Exception (exp.getMessage());
        }
+        rs = null;
     }
     
     //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
@@ -126,7 +127,7 @@ public class AnaliseStock extends javax.swing.JFrame {
     {
         String q = "SELECT NNA , IC, to_char(DATA,'DD/MM/YYYY') DATA, "
                  + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, LOCALIZACAO "
-                 + "FROM Sig a, Consumivel b, centro_custo c, IC d, Impressora e "
+                 + "FROM Sig a, Consumivel b, Centro_Custo c, IC d, Impressora e "
                  + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC "
                  + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') ";
         
@@ -137,11 +138,11 @@ public class AnaliseStock extends javax.swing.JFrame {
                     String modelo = result[1];
                     String nome = result[2];
             
-            q =  q + "AND MARCA LIKE '%"+marca+"%' AND MODELO LIKE '"+modelo+"' AND NOME LIKE '%"+nome+"%' ";
+            q =  q + "AND MARCA LIKE '%"+marca+"%' AND MODELO LIKE '%"+modelo+"%' AND NOME LIKE '%"+nome+"%' ";
             }
              case("centro_custo")->{
                  
-            q =  q+ "AND CUSTO LIKE '%"+objeto+"%' ";
+            q =  q+ "AND LOCALIZACAO LIKE '%"+objeto+"%' ";
              }
              case("ic")->{
                  
@@ -151,8 +152,9 @@ public class AnaliseStock extends javax.swing.JFrame {
                  
              }
         }
+        q = q + "ORDER BY DATA";
         
-        return q+ "ORDER BY DATA";
+        return q;
     }
     
     /**

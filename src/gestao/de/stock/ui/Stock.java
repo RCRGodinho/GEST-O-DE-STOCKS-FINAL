@@ -70,6 +70,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         stock = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
+        btnAnalise = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         abaterStock = new javax.swing.JSpinner();
@@ -163,16 +164,24 @@ public final class Stock extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAnalise.setText("ANÁLISE");
+        btnAnalise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnaliseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(stock))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addComponent(stock, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAnalise, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -184,7 +193,9 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addComponent(btnAnalise, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         ABATER.addTab("ADD", jPanel1);
@@ -443,7 +454,6 @@ public final class Stock extends javax.swing.JInternalFrame {
              //buscar dados 
             buscarDados();
             
-            
             if(getId() != 0)
             {
                 //buscasr e calcular o valor da soma do stock e sig existentes com os introduzidos
@@ -455,6 +465,9 @@ public final class Stock extends javax.swing.JInternalFrame {
                     "WHERE ID_CONSUMIVEL = "+getId()+"";
              
              stm.executeUpdate(q);
+             
+             stm.executeQuery("INSERT INTO REGISTO_STOCK (Quantidade, ID_CONSUMIVEL) VALUES( "
+                     + ""+Integer.parseInt(stock.getValue().toString())+", "+getId()+")");
              
              JOptionPane.showMessageDialog(rootPane, "Stock adicionado!");
     
@@ -639,6 +652,13 @@ public final class Stock extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboICActionPerformed
 
+    private void btnAnaliseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnaliseActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_btnAnaliseActionPerformed
+
     public int getId(){
         //buscar o ID de modo a fazer query na bd
         if(tabela.getSelectedRow()!= -1)
@@ -676,6 +696,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAbaterSig;
     private javax.swing.JButton btnAbaterStock;
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnAnalise;
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnRepor;
     private javax.swing.JComboBox<String> comboCusto;
