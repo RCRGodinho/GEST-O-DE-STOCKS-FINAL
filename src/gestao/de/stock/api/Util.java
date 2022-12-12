@@ -38,7 +38,7 @@ public class Util {
 
     public Util(Conexao c) throws SQLException, ClassNotFoundException{
         this.c = c;
-        stm = c.fazerConexao().createStatement();
+        stm = this.c.fazerConexao().createStatement();
     }
     
     public void exportarExcel(JTable tabela)
@@ -311,19 +311,55 @@ public class Util {
          
          if(column == 7)
         {
-                int quantidade = Integer.parseInt(table.getModel().getValueAt(row, column-1).toString());
                 int progresso = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
                 
-                if(progresso != quantidade){
+                if(progresso == 0){
                      c.setBackground(Color.RED);
                      c.setForeground(table.getForeground());
+                }else{
+                    c.setBackground(Color.YELLOW);
+                     c.setForeground(table.getForeground());
                 }
-               
         }else{
             c.setBackground(table.getBackground());
             c.setForeground(table.getForeground());
         }
          return c;
+     }
+     
+     public void abaterSig (int valor, int id) throws SQLException{
+        ResultSet rs = stm.executeQuery("SELECT SIG FROM CONSUMIVEL WHERE ID_CONSUMIVEL = "+id+"");
+        int valorSig = 0;
+        
+        while(rs.next()){
+            valorSig = rs.getInt("SIG");
+        }
+         
+        int valorTotal = valorSig - valor;
+        
+         stm.executeUpdate("UPDATE CONSUMIVEL SET SIG = "+valorTotal+" WHERE ID_CONSUMIVEL = "+id+"");
+     }
+     
+     public void apagar(String tabela, int id) throws SQLException{
+         stm.execute("DELETE FROM "+tabela.toUpperCase()+" WHERE ID_"+tabela.toUpperCase()+" = "+id+"");
+     }
+     
+     public int getIdConsumivel(String consumivel) throws SQLException
+     {
+         String[] result = consumivel.split("_");
+            String marca = result[0];
+            String modelo = result[1];
+            String cons = result[2];
+            
+            int id = 0;
+                    
+                ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '"+cons+"' AND MARCA = '"+marca+"' AND MODELO = '"+modelo+"'");
+                while(rs.next())
+                {
+                 id = rs.getInt(1);
+                }
+                
+                return id;
      }
     
 }

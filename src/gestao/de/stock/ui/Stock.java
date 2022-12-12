@@ -482,10 +482,9 @@ public final class Stock extends javax.swing.JInternalFrame {
                   
                   if(getId() != 0)
                   {
-                       int subSig = sigAtivo - Integer.parseInt(sig.getValue().toString());
+                      int subSig = Integer.parseInt(sig.getValue().toString());
                  
-                     stm.executeUpdate("UPDATE CONSUMIVEL SET SIG = "+subSig+" "+
-                                      "WHERE ID_CONSUMIVEL = "+getId());
+                     u.abaterSig(subSig, getId());
                      
                      JOptionPane.showMessageDialog(rootPane, "Consumiveis abatidos!");
                      

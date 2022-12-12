@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -68,6 +69,8 @@ public final class Sig extends javax.swing.JInternalFrame {
         porAbater = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaSig = new javax.swing.JTable();
+        progresso = new javax.swing.JSpinner();
+        btnAdicionar = new javax.swing.JButton();
         todos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaTodos = new javax.swing.JTable();
@@ -125,21 +128,38 @@ public final class Sig extends javax.swing.JInternalFrame {
             tabelaSig.getColumnModel().getColumn(7).setResizable(false);
         }
 
+        btnAdicionar.setText("ADICIONAR");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout porAbaterLayout = new javax.swing.GroupLayout(porAbater);
         porAbater.setLayout(porAbaterLayout);
         porAbaterLayout.setHorizontalGroup(
             porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(porAbaterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1041, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 918, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progresso)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
                 .addContainerGap())
         );
         porAbaterLayout.setVerticalGroup(
             porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(porAbaterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGroup(porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(porAbaterLayout.createSequentialGroup()
+                        .addComponent(progresso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAdicionar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tabbedPane.addTab("POR ABATER", porAbater);
@@ -296,10 +316,55 @@ public final class Sig extends javax.swing.JInternalFrame {
        {
            throw new Exception (exp.getMessage());
        }
+         
+         if(tabelaSig.getRowCount() == 0)
+         {
+             progresso.setEnabled(false);
+             btnAdicionar.setEnabled(false);
+         }else{
+             progresso.setEnabled(true);
+             btnAdicionar.setEnabled(true);
+         }
 
      }
     
-      
+     public int buscarDados(String x) throws SQLException
+    {
+        //buscar dados já existentes e inserir-los nas respetivas vaariaveis
+        ResultSet rs = stm.executeQuery("SELECT "+x+" FROM SIG_TEMP WHERE ID_SIG_TEMP = "+getId()+"");
+            
+        int valor = 0;
+            while(rs.next())
+            {
+                valor = rs.getInt(x);
+            }
+            
+            return valor;
+    }  
+     
+    public int getId(){
+        //buscar o ID de modo a fazer query na bd
+        if(tabelaSig.getSelectedRow()!= -1)
+         {
+            int row = tabelaSig.getSelectedRow();
+               int value = Integer.parseInt(tabelaSig.getModel().getValueAt(row, 0).toString());
+        return value;
+         }
+        return 0;
+}
+    public int getIdConsumivel() throws SQLException{
+        //buscar o ID de modo a fazer query na bd
+        if(tabelaSig.getSelectedRow()!= -1)
+         {
+            int row = tabelaSig.getSelectedRow();
+               String value = tabelaSig.getModel().getValueAt(row, 4).toString();
+               int cons = u.getIdConsumivel(value);
+             
+             return cons;
+         }
+        return 0;
+}
+    
     private void analiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analiseActionPerformed
         try {
             // TODO add your handling code here:
@@ -317,15 +382,54 @@ public final class Sig extends javax.swing.JInternalFrame {
         u.exportarExcel(tabelaSig);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        if(tabelaSig.getSelectedRow()!= -1)
+        {
+        try {
+            int stock= buscarDados("QUANTIDADE");
+            int valorExistente = Integer.parseInt(progresso.getValue().toString());
+            
+            int valor = buscarDados("PROGRESSO") + valorExistente;
+            
+            
+            System.err.println(stock +" / "+ valor);
+            
+            if(valor == stock)
+            {
+                u.apagar("SIG_TEMP", getIdConsumivel());
+                u.abaterSig(valor, getIdConsumivel());
+                
+                JOptionPane.showMessageDialog(rootPane, "Quantidade abatida!", "Aviso", 1);
+            }else if(valor>stock){
+                JOptionPane.showMessageDialog(rootPane, "Valor utrapassado!", "Aviso", 0);
+                
+            }else if(valor<stock){
+                stm.executeUpdate("UPDATE SIG_TEMP SET PROGRESSO = "+valor+" WHERE ID_SIG_TEMP = "+getId()+"");
+            }
+            
+            tabelaPorAbater();
+        } catch (SQLException ex) {
+            Logger.getLogger(Sig.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Sig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "Aviso", 2);
+        }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton analise;
+    private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel porAbater;
+    private javax.swing.JSpinner progresso;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable tabelaSig;
     private javax.swing.JTable tabelaTodos;

@@ -9,7 +9,6 @@ import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -414,7 +413,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
-                      stm.executeQuery("DELETE FROM Consumivel WHERE ID_CONSUMIVEL = "+Integer.parseInt(value));
+                      u.apagar("CONSUMIVEL", Integer.parseInt(value));
                       
                      JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
                      tabelaConsumivel();

@@ -326,14 +326,14 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
             //buscar o valor do ID no dado selecionado 
             
             int row = tabela.getSelectedRow();
-               String value = tabela.getModel().getValueAt(row, 0).toString();
+               int value = Integer.parseInt(tabela.getModel().getValueAt(row, 0).toString());
                 
              
              try {
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
-                      stm.executeQuery("DELETE FROM CENTRO_CUSTO WHERE ID_CENTRO_CUSTO = "+Integer.parseInt(value));
+                      stm.executeQuery("DELETE FROM CENTRO_CUSTO WHERE ID_CENTRO_CUSTO = "+value+"");
                      JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
                      
                      tabelaCentro_Custo();
