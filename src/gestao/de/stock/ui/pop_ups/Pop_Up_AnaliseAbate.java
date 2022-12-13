@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.pop_ups;
 
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Util;
+import gestao.de.stock.ui.paginas.analise.AnaliseAbate;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.logging.Level;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author PAT
  */
-public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
+public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
     
     //Variaveis
     
@@ -30,7 +31,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
      * @param u
      * @throws java.lang.Exception
      */
-    public Pop_Up_AnaliseStock(Conexao c,Util u) throws Exception{
+    public Pop_Up_AnaliseAbate(Conexao c,Util u) throws Exception{
         this.c = c;
         this.u = u;
         stm = c.fazerConexao().createStatement();
@@ -41,6 +42,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         
         u.comboOracle(u.lista("tabelas"), comboTipo);
         comboObjeto.setVisible(false);
+        
+        setTitle("Análise de Abates");
     }
 
     /**
@@ -225,7 +228,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
                 }
                 
             } catch (Exception ex) {
-                Logger.getLogger(Pop_Up_AnaliseStock.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Pop_Up_AnaliseAbate.class.getName()).log(Level.SEVERE, null, ex);
             }
              
          } 
@@ -241,9 +244,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     public void construirPagina(String objeto, String tipo, String dtIn, String dtFm)
     {
          try{
-             System.out.println(objeto +"-"+ tipo +"-"+ dtIn +"-"+ dtFm);
              
-                AnaliseStock hm = new AnaliseStock(objeto,tipo,dtIn,dtFm,c,u);
+                AnaliseAbate hm = new AnaliseAbate(objeto,tipo,dtIn,dtFm,c,u);
                 
                 
                 if(hm.getTabela().getRowCount() != 0)

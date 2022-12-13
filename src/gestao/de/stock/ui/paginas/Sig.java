@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.paginas;
 
+import gestao.de.stock.ui.pop_ups.Pop_Up_AnaliseAbate;
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.TableColourCellRenderer;
 import gestao.de.stock.api.Util;
@@ -369,7 +370,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             
-            Pop_Up_AnaliseStock hm = new Pop_Up_AnaliseStock(c,u);
+            Pop_Up_AnaliseAbate hm = new Pop_Up_AnaliseAbate(c,u);
             //Adicionar a nova página
             hm.setVisible(true);
         } catch (Exception ex) {

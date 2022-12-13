@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.paginas;
 
+import gestao.de.stock.ui.pop_ups.Pop_Up_Configuração;
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Util;
 import java.awt.Color;
@@ -40,6 +41,8 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
+        
+        setTitle("Gestão de Stocks");
        
        Main main = new Main();
        paginas.add(main).setVisible(true);
@@ -84,7 +87,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         menuPanel.setPreferredSize(new java.awt.Dimension(1070, 40));
 
         logoMainn.setFont(new java.awt.Font("Webdings", 0, 11)); // NOI18N
-        logoMainn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/logo (1).png"))); // NOI18N
+        logoMainn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gestao/de/stock/imagens/logo (1).png"))); // NOI18N
         logoMainn.setMaximumSize(new java.awt.Dimension(220, 40));
         logoMainn.setMinimumSize(new java.awt.Dimension(220, 327));
         logoMainn.setPreferredSize(new java.awt.Dimension(220, 40));

@@ -2,16 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.TableColourCellRenderer;
 import gestao.de.stock.api.Util;
+import gestao.de.stock.ui.pop_ups.Pop_Up_AnaliseStock;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -71,6 +74,9 @@ public final class Stock extends javax.swing.JInternalFrame {
         stock = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
         btnAnalise = new javax.swing.JButton();
+        dataAdicao = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         abaterStock = new javax.swing.JSpinner();
@@ -81,7 +87,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         comboCusto = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        data = new com.toedter.calendar.JDateChooser();
+        dataAbate = new com.toedter.calendar.JDateChooser();
         painelSig = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         sig = new javax.swing.JSpinner();
@@ -164,24 +170,35 @@ public final class Stock extends javax.swing.JInternalFrame {
             }
         });
 
-        btnAnalise.setText("ANÁLISE");
+        btnAnalise.setText("ANÁLISE DE STOCKS ADICIONADOS");
         btnAnalise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnaliseActionPerformed(evt);
             }
         });
 
+        jLabel9.setText("Adicionar:");
+
+        jLabel10.setText("Data:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(stock, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAnalise, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addComponent(btnAnalise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dataAdicao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(stock, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,11 +207,17 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stock, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dataAdicao, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(btnAnalise, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAnalise, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -213,7 +236,7 @@ public final class Stock extends javax.swing.JInternalFrame {
 
         jLabel6.setText("IC:");
 
-        jLabel5.setText("Quantidade:");
+        jLabel5.setText("QUANTIDADE:");
 
         comboIC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboIC.addActionListener(new java.awt.event.ActionListener() {
@@ -240,15 +263,15 @@ public final class Stock extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboCusto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(abaterStock)
                             .addComponent(comboIC, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(dataAbate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(abaterStock))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -258,8 +281,8 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(abaterStock, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(abaterStock))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -271,7 +294,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                    .addComponent(dataAbate, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnAbaterStock, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -451,11 +474,14 @@ public final class Stock extends javax.swing.JInternalFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
          try {
-             //buscar dados 
+             //buscar dados de stock e sig
             buscarDados();
             
             if(getId() != 0)
             {
+                if(dataAdicao.getDate()!=null)
+                {
+                
                 //buscasr e calcular o valor da soma do stock e sig existentes com os introduzidos
                 int somaStock = stockAtivo+Integer.parseInt(stock.getValue().toString());
             int somaSig = sigAtivo+Integer.parseInt(stock.getValue().toString());
@@ -474,8 +500,11 @@ public final class Stock extends javax.swing.JInternalFrame {
                     limparCampos();
                     tabelaStock();
                     tabela.clearSelection();
+                }else{
+                     JOptionPane.showMessageDialog(rootPane, "A data tem que ser preenchidas!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                }
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", HEIGHT);
+                JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
             }
             
         } catch (SQLException | ClassNotFoundException ex) {
@@ -527,7 +556,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                       //query para abater stock
                       int subStock = stockAtivo - Integer.parseInt(abaterStock.getValue().toString());
                  
-                      if(abaterStock.getValue().equals(0) || comboIC.getSelectedIndex()==0 || comboCusto.getSelectedIndex()==0 || data.getDate() == null)
+                      if(abaterStock.getValue().equals(0) || comboIC.getSelectedIndex()==0 || comboCusto.getSelectedIndex()==0 || dataAbate.getDate() == null)
                       {
                           JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", HEIGHT);
                       }else{
@@ -537,7 +566,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                           //Inserir dados na tabela SIG
                           
                           String q ="INSERT INTO SIG (QUANTIDADE,DATA,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
-                                  + "VALUES("+abaterStock.getValue()+", TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY'), "
+                                  + "VALUES("+abaterStock.getValue()+", TO_DATE('"+DateFormat.getDateInstance().format(dataAbate.getDate())+"', 'DD/MM/YYYY'), "
                                           + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getId()+")";
                           
                           //Verificar se os dados são iguais entre a tebela temporaria e a de todos
@@ -653,9 +682,15 @@ public final class Stock extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboICActionPerformed
 
     private void btnAnaliseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnaliseActionPerformed
-        // TODO add your handling code here:
-        
-        
+        try {
+            // TODO add your handling code here:
+
+            Pop_Up_AnaliseStock hm = new Pop_Up_AnaliseStock(c, u);
+            
+            hm.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btnAnaliseActionPerformed
 
@@ -701,11 +736,13 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRepor;
     private javax.swing.JComboBox<String> comboCusto;
     private javax.swing.JComboBox<String> comboIC;
-    private com.toedter.calendar.JDateChooser data;
+    private com.toedter.calendar.JDateChooser dataAbate;
+    private com.toedter.calendar.JDateChooser dataAdicao;
     private javax.swing.JTextField filtro;
     private javax.swing.JButton igualar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -713,6 +750,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

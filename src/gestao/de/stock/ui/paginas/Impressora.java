@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.paginas;
 
+import gestao.de.stock.ui.pop_ups.Pop_Up_Ic;
 import gestao.de.stock.api.Conexao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,20 +20,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author PAT
  */
-public final class CentroCusto extends javax.swing.JInternalFrame {
+public final class Impressora extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
     Statement stm;
     
     
-    public CentroCusto(Conexao c) throws Exception {
+    public Impressora(Conexao c) throws Exception {
         this.c = c;
         stm = this.c.fazerConexao().createStatement();
         
         initComponents();
         setPainelFixo();
-        tabelaCentro_Custo();
+        tabelaImpressora();
     }
     
     private void setPainelFixo(){
@@ -54,16 +55,12 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         tabela = new javax.swing.JTable();
         dados = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        responsavel = new javax.swing.JTextField();
+        marca = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        texto = new javax.swing.JTextField();
+        modelo = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        custo = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        local = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -77,20 +74,20 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         tabela.setForeground(new java.awt.Color(0, 0, 0));
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "RESPONSAVEL", "TEXTO", "CUSTO", "LOCALIZACAO"
+                "ID", "MARCA", "MODELO"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -102,6 +99,7 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
             }
         });
         tabela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tabela.setName("tabelaImpressora"); // NOI18N
         tabela.setRowHeight(25);
         tabela.setRowMargin(5);
         tabela.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -119,42 +117,78 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(5);
         }
 
-        dados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel1.setLabelFor(marca);
+        jLabel1.setText("MARCA");
 
-        jLabel1.setLabelFor(responsavel);
-        jLabel1.setText("RESPONSAVEL");
-        dados.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 14, 80, -1));
-
-        responsavel.addKeyListener(new java.awt.event.KeyAdapter() {
+        marca.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                responsavelKeyTyped(evt);
+                marcaKeyTyped(evt);
             }
         });
-        dados.add(responsavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 12, 142, -1));
-        dados.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 37, 234, 10));
 
-        jLabel2.setText("TEXTO");
-        dados.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 55, 80, -1));
-        dados.add(texto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 53, 142, -1));
-        dados.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 78, 234, 10));
+        jLabel2.setText("MODELO");
 
-        jLabel3.setText("CUSTO");
-        dados.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 96, 80, -1));
-
-        custo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                custoKeyTyped(evt);
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton1.setText("IC");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        dados.add(custo, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 94, 142, -1));
-        dados.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 119, 234, 10));
 
-        jLabel4.setText("LOCALIZACAO");
-        dados.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 135, 80, -1));
-        dados.add(local, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 135, 142, -1));
+        javax.swing.GroupLayout dadosLayout = new javax.swing.GroupLayout(dados);
+        dados.setLayout(dadosLayout);
+        dadosLayout.setHorizontalGroup(
+            dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosLayout.createSequentialGroup()
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dadosLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(dadosLayout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(dadosLayout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(dadosLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 7, Short.MAX_VALUE))
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        dadosLayout.setVerticalGroup(
+            dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dadosLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2))
+                    .addComponent(modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -207,9 +241,7 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(butoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 18, Short.MAX_VALUE)))
+                    .addComponent(dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -217,20 +249,18 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(dados, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                        .addComponent(dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))))
+                        .addComponent(butoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void tabelaCentro_Custo() throws Exception{
+    public void tabelaImpressora() throws Exception{
         
          try{
              //definir a tabela
@@ -239,18 +269,17 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
              
          
              //criar uma query e executar
-         ResultSet rs = stm.executeQuery("SELECT ID_CENTRO_CUSTO, RESPONSAVEL, TEXTO, CUSTO , LOCALIZACAO FROM CENTRO_CUSTO");
+         ResultSet rs = stm.executeQuery("SELECT ID_IMPRESSORA, MARCA, MODELO FROM Impressora");
              
            while(rs.next())
            {
                //passar os dados da BD para um object
-               Object o[] = {rs.getInt("ID_CENTRO_CUSTO"),rs.getString("RESPONSAVEL"), rs.getString("TEXTO"),
-                rs.getInt("CUSTO"), rs.getString("LOCALIZACAO")};
+               Object o[] = {rs.getInt("ID_IMPRESSORA"),rs.getString("MARCA"), rs.getString("MODELO")};
                //Adicionar os dados à tabela
                table.addRow(o);
        }
          }
-       catch(SQLException exp)
+       catch(Exception exp)
        {
            throw new Exception (exp.getMessage());
        }
@@ -260,11 +289,9 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
     
     public void limparCampos(){
         
-        responsavel.setText("");
-        texto.setText("");
-        custo.setText("");
-        local.setText("");
-        local.setText("");
+        marca.setText("");
+        modelo.setText("");
+       
     }
     
     void buscarDados(){
@@ -274,18 +301,16 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
            JOptionPane.showMessageDialog(rootPane, "Selecione um dado para editar!");
          }else{
             int row = tabela.getSelectedRow();
-            
-            responsavel.setText(tabela.getModel().getValueAt(row, 1).toString());
-            texto.setText(tabela.getModel().getValueAt(row, 2).toString());
-            custo.setText(tabela.getModel().getValueAt(row, 3).toString());
-            local.setText(tabela.getModel().getValueAt(row, 4).toString());
+          
+            marca.setText(tabela.getModel().getValueAt(row, 1).toString());
+            modelo.setText(tabela.getModel().getValueAt(row, 2).toString());
         }
     }
     
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         // TODO add your handling code here:
         
-        if(responsavel.getText().isEmpty() || texto.getText().isEmpty() || local.getText().isEmpty() || local.getText().isEmpty())
+        if( marca.getText().isEmpty() || modelo.getText().isEmpty() )
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
@@ -294,24 +319,27 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
                String value = tabela.getModel().getValueAt(row, 0).toString();
         
         try{
+             stm = c.fazerConexao().createStatement();
              
+  
+        stm.executeUpdate("UPDATE Impressora SET MARCA = '"+marca.getText().toUpperCase()+"' ,MODELO = '"+modelo.getText().toUpperCase()+"' WHERE ID_IMPRESSORA = "+Integer.parseInt(value)+"");
              
-        stm.executeUpdate("UPDATE CENTRO_CUSTO SET RESPONSAVEL = '"+responsavel.getText().toUpperCase()+"' ,TEXTO = '"+texto.getText().toUpperCase()+"' , CUSTO = "+Integer.parseInt(custo.getText())+" , LOCALIZACAO = '"+local.getText().toUpperCase()+"' WHERE ID_CENTRO_CUSTO = "+Integer.parseInt(value)+"");
-             
+        
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
                 
              tabela.clearSelection();
              limparCampos();
-             tabelaCentro_Custo();
+             tabelaImpressora();
         } catch (ClassNotFoundException| SQLException ex) {
-            
-            JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
+
+            JOptionPane.showMessageDialog(rootPane, "ERRO: "+ex+"\n");
             
         } catch (Exception ex) {
-            Logger.getLogger(CentroCusto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
         } 
             }
+        
         
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -321,22 +349,22 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         //verificar se o user selecionou algum dado
         if(tabela.getSelectedRow() == -1)
          {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!");
+           //   JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!");
          }else{
             //buscar o valor do ID no dado selecionado 
             
             int row = tabela.getSelectedRow();
-               int value = Integer.parseInt(tabela.getModel().getValueAt(row, 0).toString());
+               String value = tabela.getModel().getValueAt(row, 0).toString();
                 
              
              try {
+                 stm = c.fazerConexao().createStatement();
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
-                      stm.executeQuery("DELETE FROM CENTRO_CUSTO WHERE ID_CENTRO_CUSTO = "+value+"");
+                     ResultSet rs = stm.executeQuery("DELETE FROM IMPRESSORA WHERE ID_IMPRESSORA = "+Integer.parseInt(value));
                      JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
-                     
-                     tabelaCentro_Custo();
+                     tabelaImpressora();
                      tabela.clearSelection();
                      limparCampos();
                  }
@@ -344,7 +372,7 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
              } catch (SQLException | ClassNotFoundException ex) {
                  JOptionPane.showMessageDialog(rootPane, "ERRO!");
              } catch (Exception ex) {
-                Logger.getLogger(CentroCusto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
             }
              
          }
@@ -357,42 +385,35 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaMouseClicked
 
-    private void responsavelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_responsavelKeyTyped
-        // TODO add your handling code here:
-        if(responsavel.getText().length()>=13)
-    {
-        //nna.setText(nna.getText().substring(0, 13));
-    }
-    }//GEN-LAST:event_responsavelKeyTyped
-
      
     
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
         
         //Verificar se os campos estão vazios.
-        if(responsavel.getText().isEmpty() || texto.getText().isEmpty()|| custo.getText().isEmpty() || local.getText().isEmpty())
+        if(marca.getText().isEmpty() || modelo.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
-        }else{
-           
+        }
+            else{
         try {
              
-            stm.executeUpdate("INSERT INTO CENTRO_CUSTO(RESPONSAVEL,TEXTO, CUSTO, LOCALIZACAO) VALUES('"+responsavel.getText().toUpperCase()+"' , '"+texto.getText().toUpperCase()+"' , "+Integer.parseInt(custo.getText())+" , "+local.getText().toUpperCase()+")");
+             stm.executeUpdate("INSERT INTO IMPRESSORA(MARCA,MODELO) VALUES('"+marca.getText().toUpperCase()+"' , '"+modelo.getText().toUpperCase()+"')");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
     
                     limparCampos();
-                    tabelaCentro_Custo();
+                    tabelaImpressora();
              
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             
-            JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
+            JOptionPane.showMessageDialog(rootPane, "ERRO!");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "ERRO!");
         }
         }
+        
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void tabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaFocusLost
@@ -402,33 +423,44 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaFocusLost
 
-    private void custoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_custoKeyTyped
+    private void marcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_marcaKeyTyped
         // TODO add your handling code here:
-        if(custo.getText().length()>=8)
-    {
-       // umc.setText(umc.getText().substring(0, 8));
-    }
-    }//GEN-LAST:event_custoKeyTyped
+        if(marca.getText().length()>=13)
+        {
+            //nna.setText(nna.getText().substring(0, 13));
+        }
+    }//GEN-LAST:event_marcaKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+
+            Pop_Up_Ic ic = new Pop_Up_Ic(c);
+            
+            ic.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JPanel butoes;
-    private javax.swing.JTextField custo;
     private javax.swing.JPanel dados;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField local;
-    private javax.swing.JTextField responsavel;
+    private javax.swing.JTextField marca;
+    private javax.swing.JTextField modelo;
     private javax.swing.JTable tabela;
-    private javax.swing.JTextField texto;
     // End of variables declaration//GEN-END:variables
 }

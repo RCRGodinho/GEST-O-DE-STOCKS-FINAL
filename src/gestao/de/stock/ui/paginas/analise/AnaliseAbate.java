@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.paginas.analise;
 
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Util;
@@ -20,7 +20,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author PAT
  */
-public class AnaliseStock extends javax.swing.JFrame {
+public class AnaliseAbate extends javax.swing.JFrame {
     
     ResultSet rs;
     String objeto;
@@ -42,7 +42,7 @@ public class AnaliseStock extends javax.swing.JFrame {
      * @param u
      * @throws java.lang.Exception
      */
-    public AnaliseStock(String objeto, String tipo, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
+    public AnaliseAbate(String objeto, String tipo, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
         initComponents();
         this.objeto = objeto;
         this.tipo = tipo;

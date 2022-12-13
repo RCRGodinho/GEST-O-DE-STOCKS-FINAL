@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.pop_ups;
 
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Util;
+import gestao.de.stock.ui.paginas.Utilizacao;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

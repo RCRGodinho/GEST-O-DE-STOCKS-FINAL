@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestao.de.stock.ui;
+package gestao.de.stock.ui.paginas.analise;
 
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Util;
@@ -20,10 +20,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author PAT
  */
-public class Analise extends javax.swing.JFrame {
+public class AnaliseStock extends javax.swing.JFrame {
     
     ResultSet rs;
-    String impressora;
+    String consumivel;
     String dataInicio;
     String dataFim;
     
@@ -33,16 +33,17 @@ public class Analise extends javax.swing.JFrame {
 
     /**
      * Creates new form Analise
-     * @param impressora
+     * @param consumivel
      * @param dataInicio
      * @param dataFim
      * @param c
      * @param u
      * @throws java.lang.Exception
      */
-    public Analise(String impressora, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
+    public AnaliseStock(String consumivel, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
         initComponents();
-        this.impressora = impressora;
+        this.consumivel = consumivel;
+        
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.c = c;
@@ -55,7 +56,6 @@ public class Analise extends javax.swing.JFrame {
        criaTabela();
        criaGrafico();
        
-       
     }
     
     private void criaGrafico() throws SQLException
@@ -67,14 +67,14 @@ public class Analise extends javax.swing.JFrame {
          
          while(rs.next())
          {
-             dataset.setValue(rs.getInt("PRETO"), "Preto&Branco", rs.getString("DATA_UTIL"));
-             dataset.setValue(rs.getInt("COR"), "Cores", rs.getString("DATA_UTIL"));
+             //dados para inserir na tabela
+             dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
          
          }
          
          
-         
-         JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+impressora+" || Entre: "+dataInicio+" - "+dataFim,"Data", "Impressões", dataset);
+         //define o gráfico e o tipo de dados que vai utilizar
+         JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+consumivel+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ENTRADAS", dataset);
          grafico.setAntiAlias(false);
          ChartPanel panel = new ChartPanel(grafico);
          panel.setBackground(getTabela().getBackground());
@@ -84,7 +84,7 @@ public class Analise extends javax.swing.JFrame {
          painelGrafico.add(panel, BorderLayout.CENTER);
          painelGrafico.validate();
 
-         
+         rs = null;
     }
     
     /**
@@ -106,9 +106,8 @@ public class Analise extends javax.swing.JFrame {
            while(rs.next())
            {
                //passar os dados da BD para um object
-               Object o[] = {rs.getString("DATA_Util"),rs.getString("IC"),
-                    rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("CONSUMIVEL"), rs.getInt("QUANTIDADE"),
-                    rs.getInt("PRETO"), rs.getString("COR"), rs.getString("LOCALIZACAO"), rs.getString("CUSTO")};
+               Object o[] = {rs.getString("NNA"),rs.getString("CONSUMIVEL"),
+                    rs.getString("DATA"), rs.getInt("QUANTIDADE")};
                //Adicionar os dados à tabela
                table.addRow(o);
          }
@@ -117,16 +116,22 @@ public class Analise extends javax.swing.JFrame {
        {
            throw new Exception (exp.getMessage());
        }
+        rs = null;
     }
     
-    public String query()
+    //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
+    public String query() throws SQLException
     {
-        return "SELECT DISTINCT to_char(DATA_Util,'DD/MM/YYYY') DATA_Util, IC , MARCA, MODELO, NOME AS CONSUMIVEL, QUANTIDADE, PRETO, COR, LOCALIZACAO, CUSTO "+ 
-                    "FROM Utilizacao a, Consumivel b, centro_custo c, IC d, Impressora e "+
-                    "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL "+
-                    "AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC =d.ID_IC "+
-                    "AND d.IC = '"+impressora+"' AND a.DATA_UTIL BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') "+
-                "ORDER BY DATA_Util";
+        int id = u.getIdConsumivel(consumivel);
+        
+        String q = "SELECT NNA, to_char(DATA,'DD/MM/YYYY') DATA, "
+                 + "(MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, QUANTIDADE "
+                 + "FROM Consumivel a, Impressora b, Registo_Stock c"
+                 + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_CONSUMIVEL = c.ID_CONSUMIVEL AND a.ID_CONSUMIVEL = "+id+" "
+                 + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') "
+                 + "ORDER BY DATA";
+        
+        return q;
     }
     
     /**
@@ -141,6 +146,7 @@ public class Analise extends javax.swing.JFrame {
         painelGrafico = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
+        exportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(232, 236, 244));
@@ -159,17 +165,17 @@ public class Analise extends javax.swing.JFrame {
         tabela.setAutoCreateRowSorter(true);
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Data", "IC", "Marca", "Modelo", "Consumivel", "Quantidade", "Preto", "Cor", "Localizacao", "Centro_Custo"
+                "NNA", "IC", "Data", "Quantidade", "Consumivel", "Custo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -181,9 +187,14 @@ public class Analise extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
             tabela.getColumnModel().getColumn(5).setPreferredWidth(10);
-            tabela.getColumnModel().getColumn(6).setPreferredWidth(10);
-            tabela.getColumnModel().getColumn(7).setPreferredWidth(10);
         }
+
+        exportar.setText("Exportar");
+        exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,20 +202,32 @@ public class Analise extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(painelGrafico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportar, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportar)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarActionPerformed
+        // TODO add your handling code here:
+        u.exportarExcel(tabela);
+    }//GEN-LAST:event_exportarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exportar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel painelGrafico;
     private javax.swing.JTable tabela;
