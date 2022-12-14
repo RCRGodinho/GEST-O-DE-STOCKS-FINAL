@@ -71,10 +71,10 @@ public final class Stock extends javax.swing.JInternalFrame {
         ABATER = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        stock = new javax.swing.JSpinner();
+        spinnerStock = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
         btnAnalise = new javax.swing.JButton();
-        dataAdicao = new com.toedter.calendar.JDateChooser();
+        datePickerDataAdicao = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -197,8 +197,8 @@ public final class Stock extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dataAdicao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                            .addComponent(stock, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(datePickerDataAdicao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(spinnerStock, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -209,10 +209,10 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(stock, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                    .addComponent(spinnerStock, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(dataAdicao, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(datePickerDataAdicao, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,7 +466,7 @@ public final class Stock extends javax.swing.JInternalFrame {
      */
     public void limparCampos(){
         
-        stock.setValue(0);
+        spinnerStock.setValue(0);
         sig.setValue(0);
         abaterStock.setValue(0);
     }
@@ -474,32 +474,33 @@ public final class Stock extends javax.swing.JInternalFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
          try {
-             //buscar dados de stock e sig
+             //buscar dados de spinnerStock e sig
             buscarDados();
-            
-            if(getId() != 0)
+            int idConsumivel = getIdConsumivel();
+            if(idConsumivel != 0)
             {
-                if(dataAdicao.getDate()!=null)
+                if(datePickerDataAdicao.getDate()!=null)
                 {
                 
-                //buscasr e calcular o valor da soma do stock e sig existentes com os introduzidos
-                int somaStock = stockAtivo+Integer.parseInt(stock.getValue().toString());
-            int somaSig = sigAtivo+Integer.parseInt(stock.getValue().toString());
-                
-            //query para adicionar
-                String q = "UPDATE CONSUMIVEL SET STOCK = "+somaStock+", SIG = "+somaSig+" "+
-                    "WHERE ID_CONSUMIVEL = "+getId()+"";
-             
-             stm.executeUpdate(q);
-             
-             stm.executeQuery("INSERT INTO REGISTO_STOCK (Quantidade, ID_CONSUMIVEL) VALUES( "
-                     + ""+Integer.parseInt(stock.getValue().toString())+", "+getId()+")");
-             
-             JOptionPane.showMessageDialog(rootPane, "Stock adicionado!");
-    
-                    limparCampos();
-                    tabelaStock();
-                    tabela.clearSelection();
+                 //buscasr e calcular o valor da soma do spinnerStock e sig existentes com os introduzidos
+                 int somaStock = stockAtivo+Integer.parseInt(spinnerStock.getValue().toString());
+                 int somaSig = sigAtivo+Integer.parseInt(spinnerStock.getValue().toString());
+                 Object stock = spinnerStock.getValue();
+                  Object data = DateFormat.getDateInstance().format(datePickerDataAdicao.getDate());
+
+                 //query para adicionar
+                 String q = "UPDATE CONSUMIVEL SET STOCK = "+somaStock+", SIG = "+somaSig+" "+
+                            "WHERE ID_CONSUMIVEL = "+idConsumivel+"";
+                 stm.executeUpdate(q);
+
+                 stm.executeQuery("INSERT INTO REGISTO_STOCK (Quantidade, DATA, ID_CONSUMIVEL) "
+                                + "VALUES("+stock+", TO_DATE('"+data+"', 'DD/MM/YYYY'), "+idConsumivel+")");
+
+                 JOptionPane.showMessageDialog(rootPane, "Stock adicionado!");
+
+                        limparCampos();
+                        tabelaStock();
+                        tabela.clearSelection();
                 }else{
                      JOptionPane.showMessageDialog(rootPane, "A data tem que ser preenchidas!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
                 }
@@ -522,11 +523,11 @@ public final class Stock extends javax.swing.JInternalFrame {
         try {
                   buscarDados();
                   
-                  if(getId() != 0)
+                  if(getIdConsumivel() != 0)
                   {
                       int subSig = Integer.parseInt(sig.getValue().toString());
                  
-                     u.abaterSig(subSig, getId());
+                     u.abaterSig(subSig, getIdConsumivel());
                      
                      JOptionPane.showMessageDialog(rootPane, "Consumiveis abatidos!");
                      
@@ -551,9 +552,9 @@ public final class Stock extends javax.swing.JInternalFrame {
         try {
                   buscarDados();
                   
-                  if(getId() != 0)
+                  if(getIdConsumivel() != 0)
                   {
-                      //query para abater stock
+                      //query para abater spinnerStock
                       int subStock = stockAtivo - Integer.parseInt(abaterStock.getValue().toString());
                  
                       if(abaterStock.getValue().equals(0) || comboIC.getSelectedIndex()==0 || comboCusto.getSelectedIndex()==0 || dataAbate.getDate() == null)
@@ -561,13 +562,13 @@ public final class Stock extends javax.swing.JInternalFrame {
                           JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", HEIGHT);
                       }else{
                           stm.executeUpdate("UPDATE CONSUMIVEL SET STOCK = "+subStock+" "+
-                                      "WHERE ID_CONSUMIVEL = "+getId());
+                                      "WHERE ID_CONSUMIVEL = "+getIdConsumivel());
                           
                           //Inserir dados na tabela SIG
                           
                           String q ="INSERT INTO SIG (QUANTIDADE,DATA,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
                                   + "VALUES("+abaterStock.getValue()+", TO_DATE('"+DateFormat.getDateInstance().format(dataAbate.getDate())+"', 'DD/MM/YYYY'), "
-                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getId()+")";
+                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getIdConsumivel()+")";
                           
                           //Verificar se os dados são iguais entre a tebela temporaria e a de todos
                           
@@ -619,10 +620,10 @@ public final class Stock extends javax.swing.JInternalFrame {
          try {
                   buscarDados();
                  
-                  if(getId() != 0)
+                  if(getIdConsumivel() != 0)
                   {
                       stm.executeUpdate("UPDATE CONSUMIVEL SET SIG = "+stockAtivo+" "+
-                                      "WHERE ID_CONSUMIVEL = "+getId());
+                                      "WHERE ID_CONSUMIVEL = "+getIdConsumivel());
                     
                      JOptionPane.showMessageDialog(rootPane, "SIG igualado!");
                      
@@ -694,7 +695,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnAnaliseActionPerformed
 
-    public int getId(){
+    public int getIdConsumivel(){
         //buscar o ID de modo a fazer query na bd
         if(tabela.getSelectedRow()!= -1)
          {
@@ -708,7 +709,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     public void buscarDados() throws SQLException
     {
         //buscar dados já existentes e inserir-los nas respetivas vaariaveis
-        ResultSet rs = stm.executeQuery("SELECT STOCK, SIG FROM CONSUMIVEL WHERE ID_CONSUMIVEL = "+getId()+"");
+        ResultSet rs = stm.executeQuery("SELECT STOCK, SIG FROM CONSUMIVEL WHERE ID_CONSUMIVEL = "+getIdConsumivel()+"");
             
             while(rs.next())
             {
@@ -737,7 +738,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> comboCusto;
     private javax.swing.JComboBox<String> comboIC;
     private com.toedter.calendar.JDateChooser dataAbate;
-    private com.toedter.calendar.JDateChooser dataAdicao;
+    private com.toedter.calendar.JDateChooser datePickerDataAdicao;
     private javax.swing.JTextField filtro;
     private javax.swing.JButton igualar;
     private javax.swing.JDesktopPane jDesktopPane1;
@@ -759,7 +760,7 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel painelSig;
     private javax.swing.JSpinner sig;
-    private javax.swing.JSpinner stock;
+    private javax.swing.JSpinner spinnerStock;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

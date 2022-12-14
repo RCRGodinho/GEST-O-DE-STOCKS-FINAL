@@ -180,7 +180,8 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
         String tipo;
         String objeto;
         
-        if(comboTipo.getSelectedItem() == null || comboObjeto.getSelectedItem() == null)
+        if(comboTipo.getSelectedItem() == null || comboObjeto.getSelectedItem() == null ||
+           comboTipo.getSelectedIndex() == 0   || comboObjeto.getSelectedIndex() == 0 )
         {
             tipo = "";
             objeto = "";

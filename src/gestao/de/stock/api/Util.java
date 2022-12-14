@@ -346,7 +346,13 @@ public class Util {
      
      public int getIdConsumivel(String consumivel) throws SQLException
      {
-         String[] result = consumivel.split("_");
+         if(consumivel.isBlank())
+         {
+             return 0;
+         }
+         
+        String toUpperCase = consumivel.toUpperCase();
+         String[] result = toUpperCase.split("_");
             String marca = result[0];
             String modelo = result[1];
             String cons = result[2];
@@ -358,6 +364,7 @@ public class Util {
                 {
                  id = rs.getInt(1);
                 }
+                
                 
                 return id;
      }

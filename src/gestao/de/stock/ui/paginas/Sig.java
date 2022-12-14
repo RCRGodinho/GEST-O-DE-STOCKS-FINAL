@@ -14,8 +14,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -47,6 +45,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         //definir as comboboxes
         tabelaTodos();
         tabelaPorAbater();
+        
         
     }
     //tornal painel fixo
@@ -157,7 +156,7 @@ public final class Sig extends javax.swing.JInternalFrame {
                     .addGroup(porAbaterLayout.createSequentialGroup()
                         .addComponent(progresso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAdicionar)
+                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
                 .addContainerGap())

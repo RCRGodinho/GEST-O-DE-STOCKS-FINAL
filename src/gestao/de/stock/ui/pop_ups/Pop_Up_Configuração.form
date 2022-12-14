@@ -118,7 +118,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="guardar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="GUARDAR"/>
+            <Property name="text" type="java.lang.String" value="GUARDAR E SAIR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guardarActionPerformed"/>
@@ -164,7 +164,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="sair">
           <Properties>
-            <Property name="text" type="java.lang.String" value="SAIR"/>
+            <Property name="text" type="java.lang.String" value="SAIR SEM GUARDAR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sairActionPerformed"/>

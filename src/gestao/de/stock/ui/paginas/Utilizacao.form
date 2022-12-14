@@ -174,22 +174,22 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel2" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="quantidade" max="32767" attributes="0"/>
+                          <Component id="spinnerQuantidade" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel3" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="data" max="32767" attributes="0"/>
+                          <Component id="datePickerData" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="PRETO" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="preto" max="32767" attributes="0"/>
+                          <Component id="spinnerPreto" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel5" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cor" max="32767" attributes="0"/>
+                          <Component id="spinnerCor" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel6" min="-2" pref="80" max="-2" attributes="0"/>
@@ -234,7 +234,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="quantidade" min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="spinnerQuantidade" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
@@ -242,21 +242,21 @@
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <Component id="data" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="datePickerData" min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="PRETO" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="preto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spinnerPreto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spinnerCor" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
@@ -345,7 +345,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="data">
+        <Component class="com.toedter.calendar.JDateChooser" name="datePickerData">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[5, 19]"/>
@@ -378,7 +378,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JSpinner" name="quantidade">
+        <Component class="javax.swing.JSpinner" name="spinnerQuantidade">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -403,14 +403,14 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JSpinner" name="preto">
+        <Component class="javax.swing.JSpinner" name="spinnerPreto">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="cor">
+        <Component class="javax.swing.JSpinner" name="spinnerCor">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>

@@ -55,7 +55,11 @@ public class AnaliseStock extends javax.swing.JFrame {
         
        criaTabela();
        criaGrafico();
-       
+     
+       if(consumivel.isBlank())
+           setTitle("Análise de Stocks - Todas as entradas");
+       else
+            setTitle("Análise de Stocks - "+consumivel);
     }
     
     private void criaGrafico() throws SQLException
@@ -72,9 +76,18 @@ public class AnaliseStock extends javax.swing.JFrame {
          
          }
          
+         String titulo;
+         if(consumivel.isBlank())
+             titulo = "Análise: Todos os consumiveis";
+            else
+                titulo = "Análise: "+consumivel;
+         
+         
          
          //define o gráfico e o tipo de dados que vai utilizar
-         JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+consumivel+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ENTRADAS", dataset);
+         JFreeChart grafico = ChartFactory.createBarChart3D(titulo+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ENTRADAS", dataset);
+         
+         
          grafico.setAntiAlias(false);
          ChartPanel panel = new ChartPanel(grafico);
          panel.setBackground(getTabela().getBackground());
@@ -126,11 +139,16 @@ public class AnaliseStock extends javax.swing.JFrame {
         
         String q = "SELECT NNA, to_char(DATA,'DD/MM/YYYY') DATA, "
                  + "(MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, QUANTIDADE "
-                 + "FROM Consumivel a, Impressora b, Registo_Stock c"
-                 + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_CONSUMIVEL = c.ID_CONSUMIVEL AND a.ID_CONSUMIVEL = "+id+" "
-                 + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') "
-                 + "ORDER BY DATA";
+                 + "FROM Consumivel a, Impressora b, Registo_Stock c "
+                 + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_CONSUMIVEL = c.ID_CONSUMIVEL "
+                 + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') ";
+                
+                if(id>=1){
+                    q = q+ "AND c.ID_CONSUMIVEL = "+id+" ";
+                }
+                 q = q+ "ORDER BY DATA";
         
+                 
         return q;
     }
     
@@ -165,17 +183,17 @@ public class AnaliseStock extends javax.swing.JFrame {
         tabela.setAutoCreateRowSorter(true);
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "NNA", "IC", "Data", "Quantidade", "Consumivel", "Custo"
+                "NNA", "Data", "Consumivel", "Quantidade"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -185,9 +203,6 @@ public class AnaliseStock extends javax.swing.JFrame {
         tabela.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tabela.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         jScrollPane1.setViewportView(tabela);
-        if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(5).setPreferredWidth(10);
-        }
 
         exportar.setText("Exportar");
         exportar.addActionListener(new java.awt.event.ActionListener() {

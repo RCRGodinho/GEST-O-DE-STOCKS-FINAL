@@ -85,14 +85,14 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         comboConsumivel = new javax.swing.JComboBox<>();
-        data = new com.toedter.calendar.JDateChooser();
+        datePickerData = new com.toedter.calendar.JDateChooser();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         comboLocalizacao = new javax.swing.JComboBox<>();
-        quantidade = new javax.swing.JSpinner();
+        spinnerQuantidade = new javax.swing.JSpinner();
         comboIc = new javax.swing.JComboBox<>();
-        preto = new javax.swing.JSpinner();
-        cor = new javax.swing.JSpinner();
+        spinnerPreto = new javax.swing.JSpinner();
+        spinnerCor = new javax.swing.JSpinner();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -183,15 +183,15 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             }
         });
 
-        data.setMinimumSize(new java.awt.Dimension(5, 19));
-        data.setOpaque(false);
-        data.setPreferredSize(new java.awt.Dimension(5, 19));
+        datePickerData.setMinimumSize(new java.awt.Dimension(5, 19));
+        datePickerData.setOpaque(false);
+        datePickerData.setPreferredSize(new java.awt.Dimension(5, 19));
 
         jLabel7.setText("LOCALIZAÇÃO");
 
         comboLocalizacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        quantidade.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spinnerQuantidade.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         comboIc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboIc.addActionListener(new java.awt.event.ActionListener() {
@@ -200,9 +200,9 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             }
         });
 
-        preto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spinnerPreto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
-        cor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spinnerCor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout dadosLayout = new javax.swing.GroupLayout(dados);
         dados.setLayout(dadosLayout);
@@ -218,19 +218,19 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantidade))
+                        .addComponent(spinnerQuantidade))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(datePickerData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(PRETO, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(preto))
+                        .addComponent(spinnerPreto))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cor))
+                        .addComponent(spinnerCor))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -265,25 +265,25 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(spinnerQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datePickerData, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PRETO)
-                    .addComponent(preto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinnerPreto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinnerCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
@@ -425,11 +425,11 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         comboIc.setSelectedIndex(0);
         
         comboLocalizacao.setSelectedIndex(0);
-        quantidade.setValue(0);
-        data.setDate(null);
+        spinnerQuantidade.setValue(0);
+        datePickerData.setDate(null);
         
-        preto.setValue(0);
-        cor.setValue(0);
+        spinnerPreto.setValue(0);
+        spinnerCor.setValue(0);
     }
     
     void buscarDados() throws ParseException, SQLException{
@@ -442,19 +442,19 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
             
             ////////////////////////////////DADOS NORMAIS///////////////////////
             comboIc.setSelectedItem(tabela.getModel().getValueAt(row, 1).toString());
-                quantidade.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 2).toString()));
+                spinnerQuantidade.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 2).toString()));
             
             ///////////////////////////////////FIM//////////////////////////////
             /////////////////////////// Buscar Data/////////////////////////////
             
             String databela = tabela.getModel().getValueAt(row, 3).toString();
                 java.util.Date date2 = new SimpleDateFormat("dd/MM/yy").parse(databela);
-                    data.setDate(date2);
+                    datePickerData.setDate(date2);
            //////////////////////////////FIM/////////////////////////////////////
            /////////////////////////////INTS////////////////////////////////////
            
-            preto.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 4).toString()));
-                cor.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 5).toString()));
+            spinnerPreto.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 4).toString()));
+                spinnerCor.setValue(Integer.parseInt(tabela.getModel().getValueAt(row, 5).toString()));
             
             ////////////////////////////FIM/////////////////////////////////////    
             ///////////////////////BUSCAR COMBOS À TABELA///////////////////////
@@ -474,7 +474,7 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         
        
             //Verificar se todos têm o mesmo tamanho.
-            if(data.getDate().toString().isEmpty()){
+            if(datePickerData.getDate().toString().isEmpty()){
              JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
             }
             else{
@@ -483,9 +483,21 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
                String value = tabela.getModel().getValueAt(row, 0).toString();
                
         try{
-             stm = c.fazerConexao().createStatement();
+            Object quantidade = spinnerQuantidade.getValue(); 
+            Object data = DateFormat.getDateInstance().format(datePickerData.getDate());
+            Object preto = spinnerPreto.getValue();
+            Object cor = spinnerCor.getValue();
+            
+            Object idConsumivel = u.comboId("consumivel", comboConsumivel);
+            Object idCentroCusto = u.comboId("localizacao", comboLocalizacao);
+            Object idIc = u.comboId("ic", comboIc);
+            Object idUtilizacao = Integer.parseInt(value);
              
-             stm.executeUpdate("UPDATE Utilizacao SET QUANTIDADE = "+quantidade.getValue()+" , DATA_UTIL = TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , PRETO = "+preto.getValue()+" , COR = "+cor.getValue()+" , ID_CONSUMIVEL ="+u.comboId("consumivel", comboConsumivel)+", ID_CENTRO_CUSTO = "+u.comboId("localizacao", comboLocalizacao)+", ID_IC = "+u.comboId("ic", comboIc)+" WHERE ID_UTILIZACAO = "+Integer.parseInt(value)+"");
+             stm.executeUpdate("UPDATE Utilizacao SET QUANTIDADE = "+quantidade+" , "
+                             + "DATA_UTIL = TO_DATE('"+data+"', 'DD/MM/YYYY') , PRETO = "+preto+" , COR = "+cor+" , "
+                             + "ID_CONSUMIVEL ="+idConsumivel+", ID_CENTRO_CUSTO = "+idCentroCusto+", "
+                             + "ID_IC = "+idIc+" "
+                             + "WHERE ID_UTILIZACAO = "+idUtilizacao+"");
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
                 
@@ -552,20 +564,31 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         //Verificar se os campos estão vazios.
-        if( quantidade.getValue().equals(0) || data.getDate() == null || preto.getValue().equals(0) || cor.getValue().equals(0))
+        if( spinnerQuantidade.getValue().equals(0) || datePickerData.getDate() == null || spinnerPreto.getValue().equals(0) || spinnerCor.getValue().equals(0))
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
             //Verificar se todos têm o mesmo tamanho.
-            if(data.getDate().toString().isEmpty()){
+            if(datePickerData.getDate().toString().isEmpty()){
              JOptionPane.showMessageDialog(rootPane, "A data tem que ser preenchida!");
             }
             else{
             
         
         try {
+            Object quantidade = spinnerQuantidade.getValue(); 
+            Object data = DateFormat.getDateInstance().format(datePickerData.getDate());
+            Object preto = spinnerPreto.getValue();
+            Object cor = spinnerCor.getValue();
+            
+            Object idConsumivel = u.comboId("consumivel", comboConsumivel);
+            Object idCentroCusto = u.comboId("localizacao", comboLocalizacao);
+            Object idIc = u.comboId("ic", comboIc);
+            
              
-             stm.executeUpdate("INSERT INTO UTILIZACAO(QUANTIDADE,DATA_UTIL,PRETO,COR,ID_CONSUMIVEL,ID_CENTRO_CUSTO, ID_IC) VALUES("+quantidade.getValue()+" , TO_DATE('"+DateFormat.getDateInstance().format(data.getDate())+"', 'DD/MM/YYYY') , "+preto.getValue()+" , "+cor.getValue()+" , "+u.comboId("consumivel", comboConsumivel)+" , "+u.comboId("localizacao", comboLocalizacao)+", "+u.comboId("ic", comboIc)+")");
+             stm.executeUpdate("INSERT INTO UTILIZACAO(QUANTIDADE,DATA_UTIL,PRETO,COR,ID_CONSUMIVEL,ID_CENTRO_CUSTO, ID_IC) "
+                     + "VALUES("+quantidade+" , TO_DATE('"+data+"', 'DD/MM/YYYY') , "+preto+" , "+cor+" , "+idConsumivel+" ,"
+                     + ""+idCentroCusto+", "+idIc+")");
              
              
              
@@ -642,9 +665,8 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> comboConsumivel;
     private javax.swing.JComboBox<String> comboIc;
     private javax.swing.JComboBox<String> comboLocalizacao;
-    private javax.swing.JSpinner cor;
     private javax.swing.JPanel dados;
-    private com.toedter.calendar.JDateChooser data;
+    private com.toedter.calendar.JDateChooser datePickerData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -659,8 +681,9 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSpinner preto;
-    private javax.swing.JSpinner quantidade;
+    private javax.swing.JSpinner spinnerCor;
+    private javax.swing.JSpinner spinnerPreto;
+    private javax.swing.JSpinner spinnerQuantidade;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

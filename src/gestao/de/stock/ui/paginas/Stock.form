@@ -175,8 +175,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="dataAdicao" alignment="1" pref="149" max="32767" attributes="0"/>
-                                  <Component id="stock" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="datePickerDataAdicao" alignment="1" pref="149" max="32767" attributes="0"/>
+                                  <Component id="spinnerStock" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -192,11 +192,11 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel9" max="32767" attributes="0"/>
-                          <Component id="stock" pref="40" max="32767" attributes="0"/>
+                          <Component id="spinnerStock" pref="40" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="dataAdicao" pref="40" max="32767" attributes="0"/>
+                          <Component id="datePickerDataAdicao" pref="40" max="32767" attributes="0"/>
                           <Component id="jLabel10" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -216,7 +216,7 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSpinner" name="stock">
+            <Component class="javax.swing.JSpinner" name="spinnerStock">
             </Component>
             <Component class="javax.swing.JButton" name="btnAdicionar">
               <Properties>
@@ -234,7 +234,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnaliseActionPerformed"/>
               </Events>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="dataAdicao">
+            <Component class="com.toedter.calendar.JDateChooser" name="datePickerDataAdicao">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>

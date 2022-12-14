@@ -11,8 +11,6 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -47,6 +45,8 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
         u.comboOracle(u.lista("consumivel"), comboConsumivel);
         dataInicio.setDate(null);
         dataFim.setDate(null);
+        
+        setTitle("Análise de Stocks");
     }
 
     /**
@@ -193,12 +193,16 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     private void analisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analisarActionPerformed
 
         String consumivel = getConsumivel();
-        
-        String[] datas = getDatas().split("_");
+        System.out.println("x:"+consumivel);
+        if(!getDatas().isBlank())
+        {
+           String[] datas = getDatas().split("_");
             String dtIn = datas[0];
             String dtFm = datas[1];
         
-           construirPagina( consumivel,  dtIn,  dtFm);
+            
+           construirPagina( consumivel,  dtIn,  dtFm); 
+        }
     }//GEN-LAST:event_analisarActionPerformed
 
     private void comboConsumivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboConsumivelActionPerformed
@@ -249,15 +253,16 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     
     public String getDatas(){
         
-         String dtIn = null;
-         String dtFm = null;
+         String dtIn;
+         String dtFm;
         
             try {
              dtIn= DateFormat.getDateInstance().format(dataInicio.getDate());
              dtFm= DateFormat.getDateInstance().format(dataFim.getDate());
-            
+             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!");
+            return "";
         }
         return dtIn + "_" + dtFm;
     }
@@ -274,9 +279,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     
     public void construirPagina(String consumivel, String dtIn, String dtFm){
          try{
-             
                 AnaliseStock hm = new AnaliseStock(consumivel,dtIn,dtFm,c,u);
-                
                 
                 if(hm.getTabela().getRowCount() != 0)
                 {

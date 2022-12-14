@@ -44,6 +44,8 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
         user.setText(c.getUser());
         pass.setText(c.getPass());
         
+        setTitle("Configuração da ligação");
+        
     }
     
     public boolean guardarDados()
@@ -117,7 +119,7 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
         });
         jPanel1.add(testar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 235, 468, -1));
 
-        guardar.setText("GUARDAR");
+        guardar.setText("GUARDAR E SAIR");
         guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarActionPerformed(evt);
@@ -131,7 +133,7 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
         jPanel1.add(driver, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 88, 356, 31));
         jPanel1.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 137, 356, 31));
 
-        sair.setText("SAIR");
+        sair.setText("SAIR SEM GUARDAR");
         sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sairActionPerformed(evt);
@@ -195,9 +197,10 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
             c.setUser(userS);
             c.setPass(passS);
             
-            JOptionPane.showMessageDialog(rootPane, "Dados guardados com sucesso!");
+            JOptionPane.showMessageDialog(rootPane, "Dados guardados com sucesso!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }else{
-            JOptionPane.showMessageDialog(rootPane, "A conexão tem que ser válida");
+            JOptionPane.showMessageDialog(rootPane, "A conexão tem que ser validada primeiro!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_guardarActionPerformed
 

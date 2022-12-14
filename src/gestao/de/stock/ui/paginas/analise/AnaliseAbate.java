@@ -59,6 +59,10 @@ public class AnaliseAbate extends javax.swing.JFrame {
        criaTabela();
        criaGrafico();
        
+       if(objeto.isBlank())
+           setTitle("Análise de Abates - Todas as entradas");
+       else
+            setTitle("Análise de Abates - "+objeto);
     }
     
     private void criaGrafico() throws SQLException
@@ -74,10 +78,15 @@ public class AnaliseAbate extends javax.swing.JFrame {
              dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
          
          }
+         String titulo;
          
+         if(objeto.isBlank())
+             titulo = "Análise: Todos os abates";
+            else
+                titulo = "Análise: "+objeto;
          
          //define o gráfico e o tipo de dados que vai utilizar
-         JFreeChart grafico = ChartFactory.createBarChart3D("Análise: "+objeto+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ABATES", dataset);
+         JFreeChart grafico = ChartFactory.createBarChart3D(titulo+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ABATES", dataset);
          grafico.setAntiAlias(false);
          ChartPanel panel = new ChartPanel(grafico);
          panel.setBackground(getTabela().getBackground());
@@ -236,7 +245,7 @@ public class AnaliseAbate extends javax.swing.JFrame {
                 .addComponent(painelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exportar)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
