@@ -9,6 +9,8 @@ import gestao.de.stock.api.Util;
 import gestao.de.stock.ui.paginas.analise.AnaliseAbate;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -43,6 +45,9 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
         u.comboOracle(u.lista("tabelas"), comboTipo);
         comboObjeto.setVisible(false);
         
+        dataInicio.setDate(null);
+        dataFim.setDate(null);
+        
         setTitle("Análise de Abates");
     }
 
@@ -64,9 +69,12 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
         dataInicio = new com.toedter.calendar.JDateChooser();
         analise = new javax.swing.JLabel();
         analisar = new javax.swing.JButton();
-        anual = new javax.swing.JButton();
         marca = new javax.swing.JLabel();
         comboObjeto = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        btnAno = new javax.swing.JToggleButton();
+        escolherAno = new com.toedter.calendar.JYearChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -95,42 +103,60 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
             }
         });
 
-        anual.setText("ANUAL");
-        anual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anualActionPerformed(evt);
+        marca.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+
+        jLabel1.setText("ANUAL?");
+
+        btnAno.setText("SIM");
+        btnAno.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                btnAnoItemStateChanged(evt);
             }
         });
 
-        marca.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        escolherAno.setEnabled(false);
+        escolherAno.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                escolherAnoPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(analise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(selecao, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboObjeto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(90, 90, 90)
-                .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(analisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(anual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                                    .addComponent(dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(analise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(selecao, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboObjeto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(90, 90, 90)
+                        .addComponent(marca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAno, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(escolherAno, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,16 +173,21 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(escolherAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(analisar)
-                .addGap(18, 18, 18)
-                .addComponent(anual)
-                .addGap(65, 65, 65))
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,18 +223,13 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
         objeto = comboObjeto.getSelectedItem().toString();
         }
         
-        String dtIn = null;
-        String dtFm = null;
-        
-        
-            try {
-             dtIn= DateFormat.getDateInstance().format(dataInicio.getDate());
-             dtFm= DateFormat.getDateInstance().format(dataFim.getDate());
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!");
+        if(!getDatas().isBlank())
+        {
+           String[] datas = getDatas().split("_");
+            String dtIn = datas[0];
+            String dtFm = datas[1];
+         construirPagina( objeto,  tipo,  dtIn,  dtFm);   
         }
-           construirPagina( objeto,  tipo,  dtIn,  dtFm);
     }//GEN-LAST:event_analisarActionPerformed
 
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
@@ -235,12 +261,34 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
          } 
     }//GEN-LAST:event_comboTipoActionPerformed
 
-    private void anualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anualActionPerformed
+    private void btnAnoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btnAnoItemStateChanged
         // TODO add your handling code here:
-        
-        String ano = JOptionPane.showInputDialog(rootPane, "Ano:", "Escolha o ano", JOptionPane.QUESTION_MESSAGE);
-        
-    }//GEN-LAST:event_anualActionPerformed
+
+        if(btnAno.isSelected())
+        {
+            btnAno.setText("NÃO");
+            escolherAno.setEnabled(true);
+            dataInicio.setEnabled(false);
+            dataFim.setEnabled(false);
+        }else{
+            btnAno.setText("SIM");
+            escolherAno.setEnabled(false);
+            dataInicio.setEnabled(true);
+            dataInicio.setDate(null);
+            dataFim.setEnabled(true);
+            dataFim.setDate(null);
+
+        }
+    }//GEN-LAST:event_btnAnoItemStateChanged
+
+    private void escolherAnoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_escolherAnoPropertyChange
+        try {
+            setDatas(String.valueOf(escolherAno.getValue()));
+
+        } catch (ParseException ex) {
+            Logger.getLogger(Pop_Up_AnaliseStock.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_escolherAnoPropertyChange
 
     public void construirPagina(String objeto, String tipo, String dtIn, String dtFm)
     {
@@ -263,18 +311,46 @@ public class Pop_Up_AnaliseAbate extends javax.swing.JFrame {
             }
     }
    
+    public String getDatas(){
+        
+         String dtIn;
+         String dtFm;
+        
+            try {
+             dtIn= DateFormat.getDateInstance().format(dataInicio.getDate());
+             dtFm= DateFormat.getDateInstance().format(dataFim.getDate());
+             
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!");
+            return "";
+        }
+        return dtIn + "_" + dtFm;
+    }
+    
+    public void setDatas(String ano) throws ParseException{
+        String data = "01/01/"+ano;
+                java.util.Date date = new SimpleDateFormat("dd/MM/yy").parse(data);
+                    dataInicio.setDate(date);
+        ////////////////////////////////////////////////////////////////////////////
+        data = "31/12/"+ano;
+                date = new SimpleDateFormat("dd/MM/yy").parse(data);
+                    dataFim.setDate(date);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton analisar;
     private javax.swing.JLabel analise;
-    private javax.swing.JButton anual;
+    private javax.swing.JToggleButton btnAno;
     private javax.swing.JComboBox<String> comboObjeto;
     private javax.swing.JComboBox<String> comboTipo;
     private com.toedter.calendar.JDateChooser dataFim;
     private com.toedter.calendar.JDateChooser dataInicio;
+    private com.toedter.calendar.JYearChooser escolherAno;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel marca;
     private javax.swing.JLabel selecao;
     // End of variables declaration//GEN-END:variables
