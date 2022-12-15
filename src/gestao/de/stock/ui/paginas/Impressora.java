@@ -6,6 +6,7 @@ package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.ui.pop_ups.Pop_Up_Ic;
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,11 +25,13 @@ public final class Impressora extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
+    Util u;
     Statement stm;
     
     
-    public Impressora(Conexao c) throws Exception {
+    public Impressora(Conexao c, Util u) throws Exception {
         this.c = c;
+        this.u = u;
         stm = this.c.fazerConexao().createStatement();
         
         initComponents();
@@ -54,13 +57,13 @@ public final class Impressora extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         dados = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        marca = new javax.swing.JTextField();
+        labelMarca = new javax.swing.JLabel();
+        textoMarca = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        modelo = new javax.swing.JTextField();
+        labelModelo = new javax.swing.JLabel();
+        textoModelo = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        btnIC = new javax.swing.JButton();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -120,22 +123,22 @@ public final class Impressora extends javax.swing.JInternalFrame {
             tabela.getColumnModel().getColumn(0).setPreferredWidth(5);
         }
 
-        jLabel1.setLabelFor(marca);
-        jLabel1.setText("MARCA");
+        labelMarca.setLabelFor(textoMarca);
+        labelMarca.setText("MARCA");
 
-        marca.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoMarca.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                marcaKeyTyped(evt);
+                textoMarcaKeyTyped(evt);
             }
         });
 
-        jLabel2.setText("MODELO");
+        labelModelo.setText("MODELO");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setText("IC");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnIC.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnIC.setText("IC");
+        btnIC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnICActionPerformed(evt);
             }
         });
 
@@ -151,21 +154,21 @@ public final class Impressora extends javax.swing.JInternalFrame {
                                 .addGap(12, 12, 12)
                                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(dadosLayout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(12, 12, 12)
-                                        .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(textoMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(dadosLayout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(12, 12, 12)
-                                        .addComponent(modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(textoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(dadosLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 7, Short.MAX_VALUE))
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnIC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         dadosLayout.setVerticalGroup(
@@ -173,20 +176,20 @@ public final class Impressora extends javax.swing.JInternalFrame {
             .addGroup(dadosLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jLabel2))
-                    .addComponent(modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelModelo))
+                    .addComponent(textoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnIC, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -198,16 +201,16 @@ public final class Impressora extends javax.swing.JInternalFrame {
         });
 
         btnEditar.setText("Editar");
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
         btnApagar.setText("Apagar");
-        btnApagar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnApagarMouseClicked(evt);
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
             }
         });
 
@@ -289,8 +292,8 @@ public final class Impressora extends javax.swing.JInternalFrame {
     
     public void limparCampos(){
         
-        marca.setText("");
-        modelo.setText("");
+        textoMarca.setText("");
+        textoModelo.setText("");
        
     }
     
@@ -302,83 +305,11 @@ public final class Impressora extends javax.swing.JInternalFrame {
          }else{
             int row = tabela.getSelectedRow();
           
-            marca.setText(tabela.getModel().getValueAt(row, 1).toString());
-            modelo.setText(tabela.getModel().getValueAt(row, 2).toString());
+            textoMarca.setText(tabela.getModel().getValueAt(row, 1).toString());
+            textoModelo.setText(tabela.getModel().getValueAt(row, 2).toString());
         }
     }
     
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        // TODO add your handling code here:
-        
-        if( marca.getText().isEmpty() || modelo.getText().isEmpty() )
-        {
-            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
-        }else{
-        
-        int row = tabela.getSelectedRow();
-               String value = tabela.getModel().getValueAt(row, 0).toString();
-        
-        try{
-             stm = c.fazerConexao().createStatement();
-             
-  
-        stm.executeUpdate("UPDATE Impressora SET MARCA = '"+marca.getText().toUpperCase()+"' ,MODELO = '"+modelo.getText().toUpperCase()+"' WHERE ID_IMPRESSORA = "+Integer.parseInt(value)+"");
-             
-        
-             
-             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
-                
-             tabela.clearSelection();
-             limparCampos();
-             tabelaImpressora();
-        } catch (ClassNotFoundException| SQLException ex) {
-
-            JOptionPane.showMessageDialog(rootPane, "ERRO: "+ex+"\n");
-            
-        } catch (Exception ex) {
-            Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-            }
-        
-        
-    }//GEN-LAST:event_btnEditarMouseClicked
-
-    private void btnApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseClicked
-        // TODO add your handling code here:
-        
-        //verificar se o user selecionou algum dado
-        if(tabela.getSelectedRow() == -1)
-         {
-           //   JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!");
-         }else{
-            //buscar o valor do ID no dado selecionado 
-            
-            int row = tabela.getSelectedRow();
-               String value = tabela.getModel().getValueAt(row, 0).toString();
-                
-             
-             try {
-                 stm = c.fazerConexao().createStatement();
-                int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
-                 if(op == 0)
-                 {
-                     ResultSet rs = stm.executeQuery("DELETE FROM IMPRESSORA WHERE ID_IMPRESSORA = "+Integer.parseInt(value));
-                     JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
-                     tabelaImpressora();
-                     tabela.clearSelection();
-                     limparCampos();
-                 }
-                 
-             } catch (SQLException | ClassNotFoundException ex) {
-                 JOptionPane.showMessageDialog(rootPane, "ERRO!");
-             } catch (Exception ex) {
-                Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-         }
-
-    }//GEN-LAST:event_btnApagarMouseClicked
-
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         // TODO add your handling code here:
         buscarDados();
@@ -391,14 +322,16 @@ public final class Impressora extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         //Verificar se os campos estão vazios.
-        if(marca.getText().isEmpty() || modelo.getText().isEmpty())
+        if(textoMarca.getText().isEmpty() || textoModelo.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }
             else{
         try {
+            Object marca = textoMarca.getText().toUpperCase();
+            Object modelo = textoModelo.getText().toUpperCase();
              
-             stm.executeUpdate("INSERT INTO IMPRESSORA(MARCA,MODELO) VALUES('"+marca.getText().toUpperCase()+"' , '"+modelo.getText().toUpperCase()+"')");
+             stm.executeUpdate("INSERT INTO IMPRESSORA(MARCA,MODELO) VALUES('"+marca+"' , '"+modelo+"')");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
@@ -423,15 +356,15 @@ public final class Impressora extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaFocusLost
 
-    private void marcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_marcaKeyTyped
+    private void textoMarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoMarcaKeyTyped
         // TODO add your handling code here:
-        if(marca.getText().length()>=13)
+        if(textoMarca.getText().length()>=13)
         {
             //nna.setText(nna.getText().substring(0, 13));
         }
-    }//GEN-LAST:event_marcaKeyTyped
+    }//GEN-LAST:event_textoMarcaKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnICActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnICActionPerformed
         try {
             // TODO add your handling code here:
 
@@ -443,7 +376,84 @@ public final class Impressora extends javax.swing.JInternalFrame {
         }
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnICActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+        
+        if( textoMarca.getText().isEmpty() || textoModelo.getText().isEmpty() )
+        {
+            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
+        }else{
+        
+        int row = tabela.getSelectedRow();
+               String value = tabela.getModel().getValueAt(row, 0).toString();
+        
+        try{
+            Object marca = textoMarca.getText().toUpperCase();
+            Object modelo = textoModelo.getText().toUpperCase();
+            Object idImpressora = Integer.parseInt(value);
+             
+  
+        stm.executeUpdate("UPDATE Impressora SET MARCA = '"+marca+"' ,MODELO = '"+modelo+"' "
+                        + "WHERE ID_IMPRESSORA = "+idImpressora+"");
+             
+        
+             
+             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
+                
+             tabela.clearSelection();
+             limparCampos();
+             tabelaImpressora();
+        } catch (ClassNotFoundException| SQLException ex) {
+
+            JOptionPane.showMessageDialog(rootPane, "ERRO: "+ex+"\n");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+            }
+        
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+       
+        
+        //verificar se o user selecionou algum dado
+        if(tabela.getSelectedRow() == -1)
+         {
+           //   JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!");
+         }else{
+            //buscar o valor do ID no dado selecionado 
+            
+            int row = tabela.getSelectedRow();
+               String value = tabela.getModel().getValueAt(row, 0).toString();
+                int idImpressora = Integer.parseInt(value);
+             
+             try {
+                 stm = c.fazerConexao().createStatement();
+                int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
+                 if(op == 0)
+                 {
+                     u.apagar("impressora", idImpressora);
+                     JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
+                     
+                     //refresh dos dados
+                     tabelaImpressora();
+                     tabela.clearSelection();
+                     limparCampos();
+                 }
+                 
+             } catch (SQLException | ClassNotFoundException ex) {
+                 JOptionPane.showMessageDialog(rootPane, "ERRO!");
+             } catch (Exception ex) {
+                Logger.getLogger(Impressora.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+         }
+
+    }//GEN-LAST:event_btnApagarActionPerformed
 
     
 
@@ -451,16 +461,16 @@ public final class Impressora extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnIC;
     private javax.swing.JPanel butoes;
     private javax.swing.JPanel dados;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField marca;
-    private javax.swing.JTextField modelo;
+    private javax.swing.JLabel labelMarca;
+    private javax.swing.JLabel labelModelo;
     private javax.swing.JTable tabela;
+    private javax.swing.JTextField textoMarca;
+    private javax.swing.JTextField textoModelo;
     // End of variables declaration//GEN-END:variables
 }

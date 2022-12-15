@@ -418,7 +418,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             Impressora hm = new Impressora(c);
+             Impressora hm = new Impressora(c,u);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {
@@ -472,7 +472,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
              //Remover a pagina antiga
              paginas.removeAll();
              //Criar objeto para nova class
-             CentroCusto hm = new CentroCusto(c);
+             CentroCusto hm = new CentroCusto(c,u);
              //Adicionar a nova página
              paginas.add(hm).setVisible(true);
          } catch (Exception ex) {

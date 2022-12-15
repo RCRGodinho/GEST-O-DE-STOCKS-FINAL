@@ -10,7 +10,6 @@ import gestao.de.stock.ui.paginas.Utilizacao;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,7 +35,7 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
     public Pop_Up_Ic(Conexao c) throws Exception{
         this.c = c;
         u = new Util(c);
-        stm = c.fazerConexao().createStatement();
+        stm = this.c.fazerConexao().createStatement();
         
         initComponents();
         setResizable(false);
@@ -44,6 +43,8 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
         
         tabelaIc();
         u.comboOracle(u.lista("impressora"), comboImpressora);
+        
+        setTitle("Manipulação de Ics");
     }
     
     public void tabelaIc() throws Exception
@@ -56,7 +57,7 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
          
              //criar uma query e executar
          ResultSet rs = stm.executeQuery("SELECT ID_IC, IC, (MARCA || '_' || MODELO) AS IMPRESSORA "
-                 + "FROM IC a, Impressora b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
+                                       + "FROM IC a, Impressora b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
              
            while(rs.next())
            {
@@ -76,14 +77,13 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
             int row = tabela.getSelectedRow();
           
             comboImpressora.setSelectedItem(tabela.getModel().getValueAt(row, 1).toString());
-            ic.setText(tabela.getModel().getValueAt(row, 2).toString());
+            textIC.setText(tabela.getModel().getValueAt(row, 2).toString());
     }
      
       public void limparCampos(){
         //tornar todos os campos indefinidos
-        
         comboImpressora.setSelectedIndex(0);
-        ic.setText("");
+        textIC.setText("");
     }
 
     /**
@@ -96,44 +96,44 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelImpressora = new javax.swing.JLabel();
         comboImpressora = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        adicionar = new javax.swing.JButton();
-        editar = new javax.swing.JButton();
-        ic = new javax.swing.JTextField();
-        apagar = new javax.swing.JButton();
+        labelIC = new javax.swing.JLabel();
+        btnAdicionar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        textIC = new javax.swing.JTextField();
+        btnApagar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setText("IMPRESSORA:");
+        labelImpressora.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        labelImpressora.setText("IMPRESSORA:");
 
         comboImpressora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setText("IC:");
+        labelIC.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        labelIC.setText("IC:");
 
-        adicionar.setText("ADICIONAR");
-        adicionar.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionar.setText("ADICIONAR");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adicionarActionPerformed(evt);
+                btnAdicionarActionPerformed(evt);
             }
         });
 
-        editar.setText("EDITAR");
-        editar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setText("EDITAR");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
-        apagar.setText("APAGAR");
-        apagar.addActionListener(new java.awt.event.ActionListener() {
+        btnApagar.setText("APAGAR");
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                apagarActionPerformed(evt);
+                btnApagarActionPerformed(evt);
             }
         });
 
@@ -144,20 +144,20 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(adicionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelIC, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ic, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textIC, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(apagar, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -165,18 +165,18 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ic, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(labelIC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textIC, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(adicionar)
+                .addComponent(btnAdicionar)
                 .addGap(18, 18, 18)
-                .addComponent(editar)
+                .addComponent(btnEditar)
                 .addGap(18, 18, 18)
-                .addComponent(apagar)
+                .addComponent(btnApagar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -234,26 +234,30 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarActionPerformed
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         try {
-            stm.executeQuery("INSERT (IC, ID_IMPRESSORA) INTO IC "
-                    + "VALUES('"+ic.getText()+"', "+u.comboId("impressora", comboImpressora)+")");
+            Object ic = textIC.getText();
+            Object idImpressora = u.comboId("impressora", comboImpressora);
             
+            stm.executeQuery("INSERT (IC, ID_IMPRESSORA) INTO IC "
+                           + "VALUES('"+ic+"', "+idImpressora+")");
+            
+            JOptionPane.showMessageDialog(rootPane, "IC adicionado com sucesso", "SUCESSO!", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(Pop_Up_Ic.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_adicionarActionPerformed
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         
         if(tabela.getSelectedRow() == -1)
         {
-             JOptionPane.showMessageDialog(rootPane, "Selecione um dado para editar!", "ERRO", HEIGHT);
+             JOptionPane.showMessageDialog(rootPane, "Selecione um dado para editar!", "ERRO", JOptionPane.WARNING_MESSAGE);
         }else{
             //Verificar se todos têm o mesmo tamanho.
-            if(comboImpressora.getSelectedIndex() == 0 || ic.getText().equals("")){
-             JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente", "ERRO", HEIGHT);
+            if(comboImpressora.getSelectedIndex() == 0 || textIC.getText().equals("")){
+             JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente", "ERRO", JOptionPane.WARNING_MESSAGE);
             }
             else{
         
@@ -261,10 +265,13 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
                String value = tabela.getModel().getValueAt(row, 0).toString();
                
         try{
+            Object ic = textIC.getText();
+            Object idImpressora = u.comboId("impressora", comboImpressora);
+            Object idIc = Integer.parseInt(value);
              
-             stm.executeUpdate("UPDATE IC SET IC = '"+ic.getText()+"' , ID_IMPRESSORA = "+u.comboId("impressora", comboImpressora)+" WHERE ID_IC = "+Integer.parseInt(value)+"");
+             stm.executeUpdate("UPDATE IC SET IC = '"+ic+"' , ID_IMPRESSORA = "+idImpressora+" WHERE ID_IC = "+idIc+"");
              
-             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
+             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!", "SUCESSO!", JOptionPane.INFORMATION_MESSAGE);
                 
              tabela.clearSelection();
                 limparCampos();
@@ -280,19 +287,19 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
             }
         }
         
-    }//GEN-LAST:event_editarActionPerformed
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         // TODO add your handling code here:
         buscarDados();
     }//GEN-LAST:event_tabelaMouseClicked
 
-    private void apagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apagarActionPerformed
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         // TODO add your handling code here:
         
             //Verificar se todos têm o mesmo tamanho.
             if(tabela.getSelectedRow() == -1){
-             JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!", "ERRO", HEIGHT);
+             JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!", "ERRO", JOptionPane.WARNING_MESSAGE);
             }
             else{
         
@@ -300,10 +307,11 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
                String value = tabela.getModel().getValueAt(row, 0).toString();
                
         try{
+             int idIc = Integer.parseInt(value);
              
-             stm.executeUpdate("DELETE FOM IC WHERE ID_IC = "+Integer.parseInt(value)+"");
+             u.apagar("ic", idIc);
              
-             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
+             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!", "SUCESSO!", JOptionPane.INFORMATION_MESSAGE);
                 
              tabela.clearSelection();
                 limparCampos();
@@ -317,20 +325,20 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
             Logger.getLogger(Utilizacao.class.getName()).log(Level.SEVERE, null, ex);
         } 
             }   
-    }//GEN-LAST:event_apagarActionPerformed
+    }//GEN-LAST:event_btnApagarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton adicionar;
-    private javax.swing.JButton apagar;
+    private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnApagar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JComboBox<String> comboImpressora;
-    private javax.swing.JButton editar;
-    private javax.swing.JTextField ic;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelIC;
+    private javax.swing.JLabel labelImpressora;
     private javax.swing.JTable tabela;
+    private javax.swing.JTextField textIC;
     // End of variables declaration//GEN-END:variables
 
 

@@ -165,13 +165,13 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="labelAdicionar" alignment="1" max="32767" attributes="0"/>
                           <Component id="btnAdicionar" alignment="0" pref="235" max="32767" attributes="0"/>
                           <Component id="btnAnalise" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel9" max="32767" attributes="0"/>
-                                  <Component id="jLabel10" max="32767" attributes="0"/>
+                                  <Component id="labelAdicionarStock" max="32767" attributes="0"/>
+                                  <Component id="labelDataAdicionar" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -188,16 +188,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="labelAdicionar" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel9" max="32767" attributes="0"/>
+                          <Component id="labelAdicionarStock" max="32767" attributes="0"/>
                           <Component id="spinnerStock" pref="40" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="datePickerDataAdicao" pref="40" max="32767" attributes="0"/>
-                          <Component id="jLabel10" max="32767" attributes="0"/>
+                          <Component id="labelDataAdicionar" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnAdicionar" min="-2" pref="70" max="-2" attributes="0"/>
@@ -209,7 +209,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="labelAdicionar">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="ADICIONAR STOCK"/>
@@ -236,12 +236,12 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="datePickerDataAdicao">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
+            <Component class="javax.swing.JLabel" name="labelAdicionarStock">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel10">
+            <Component class="javax.swing.JLabel" name="labelDataAdicionar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Data:"/>
               </Properties>
@@ -264,20 +264,20 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnAbaterStock" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jLabel2" alignment="1" pref="235" max="32767" attributes="0"/>
+                          <Component id="labelAbaterStock" alignment="1" pref="235" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="labelDataAbateStock" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="labelCentroCusto" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="labelIC" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="labelQuantidade" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="comboCusto" max="32767" attributes="0"/>
                                   <Component id="comboIC" max="32767" attributes="0"/>
-                                  <Component id="dataAbate" max="32767" attributes="0"/>
-                                  <Component id="abaterStock" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="datePickerDataAbate" max="32767" attributes="0"/>
+                                  <Component id="spinnerAbaterStock" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -289,26 +289,26 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="labelAbaterStock" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel5" pref="35" max="32767" attributes="0"/>
-                          <Component id="abaterStock" max="32767" attributes="0"/>
+                          <Component id="labelQuantidade" pref="35" max="32767" attributes="0"/>
+                          <Component id="spinnerAbaterStock" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel6" max="32767" attributes="0"/>
+                          <Component id="labelIC" max="32767" attributes="0"/>
                           <Component id="comboIC" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel7" max="32767" attributes="0"/>
+                          <Component id="labelCentroCusto" max="32767" attributes="0"/>
                           <Component id="comboCusto" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel8" max="32767" attributes="0"/>
-                          <Component id="dataAbate" pref="35" max="32767" attributes="0"/>
+                          <Component id="labelDataAbateStock" max="32767" attributes="0"/>
+                          <Component id="datePickerDataAbate" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnAbaterStock" min="-2" pref="70" max="-2" attributes="0"/>
@@ -318,14 +318,14 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="labelAbaterStock">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="ABATER STOCK"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSpinner" name="abaterStock">
+            <Component class="javax.swing.JSpinner" name="spinnerAbaterStock">
             </Component>
             <Component class="javax.swing.JButton" name="btnAbaterStock">
               <Properties>
@@ -335,12 +335,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbaterStockActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel6">
+            <Component class="javax.swing.JLabel" name="labelIC">
               <Properties>
                 <Property name="text" type="java.lang.String" value="IC:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel5">
+            <Component class="javax.swing.JLabel" name="labelQuantidade">
               <Properties>
                 <Property name="text" type="java.lang.String" value="QUANTIDADE:"/>
               </Properties>
@@ -363,7 +363,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel7">
+            <Component class="javax.swing.JLabel" name="labelCentroCusto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Centro Custo:"/>
               </Properties>
@@ -383,12 +383,12 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel8">
+            <Component class="javax.swing.JLabel" name="labelDataAbateStock">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Data:"/>
               </Properties>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="dataAbate">
+            <Component class="com.toedter.calendar.JDateChooser" name="datePickerDataAbate">
             </Component>
           </SubComponents>
         </Container>
@@ -409,8 +409,8 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="igualar" pref="235" max="32767" attributes="0"/>
                           <Component id="btnAbaterSig" alignment="1" max="32767" attributes="0"/>
-                          <Component id="sig" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="spinnerSig" alignment="1" max="32767" attributes="0"/>
+                          <Component id="labelSig" alignment="1" max="32767" attributes="0"/>
                           <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -421,9 +421,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="labelSig" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="sig" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="spinnerSig" min="-2" pref="60" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnAbaterSig" min="-2" pref="70" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -436,14 +436,14 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel3">
+            <Component class="javax.swing.JLabel" name="labelSig">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="SIG"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSpinner" name="sig">
+            <Component class="javax.swing.JSpinner" name="spinnerSig">
             </Component>
             <Component class="javax.swing.JButton" name="btnAbaterSig">
               <Properties>
@@ -477,9 +477,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnFiltrar" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFiltro" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="filtro" max="32767" attributes="0"/>
+                          <Component id="textoFiltro" max="32767" attributes="0"/>
                       </Group>
                       <Component id="btnRepor" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -492,8 +492,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="filtro" pref="36" max="32767" attributes="0"/>
-                      <Component id="jLabel4" max="32767" attributes="0"/>
+                      <Component id="textoFiltro" pref="36" max="32767" attributes="0"/>
+                      <Component id="labelFiltro" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnFiltrar" min="-2" max="-2" attributes="0"/>
@@ -505,12 +505,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="labelFiltro">
           <Properties>
             <Property name="text" type="java.lang.String" value="NOME:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="filtro">
+        <Component class="javax.swing.JTextField" name="textoFiltro">
         </Component>
         <Component class="javax.swing.JButton" name="btnFiltrar">
           <Properties>

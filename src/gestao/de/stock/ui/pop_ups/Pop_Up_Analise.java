@@ -42,7 +42,7 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         
-        u.comboOracle(lista("impressora"), comboImpressora);
+        u.comboOracle(u.lista("impressora"), comboImpressora);
         
         setTitle("Análise");
     }
@@ -195,15 +195,15 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
                     hm.setVisible(true);
                         this.dispose();
                 }else{
-                     JOptionPane.showMessageDialog(rootPane, "Não existem registos!");
+                     JOptionPane.showMessageDialog(rootPane, "Não existem registos!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
                 }
             
             
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!");
+            JOptionPane.showMessageDialog(rootPane, "As datas têm que ser preenchidos!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
         }
         }else{
-             JOptionPane.showMessageDialog(rootPane, "Tem que selecionar uma impressora!");
+             JOptionPane.showMessageDialog(rootPane, "Tem que selecionar uma impressora!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
         }
         
     }//GEN-LAST:event_pesquisarActionPerformed
@@ -227,35 +227,6 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboImpressoraItemStateChanged
 
-     private int comboId(String x){
-        
-        try{
-            ResultSet rs;
-            int id = 0;
-            
-            switch(x)
-            {
-                case "impressora" -> {
-                    rs = stm.executeQuery("SELECT ID_IC FROM IC WHERE IC = '"+comboImpressora.getSelectedItem()+"'");
-                    while(rs.next())
-                    {
-                       id = rs.getInt(1);
-                    }
-             
-                }
-               
-                default -> {
-                    System.out.println("DUMB");
-                    return -1;
-                }
-            }
-             
-             return id;
-             
-        }catch(SQLException exp){
-            return 0;
-        }
-    }
      
      public String comboString(String x) throws SQLException
      {
@@ -264,7 +235,8 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
          switch(x)
             {
                 case "centro_custo" -> {
-                    rs = stm.executeQuery("SELECT Localizacao FROM CENTRO_CUSTO a, Utilizacao b WHERE a.ID_CENTRO_CUSTO = b.ID_CENTRO_CUSTO AND b.ID_IC = "+comboId("impressora")+"");
+                    rs = stm.executeQuery("SELECT Localizacao FROM CENTRO_CUSTO a, Utilizacao b "
+                                        + "WHERE a.ID_CENTRO_CUSTO = b.ID_CENTRO_CUSTO AND b.ID_IC = "+u.comboId("impressora", comboImpressora)+"");
                     while(rs.next())
                     {
                         return rs.getString("Localizacao");
@@ -272,7 +244,8 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
                     
                 }
                 case "impressora" ->{
-                    rs = stm.executeQuery("SELECT (Marca || ' ' || Modelo) AS IMPRESSORA FROM Impressora a, IC b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.ID_IC = "+comboId("impressora")+"");
+                    rs = stm.executeQuery("SELECT (Marca || ' ' || Modelo) AS IMPRESSORA FROM Impressora a, IC b "
+                                        + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.ID_IC = "+u.comboId("impressora", comboImpressora)+"");
                     while(rs.next())
                     {
                         return rs.getString("IMPRESSORA");
@@ -281,48 +254,6 @@ public class Pop_Up_Analise extends javax.swing.JFrame {
      }
          return null;
      }
-    
-    public ArrayList lista(String x) throws Exception{
-        ArrayList list = new ArrayList<>();
-        ResultSet rs;
-        
-        
-        switch(x)
-        {
-            case "consumivel" -> {
-                
-               rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
-
-            while(rs.next())
-            {
-                list.add(rs.getString("NOME"));
-            }
-            }
-            
-            case "localizacao" -> {
-               
-                rs = stm.executeQuery("SELECT LOCALIZACAO FROM CENTRO_CUSTO");
-
-                while(rs.next())
-                {
-                    list.add(rs.getString("LOCALIZACAO"));
-                }
-            }
-            case "impressora" -> {
-                
-                rs = stm.executeQuery("SELECT IC FROM IC");
-
-                while(rs.next())
-                {
-                    list.add(rs.getString("IC"));
-                }
-            }
-            default -> {
-                System.out.println("Erro Lista");
-            }
-        }     
-        return list;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboImpressora;

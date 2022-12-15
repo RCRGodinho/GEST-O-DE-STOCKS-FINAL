@@ -12,9 +12,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.text.DateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -70,33 +68,33 @@ public final class Stock extends javax.swing.JInternalFrame {
         tabela = new javax.swing.JTable();
         ABATER = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelAdicionar = new javax.swing.JLabel();
         spinnerStock = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
         btnAnalise = new javax.swing.JButton();
         datePickerDataAdicao = new com.toedter.calendar.JDateChooser();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        labelAdicionarStock = new javax.swing.JLabel();
+        labelDataAdicionar = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        abaterStock = new javax.swing.JSpinner();
+        labelAbaterStock = new javax.swing.JLabel();
+        spinnerAbaterStock = new javax.swing.JSpinner();
         btnAbaterStock = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        labelIC = new javax.swing.JLabel();
+        labelQuantidade = new javax.swing.JLabel();
         comboIC = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
+        labelCentroCusto = new javax.swing.JLabel();
         comboCusto = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        dataAbate = new com.toedter.calendar.JDateChooser();
+        labelDataAbateStock = new javax.swing.JLabel();
+        datePickerDataAbate = new com.toedter.calendar.JDateChooser();
         painelSig = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        sig = new javax.swing.JSpinner();
+        labelSig = new javax.swing.JLabel();
+        spinnerSig = new javax.swing.JSpinner();
         btnAbaterSig = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         igualar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        filtro = new javax.swing.JTextField();
+        labelFiltro = new javax.swing.JLabel();
+        textoFiltro = new javax.swing.JTextField();
         btnFiltrar = new javax.swing.JButton();
         btnRepor = new javax.swing.JButton();
 
@@ -159,9 +157,9 @@ public final class Stock extends javax.swing.JInternalFrame {
             tabela.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADICIONAR STOCK");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        labelAdicionar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdicionar.setText("ADICIONAR STOCK");
+        labelAdicionar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAdicionar.setText("ADICIONAR");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -177,9 +175,9 @@ public final class Stock extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel9.setText("Adicionar:");
+        labelAdicionarStock.setText("Adicionar:");
 
-        jLabel10.setText("Data:");
+        labelDataAdicionar.setText("Data:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,13 +186,13 @@ public final class Stock extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                     .addComponent(btnAnalise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(labelAdicionarStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelDataAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(datePickerDataAdicao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
@@ -205,15 +203,15 @@ public final class Stock extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelAdicionarStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(spinnerStock, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(datePickerDataAdicao, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelDataAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -223,9 +221,9 @@ public final class Stock extends javax.swing.JInternalFrame {
 
         ABATER.addTab("ADD", jPanel1);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("ABATER STOCK");
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        labelAbaterStock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAbaterStock.setText("ABATER STOCK");
+        labelAbaterStock.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAbaterStock.setText("ABATER");
         btnAbaterStock.addActionListener(new java.awt.event.ActionListener() {
@@ -234,9 +232,9 @@ public final class Stock extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("IC:");
+        labelIC.setText("IC:");
 
-        jLabel5.setText("QUANTIDADE:");
+        labelQuantidade.setText("QUANTIDADE:");
 
         comboIC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboIC.addActionListener(new java.awt.event.ActionListener() {
@@ -245,11 +243,11 @@ public final class Stock extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel7.setText("Centro Custo:");
+        labelCentroCusto.setText("Centro Custo:");
 
         comboCusto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel8.setText("Data:");
+        labelDataAbateStock.setText("Data:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -259,42 +257,42 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAbaterStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addComponent(labelAbaterStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(labelDataAbateStock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelCentroCusto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelIC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelQuantidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboCusto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboIC, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dataAbate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(abaterStock))))
+                            .addComponent(datePickerDataAbate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spinnerAbaterStock))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelAbaterStock, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(abaterStock))
+                    .addComponent(labelQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(spinnerAbaterStock))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelIC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(comboIC, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelCentroCusto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(comboCusto, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dataAbate, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                    .addComponent(labelDataAbateStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(datePickerDataAbate, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnAbaterStock, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -302,9 +300,9 @@ public final class Stock extends javax.swing.JInternalFrame {
 
         ABATER.addTab("ABATER STOCK", jPanel2);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("SIG");
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        labelSig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSig.setText("SIG");
+        labelSig.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnAbaterSig.setText("ABATER");
         btnAbaterSig.addActionListener(new java.awt.event.ActionListener() {
@@ -329,8 +327,8 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addGroup(painelSigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(igualar, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                     .addComponent(btnAbaterSig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sig)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(spinnerSig)
+                    .addComponent(labelSig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
@@ -338,9 +336,9 @@ public final class Stock extends javax.swing.JInternalFrame {
             painelSigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelSigLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelSig, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sig, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spinnerSig, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAbaterSig, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -352,7 +350,7 @@ public final class Stock extends javax.swing.JInternalFrame {
 
         ABATER.addTab("ABATER SIG", painelSig);
 
-        jLabel4.setText("NOME:");
+        labelFiltro.setText("NOME:");
 
         btnFiltrar.setText("FILTRAR");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
@@ -377,9 +375,9 @@ public final class Stock extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(labelFiltro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filtro))
+                        .addComponent(textoFiltro))
                     .addComponent(btnRepor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -388,8 +386,8 @@ public final class Stock extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(filtro, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(textoFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(labelFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnFiltrar)
                 .addGap(18, 18, 18)
@@ -467,8 +465,8 @@ public final class Stock extends javax.swing.JInternalFrame {
     public void limparCampos(){
         
         spinnerStock.setValue(0);
-        sig.setValue(0);
-        abaterStock.setValue(0);
+        spinnerSig.setValue(0);
+        spinnerAbaterStock.setValue(0);
     }
     
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
@@ -525,7 +523,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                   
                   if(getIdConsumivel() != 0)
                   {
-                      int subSig = Integer.parseInt(sig.getValue().toString());
+                      int subSig = Integer.parseInt(spinnerSig.getValue().toString());
                  
                      u.abaterSig(subSig, getIdConsumivel());
                      
@@ -535,7 +533,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                      tabela.clearSelection();
                      limparCampos();
                   }else{
-                       JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", HEIGHT);
+                       JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", JOptionPane.WARNING_MESSAGE);
                   }
              } catch (SQLException | ClassNotFoundException ex) {
                  JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
@@ -555,50 +553,52 @@ public final class Stock extends javax.swing.JInternalFrame {
                   if(getIdConsumivel() != 0)
                   {
                       //query para abater spinnerStock
-                      int subStock = stockAtivo - Integer.parseInt(abaterStock.getValue().toString());
+                      int subStock = stockAtivo - Integer.parseInt(spinnerAbaterStock.getValue().toString());
                  
-                      if(abaterStock.getValue().equals(0) || comboIC.getSelectedIndex()==0 || comboCusto.getSelectedIndex()==0 || dataAbate.getDate() == null)
+                      if(spinnerAbaterStock.getValue().equals(0) || comboIC.getSelectedIndex()==0 || comboCusto.getSelectedIndex()==0 || datePickerDataAbate.getDate() == null)
                       {
-                          JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", HEIGHT);
+                          JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", JOptionPane.WARNING_MESSAGE);
                       }else{
                           stm.executeUpdate("UPDATE CONSUMIVEL SET STOCK = "+subStock+" "+
                                       "WHERE ID_CONSUMIVEL = "+getIdConsumivel());
                           
+                          Object quantidade = spinnerAbaterStock.getValue();
+                          Object data = DateFormat.getDateInstance().format(datePickerDataAbate.getDate());
+                          Object idIc = u.comboId("ic", comboIC);
+                          Object idCentroCusto = u.comboId("localizacao", comboIC);
+                          Object idConsumivel = getIdConsumivel();
+                          
                           //Inserir dados na tabela SIG
                           
                           String q ="INSERT INTO SIG (QUANTIDADE,DATA,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
-                                  + "VALUES("+abaterStock.getValue()+", TO_DATE('"+DateFormat.getDateInstance().format(dataAbate.getDate())+"', 'DD/MM/YYYY'), "
-                                          + ""+u.comboId("ic", comboIC)+", "+u.comboId("localizacao", comboCusto)+", "+getIdConsumivel()+")";
+                                  + "VALUES("+quantidade+", TO_DATE('"+data+"', 'DD/MM/YYYY'), "
+                                          + ""+idIc+", "+idCentroCusto+", "+idConsumivel+")";
                           
                           //Verificar se os dados são iguais entre a tebela temporaria e a de todos
                           
                           PreparedStatement ps = c.fazerConexao().prepareStatement(q,
                                                 new String[] { "ID_SIG" });
 
-                        // local variable to hold auto generated student id
+                        // variavel para guardar o valor
                         Long idSIG = null;
 
-                        // execute the insert statement, if success get the primary key value
+                        // executa a query e se for realizada com exito, guardar o id
                         if (ps.executeUpdate() > 0) {
 
-                            // getGeneratedKeys() returns result set of keys that were auto
-                            // generated
-                            // in our case student_id column
-                            ResultSet generatedKeys = ps.getGeneratedKeys();
+                            ResultSet rs = ps.getGeneratedKeys();
 
-                            // if resultset has data, get the primary key value
-                            // of last inserted record
-                            if (null != generatedKeys && generatedKeys.next()) {
+                            //se rs tem dados, guardar chave primária do ultima dado inserido
+                            if (null != rs && rs.next()) {
 
-                                // voila! we got student id which was generated from sequence
-                                idSIG = generatedKeys.getLong(1);
+                                //id gerado pela sequencia
+                                idSIG = rs.getLong(1);
                             }
                         }
                           
                         stm.executeQuery("INSERT INTO SIG_TEMP (QUANTIDADE,ID_SIG) "
-                                  + "VALUES("+abaterStock.getValue()+", "+idSIG+")");
+                                  + "VALUES("+quantidade+", "+idSIG+")");
                         
-                     JOptionPane.showMessageDialog(rootPane, "Stock abatido!\nPOR ABATER EM SIG!");
+                     JOptionPane.showMessageDialog(rootPane, "Stock abatido!\nPOR ABATER EM SIG!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
                      
                      tabelaStock();
                      tabela.clearSelection();
@@ -606,7 +606,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                       }
                      
                   }else{
-                      JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", HEIGHT);
+                      JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "ERRO", JOptionPane.WARNING_MESSAGE);
                   }
              } catch (SQLException | ClassNotFoundException ex) {
                  JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
@@ -646,10 +646,11 @@ public final class Stock extends javax.swing.JInternalFrame {
             
             table.setRowCount(0);
             
+            Object filtro = textoFiltro.getText().toUpperCase();
             
             //criar uma query e executar
             ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL,( MARCA|| '' || MODELO || '_' || NOME) AS NOME, "+
-                 "STOCK, SIG FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND NOME LIKE '%"+filtro.getText().toUpperCase()+"%'");
+                 "STOCK, SIG FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND NOME LIKE '%"+filtro+"%'");
             
             while(rs.next())
             {
@@ -672,7 +673,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             tabelaStock();
-            filtro.setText("");
+            textoFiltro.setText("");
         } catch (Exception ex) {
             Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -728,7 +729,6 @@ public final class Stock extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane ABATER;
-    private javax.swing.JSpinner abaterStock;
     private javax.swing.JButton btnAbaterSig;
     private javax.swing.JButton btnAbaterStock;
     private javax.swing.JButton btnAdicionar;
@@ -737,30 +737,31 @@ public final class Stock extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRepor;
     private javax.swing.JComboBox<String> comboCusto;
     private javax.swing.JComboBox<String> comboIC;
-    private com.toedter.calendar.JDateChooser dataAbate;
+    private com.toedter.calendar.JDateChooser datePickerDataAbate;
     private com.toedter.calendar.JDateChooser datePickerDataAdicao;
-    private javax.swing.JTextField filtro;
     private javax.swing.JButton igualar;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel labelAbaterStock;
+    private javax.swing.JLabel labelAdicionar;
+    private javax.swing.JLabel labelAdicionarStock;
+    private javax.swing.JLabel labelCentroCusto;
+    private javax.swing.JLabel labelDataAbateStock;
+    private javax.swing.JLabel labelDataAdicionar;
+    private javax.swing.JLabel labelFiltro;
+    private javax.swing.JLabel labelIC;
+    private javax.swing.JLabel labelQuantidade;
+    private javax.swing.JLabel labelSig;
     private javax.swing.JPanel painelSig;
-    private javax.swing.JSpinner sig;
+    private javax.swing.JSpinner spinnerAbaterStock;
+    private javax.swing.JSpinner spinnerSig;
     private javax.swing.JSpinner spinnerStock;
     private javax.swing.JTable tabela;
+    private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
 }

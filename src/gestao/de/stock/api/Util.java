@@ -244,12 +244,25 @@ public class Util {
              
                 }
                 case "impressora" -> {
-                    rs = stm.executeQuery("SELECT a.ID_Impressora FROM IMPRESSORA a, IC b  WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.IC = '"+c.getSelectedItem()+"'");
+                    rs = stm.executeQuery("SELECT a.ID_Impressora FROM IMPRESSORA a, IC b  "
+                                        + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.IC = '"+c.getSelectedItem()+"'");
                     while(rs.next())
                     {
                        id = rs.getInt(1);
                     }
              
+                }
+                case "impressoraMarcaModelo" -> {
+                    String[] result =c.getSelectedItem().toString().split("_");
+                        String marca = result[0];
+                        String modelo = result[1];
+        
+                    rs = stm.executeQuery("SELECT ID_Impressora FROM IMPRESSORA "
+                                        + "WHERE IMPRESSORA.MARCA = '"+marca+"' AND IMPRESSORA.Modelo = '"+modelo+"'");
+                    while(rs.next())
+                    {
+                       id = rs.getInt(1);
+                    }
                 }
                
                 default -> {
@@ -342,6 +355,7 @@ public class Util {
      
      public void apagar(String tabela, int id) throws SQLException{
          stm.execute("DELETE FROM "+tabela.toUpperCase()+" WHERE ID_"+tabela.toUpperCase()+" = "+id+"");
+         
      }
      
      public int getIdConsumivel(String consumivel) throws SQLException

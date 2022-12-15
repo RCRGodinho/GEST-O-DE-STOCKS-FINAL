@@ -5,6 +5,7 @@
 package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.api.Conexao;
+import gestao.de.stock.api.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,11 +24,13 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
+    Util u;
     Statement stm;
     
     
-    public CentroCusto(Conexao c) throws Exception {
+    public CentroCusto(Conexao c, Util u) throws Exception {
         this.c = c;
+        this.u = u;
         stm = this.c.fazerConexao().createStatement();
         
         initComponents();
@@ -53,17 +56,17 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         dados = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        responsavel = new javax.swing.JTextField();
+        labelResponsavel = new javax.swing.JLabel();
+        textoResponsavel = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        texto = new javax.swing.JTextField();
+        labelTexto = new javax.swing.JLabel();
+        textoTexto = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        custo = new javax.swing.JTextField();
+        labelCusto = new javax.swing.JLabel();
+        textoCusto = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        local = new javax.swing.JTextField();
+        labelLocalizacao = new javax.swing.JLabel();
+        textoLocalizacao = new javax.swing.JTextField();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -124,37 +127,37 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
 
         dados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setLabelFor(responsavel);
-        jLabel1.setText("RESPONSAVEL");
-        dados.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 14, 80, -1));
+        labelResponsavel.setLabelFor(textoResponsavel);
+        labelResponsavel.setText("RESPONSAVEL");
+        dados.add(labelResponsavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 14, 80, -1));
 
-        responsavel.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoResponsavel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                responsavelKeyTyped(evt);
+                textoResponsavelKeyTyped(evt);
             }
         });
-        dados.add(responsavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 12, 142, -1));
+        dados.add(textoResponsavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 12, 142, -1));
         dados.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 37, 234, 10));
 
-        jLabel2.setText("TEXTO");
-        dados.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 55, 80, -1));
-        dados.add(texto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 53, 142, -1));
+        labelTexto.setText("TEXTO");
+        dados.add(labelTexto, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 55, 80, -1));
+        dados.add(textoTexto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 53, 142, -1));
         dados.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 78, 234, 10));
 
-        jLabel3.setText("CUSTO");
-        dados.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 96, 80, -1));
+        labelCusto.setText("CUSTO");
+        dados.add(labelCusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 96, 80, -1));
 
-        custo.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoCusto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                custoKeyTyped(evt);
+                textoCustoKeyTyped(evt);
             }
         });
-        dados.add(custo, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 94, 142, -1));
+        dados.add(textoCusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 94, 142, -1));
         dados.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 119, 234, 10));
 
-        jLabel4.setText("LOCALIZACAO");
-        dados.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 135, 80, -1));
-        dados.add(local, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 135, 142, -1));
+        labelLocalizacao.setText("LOCALIZACAO");
+        dados.add(labelLocalizacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 135, 80, -1));
+        dados.add(textoLocalizacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 135, 142, -1));
 
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,16 +167,16 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         });
 
         btnEditar.setText("Editar");
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
         btnApagar.setText("Apagar");
-        btnApagar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnApagarMouseClicked(evt);
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
             }
         });
 
@@ -260,82 +263,147 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
     
     public void limparCampos(){
         
-        responsavel.setText("");
-        texto.setText("");
-        custo.setText("");
-        local.setText("");
-        local.setText("");
+        textoResponsavel.setText("");
+        textoTexto.setText("");
+        textoCusto.setText("");
+        textoLocalizacao.setText("");
+        textoLocalizacao.setText("");
     }
     
     void buscarDados(){
         
+        //Buscar os dados à tabela e disponibilizar-los para edição
         if(tabela.getSelectedRow() == -1)
          {
-           JOptionPane.showMessageDialog(rootPane, "Selecione um dado para editar!");
+           JOptionPane.showMessageDialog(rootPane, "Selecione um dado para editar!", "ERRO", JOptionPane.WARNING_MESSAGE);
          }else{
             int row = tabela.getSelectedRow();
             
-            responsavel.setText(tabela.getModel().getValueAt(row, 1).toString());
-            texto.setText(tabela.getModel().getValueAt(row, 2).toString());
-            custo.setText(tabela.getModel().getValueAt(row, 3).toString());
-            local.setText(tabela.getModel().getValueAt(row, 4).toString());
+            textoResponsavel.setText(tabela.getModel().getValueAt(row, 1).toString());
+            textoTexto.setText(tabela.getModel().getValueAt(row, 2).toString());
+            textoCusto.setText(tabela.getModel().getValueAt(row, 3).toString());
+            textoLocalizacao.setText(tabela.getModel().getValueAt(row, 4).toString());
         }
     }
     
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         // TODO add your handling code here:
+        buscarDados();
         
-        if(responsavel.getText().isEmpty() || texto.getText().isEmpty() || local.getText().isEmpty() || local.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
-        }else{
-        
-        int row = tabela.getSelectedRow();
-               String value = tabela.getModel().getValueAt(row, 0).toString();
-        
-        try{
-             
-             
-        stm.executeUpdate("UPDATE CENTRO_CUSTO SET RESPONSAVEL = '"+responsavel.getText().toUpperCase()+"' ,TEXTO = '"+texto.getText().toUpperCase()+"' , CUSTO = "+Integer.parseInt(custo.getText())+" , LOCALIZACAO = '"+local.getText().toUpperCase()+"' WHERE ID_CENTRO_CUSTO = "+Integer.parseInt(value)+"");
-             
-             
-             JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
-                
-             tabela.clearSelection();
-             limparCampos();
-             tabelaCentro_Custo();
-        } catch (ClassNotFoundException| SQLException ex) {
-            
-            JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(CentroCusto.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-            }
-        
-    }//GEN-LAST:event_btnEditarMouseClicked
+    }//GEN-LAST:event_tabelaMouseClicked
 
-    private void btnApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseClicked
+    private void textoResponsavelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoResponsavelKeyTyped
+        // TODO add your handling code here:
+        if(textoResponsavel.getText().length()>=13)
+    {
+        //nna.setText(nna.getText().substring(0, 13));
+    }
+    }//GEN-LAST:event_textoResponsavelKeyTyped
+
+     
+    
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
         
+        //Verificar se os campos estão vazios.
+        if(textoResponsavel.getText().isEmpty() || textoTexto.getText().isEmpty()|| textoCusto.getText().isEmpty() || textoLocalizacao.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }
+            else{
+                try {
+                    Object responsavel = textoResponsavel.getText().toUpperCase();
+                    Object texto = textoTexto.getText().toUpperCase();
+                    Object centroCusto = Integer.parseInt(textoCusto.getText());
+                    Object localizacao = textoLocalizacao.getText().toUpperCase();
+
+                 stm.executeUpdate("INSERT INTO CENTRO_CUSTO(RESPONSAVEL,TEXTO, CUSTO, LOCALIZACAO) "
+                                 + "VALUES('"+responsavel+"' , '"+texto+"' , "+centroCusto+" , "+localizacao+")");
+
+
+                 JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    limparCampos();
+                    tabelaCentro_Custo();
+
+                } catch (SQLException | ClassNotFoundException ex) {
+
+                    JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(rootPane, "ERRO!");
+                }
+        }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void tabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaFocusLost
+        // TODO add your handling code here:
+        //tabela.getSelectionModel().clearSelection();
+        btnAdicionar.setEnabled(true);
+        
+    }//GEN-LAST:event_tabelaFocusLost
+
+    private void textoCustoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoCustoKeyTyped
+        // TODO add your handling code here:
+        if(textoCusto.getText().length()>=8)
+        {
+       // umc.setText(umc.getText().substring(0, 8));
+        }
+    }//GEN-LAST:event_textoCustoKeyTyped
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+        if(textoResponsavel.getText().isEmpty() || textoTexto.getText().isEmpty() || textoLocalizacao.getText().isEmpty() || textoLocalizacao.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+         int row = tabela.getSelectedRow();
+            String value = tabela.getModel().getValueAt(row, 0).toString();
+        
+            try{
+             Object responsavel = textoResponsavel.getText().toUpperCase();
+             Object texto = textoTexto.getText().toUpperCase();
+             Object centroCusto = Integer.parseInt(textoCusto.getText());
+             Object localizacao = textoLocalizacao.getText().toUpperCase();
+             Object idCentroCusto = Integer.parseInt(value);
+                
+             stm.executeUpdate("UPDATE CENTRO_CUSTO SET RESPONSAVEL = '"+responsavel+"', "
+                             + "TEXTO = '"+texto+"' , CUSTO = "+centroCusto+" , LOCALIZACAO = '"+localizacao+"' "
+                             + "WHERE ID_CENTRO_CUSTO = "+idCentroCusto+"");
+             
+                JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                 tabela.clearSelection();
+                 limparCampos();
+                 tabelaCentro_Custo();
+                 
+            } catch (ClassNotFoundException| SQLException ex) {
+
+                JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
+
+            } catch (Exception ex) {
+                Logger.getLogger(CentroCusto.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+                }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         //verificar se o user selecionou algum dado
         if(tabela.getSelectedRow() == -1)
          {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um dado para apagar!", "ERRO", JOptionPane.WARNING_MESSAGE);
          }else{
             //buscar o valor do ID no dado selecionado 
             
             int row = tabela.getSelectedRow();
                int value = Integer.parseInt(tabela.getModel().getValueAt(row, 0).toString());
                 
-             
+             //Confirmar a opção escolhida e apagar o registo
              try {
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
-                      stm.executeQuery("DELETE FROM CENTRO_CUSTO WHERE ID_CENTRO_CUSTO = "+value+"");
-                     JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
-                     
+                      u.apagar("centro_custo", value);
+                      JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                      tabelaCentro_Custo();
                      tabela.clearSelection();
                      limparCampos();
@@ -348,67 +416,7 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
             }
              
          }
-
-    }//GEN-LAST:event_btnApagarMouseClicked
-
-    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-        // TODO add your handling code here:
-        buscarDados();
-        
-    }//GEN-LAST:event_tabelaMouseClicked
-
-    private void responsavelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_responsavelKeyTyped
-        // TODO add your handling code here:
-        if(responsavel.getText().length()>=13)
-    {
-        //nna.setText(nna.getText().substring(0, 13));
-    }
-    }//GEN-LAST:event_responsavelKeyTyped
-
-     
-    
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        // TODO add your handling code here:
-        
-        //Verificar se os campos estão vazios.
-        if(responsavel.getText().isEmpty() || texto.getText().isEmpty()|| custo.getText().isEmpty() || local.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
-        }else{
-           
-        try {
-             
-            stm.executeUpdate("INSERT INTO CENTRO_CUSTO(RESPONSAVEL,TEXTO, CUSTO, LOCALIZACAO) VALUES('"+responsavel.getText().toUpperCase()+"' , '"+texto.getText().toUpperCase()+"' , "+Integer.parseInt(custo.getText())+" , "+local.getText().toUpperCase()+")");
-             
-             
-             JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
-    
-                    limparCampos();
-                    tabelaCentro_Custo();
-             
-        } catch (SQLException | ClassNotFoundException ex) {
-            
-            JOptionPane.showMessageDialog(rootPane, "ERRO!\n"+ex);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO!");
-        }
-        }
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
-    private void tabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaFocusLost
-        // TODO add your handling code here:
-        //tabela.getSelectionModel().clearSelection();
-        btnAdicionar.setEnabled(true);
-        
-    }//GEN-LAST:event_tabelaFocusLost
-
-    private void custoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_custoKeyTyped
-        // TODO add your handling code here:
-        if(custo.getText().length()>=8)
-    {
-       // umc.setText(umc.getText().substring(0, 8));
-    }
-    }//GEN-LAST:event_custoKeyTyped
+    }//GEN-LAST:event_btnApagarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -416,19 +424,19 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JPanel butoes;
-    private javax.swing.JTextField custo;
     private javax.swing.JPanel dados;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField local;
-    private javax.swing.JTextField responsavel;
+    private javax.swing.JLabel labelCusto;
+    private javax.swing.JLabel labelLocalizacao;
+    private javax.swing.JLabel labelResponsavel;
+    private javax.swing.JLabel labelTexto;
     private javax.swing.JTable tabela;
-    private javax.swing.JTextField texto;
+    private javax.swing.JTextField textoCusto;
+    private javax.swing.JTextField textoLocalizacao;
+    private javax.swing.JTextField textoResponsavel;
+    private javax.swing.JTextField textoTexto;
     // End of variables declaration//GEN-END:variables
 }

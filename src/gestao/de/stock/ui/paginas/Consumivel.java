@@ -41,6 +41,8 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         initComponents();
         setPainelFixo();
         tabelaConsumivel();
+        
+        //Buscar a listagem das impressoras e colocar na combobox
         u.comboOracle(u.lista("impressora"),comboImpressora);
     }
     
@@ -62,19 +64,19 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         dados = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        nna = new javax.swing.JTextField();
+        labelNNA = new javax.swing.JLabel();
+        textoNNA = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        nome = new javax.swing.JTextField();
+        labelNome = new javax.swing.JLabel();
+        textoNome = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        preco = new javax.swing.JTextField();
+        labelPreco = new javax.swing.JLabel();
+        textoPreco = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
-        jLabel5 = new javax.swing.JLabel();
-        referencia = new javax.swing.JTextField();
+        labelReferencia = new javax.swing.JLabel();
+        textoReferencia = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
+        labelImpressora = new javax.swing.JLabel();
         comboImpressora = new javax.swing.JComboBox<>();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
@@ -135,28 +137,28 @@ public final class Consumivel extends javax.swing.JInternalFrame {
             tabela.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        jLabel1.setLabelFor(nna);
-        jLabel1.setText("NNA");
+        labelNNA.setLabelFor(textoNNA);
+        labelNNA.setText("NNA");
 
-        nna.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoNNA.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                nnaKeyTyped(evt);
+                textoNNAKeyTyped(evt);
             }
         });
 
-        jLabel2.setText("NOME");
+        labelNome.setText("NOME");
 
-        jLabel4.setText("PREÇO");
+        labelPreco.setText("PREÇO");
 
-        jLabel5.setText("REFERENCIA");
+        labelReferencia.setText("REFERENCIA");
 
-        referencia.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoReferencia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                referenciaKeyTyped(evt);
+                textoReferenciaKeyTyped(evt);
             }
         });
 
-        jLabel6.setText("IMPRESSORA");
+        labelImpressora.setText("IMPRESSORA");
 
         comboImpressora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -168,27 +170,27 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                 .addGap(12, 12, 12)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelNNA, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(nna, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoNNA, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(referencia, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(dadosLayout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(comboImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -200,35 +202,35 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jLabel1))
-                    .addComponent(nna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelNNA))
+                    .addComponent(textoNNA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jLabel2))
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelNome))
+                    .addComponent(textoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelPreco)
+                    .addComponent(textoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(referencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelReferencia)
+                    .addComponent(textoReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dadosLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(jLabel6))
+                        .addComponent(labelImpressora))
                     .addComponent(comboImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -240,16 +242,16 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         });
 
         btnEditar.setText("Editar");
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
         btnApagar.setText("Apagar");
-        btnApagar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnApagarMouseClicked(evt);
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
             }
         });
 
@@ -311,7 +313,8 @@ public final class Consumivel extends javax.swing.JInternalFrame {
              
          
              //criar uma query e executar
-         ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL, NNA, NOME, PRECO, REFERENCIA, (MARCA || '_' || MODELO) AS IMPRESSORA FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
+         ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL, NNA, NOME, PRECO, REFERENCIA, (MARCA || '_' || MODELO) AS IMPRESSORA "
+                                       + "FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
              
            while(rs.next())
            {
@@ -332,37 +335,110 @@ public final class Consumivel extends javax.swing.JInternalFrame {
     
     public void limparCampos(){
         
-        nna.setText("");
-        nome.setText("");
-        preco.setText("");
-        referencia.setText("");
+        textoNNA.setText("");
+        textoNome.setText("");
+        textoPreco.setText("");
+        textoReferencia.setText("");
     }
     
     void buscarDados(){
         
+        //Buscar os dados à tabela e disponibilizar-los para edição
         if(tabela.getSelectedRow() == -1)
          {
            JOptionPane.showMessageDialog(rootPane, "Selecione um dado para editar!");
          }else{
             int row = tabela.getSelectedRow();
             
-            nna.setText(tabela.getModel().getValueAt(row, 1).toString());
-            nome.setText(tabela.getModel().getValueAt(row, 2).toString());
-            preco.setText(tabela.getModel().getValueAt(row, 3).toString());
-            referencia.setText(tabela.getModel().getValueAt(row,4).toString());
+            textoNNA.setText(tabela.getModel().getValueAt(row, 1).toString());
+            textoNome.setText(tabela.getModel().getValueAt(row, 2).toString());
+            textoPreco.setText(tabela.getModel().getValueAt(row, 3).toString());
+            textoReferencia.setText(tabela.getModel().getValueAt(row,4).toString());
             comboImpressora.setSelectedItem(tabela.getValueAt(row, 5).toString());
         }
     }
     
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // TODO add your handling code here:
+        buscarDados();
+        
+    }//GEN-LAST:event_tabelaMouseClicked
+
+     
+    
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
         
-        if(nna.getText().isEmpty() || nome.getText().isEmpty() || preco.getText().isEmpty() || referencia.getText().isEmpty())
+        //Verificar se os campos estão vazios.
+        if(textoNNA.getText().isEmpty() || textoNome.getText().isEmpty() || textoPreco.getText().isEmpty() || textoReferencia.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
         }else{
             //Verificar se todos têm o mesmo tamanho.
-            if(nna.getText().length()<13|| referencia.getText().length()<8){
+            if(textoNNA.getText().length()<12 || textoReferencia.getText().length()<7){
+             JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
+            }
+            else{
+            
+        
+        try {
+            Object nna = textoNNA.getText().toUpperCase();
+            Object nome = textoNome.getText().toUpperCase();
+            Object preco = Float.parseFloat(textoPreco.getText());
+            Object referencia  = Integer.parseInt(textoReferencia.getText());
+            Object idImpressora = u.comboId("impressoraMarcaModelo", comboImpressora);
+             
+            //Query de insereção, inicializando o stock a 0
+             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora,STOCK,SIG) "
+                             + "VALUES('"+nna+"' , '"+nome+"' , "+preco+" , "+referencia+" , "+idImpressora+",0,0)");
+             
+             JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
+    
+                    limparCampos();
+                    tabelaConsumivel();
+             
+        } catch (SQLException | ClassNotFoundException ex) {
+            
+            JOptionPane.showMessageDialog(rootPane, "ERRO na query!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "ERRO!");
+        }
+        }
+        }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void tabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaFocusLost
+        // TODO add your handling code here:
+        //tabela.getSelectionModel().clearSelection();
+        btnAdicionar.setEnabled(true);
+        
+    }//GEN-LAST:event_tabelaFocusLost
+
+    private void textoReferenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoReferenciaKeyTyped
+        // TODO add your handling code here:
+        if(textoReferencia.getText().length()>=8)
+        {
+            //referencia.setText(referencia.getText().substring(0, 8));
+        }
+    }//GEN-LAST:event_textoReferenciaKeyTyped
+
+    private void textoNNAKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNNAKeyTyped
+        // TODO add your handling code here:
+        if(textoNNA.getText().length()>=13)
+        {
+            //nna.setText(nna.getText().substring(0, 13));
+        }
+    }//GEN-LAST:event_textoNNAKeyTyped
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+        
+        if(textoNNA.getText().isEmpty() || textoNome.getText().isEmpty() || textoPreco.getText().isEmpty() || textoReferencia.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
+        }else{
+            //Verificar se todos têm o mesmo tamanho.
+            if(textoNNA.getText().length()<13|| textoReferencia.getText().length()<8){
              JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
             }
             else{
@@ -371,10 +447,16 @@ public final class Consumivel extends javax.swing.JInternalFrame {
                String value = tabela.getModel().getValueAt(row, 0).toString();
         
         try{
-             stm = c.fazerConexao().createStatement();
+            Object nna = textoNNA.getText().toUpperCase();
+            Object nome = textoNome.getText().toUpperCase();
+            Object preco = Float.parseFloat(textoPreco.getText());
+            Object referencia  = Integer.parseInt(textoReferencia.getText());
+            Object idImpressora = u.comboId("impressoraMarcaModelo", comboImpressora);
+            Object idConsumivel = Integer.parseInt(value);
              
-             
-        stm.executeUpdate("UPDATE Consumivel SET NNA = '"+nna.getText().toUpperCase()+"' ,NOME = '"+nome.getText().toUpperCase()+"' , PRECO = "+Float.parseFloat(preco.getText())+" , REFERENCIA = "+Integer.parseInt(referencia.getText())+" , ID_IMPRESSORA ="+comboSplit()+" WHERE ID_CONSUMIVEL = "+Integer.parseInt(value)+"");
+        stm.executeUpdate("UPDATE Consumivel SET NNA = '"+nna+"' ,NOME = '"+nome+"', "
+                        + "PRECO = "+preco+" , REFERENCIA = "+referencia+" , ID_IMPRESSORA ="+idImpressora+" "
+                        + "WHERE ID_CONSUMIVEL = "+idConsumivel+"");
              
              
              JOptionPane.showMessageDialog(rootPane, "Dado editado com sucesso!");
@@ -392,10 +474,10 @@ public final class Consumivel extends javax.swing.JInternalFrame {
             }
         }
         
-    }//GEN-LAST:event_btnEditarMouseClicked
+    }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void btnApagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApagarMouseClicked
-        // TODO add your handling code here:
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        
         
         //verificar se o user selecionou algum dado
         if(tabela.getSelectedRow() == -1)
@@ -406,14 +488,13 @@ public final class Consumivel extends javax.swing.JInternalFrame {
             
             int row = tabela.getSelectedRow();
                String value = tabela.getModel().getValueAt(row, 0).toString();
-                
+                int idConsumivel = Integer.parseInt(value);
              
              try {
-                 stm = c.fazerConexao().createStatement();
                 int op = JOptionPane.showConfirmDialog(rootPane, "Tem a certeza?");
                  if(op == 0)
                  {
-                      u.apagar("CONSUMIVEL", Integer.parseInt(value));
+                      u.apagar("CONSUMIVEL", idConsumivel);
                       
                      JOptionPane.showMessageDialog(rootPane, "Dado apagado com sucesso!");
                      tabelaConsumivel();
@@ -429,94 +510,9 @@ public final class Consumivel extends javax.swing.JInternalFrame {
              
          }
 
-    }//GEN-LAST:event_btnApagarMouseClicked
+    }//GEN-LAST:event_btnApagarActionPerformed
 
-    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-        // TODO add your handling code here:
-        buscarDados();
-        
-    }//GEN-LAST:event_tabelaMouseClicked
-
-     
-    
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        // TODO add your handling code here:
-        
-        //Verificar se os campos estão vazios.
-        if(nna.getText().isEmpty() || nome.getText().isEmpty() || preco.getText().isEmpty() || referencia.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!");
-        }else{
-            //Verificar se todos têm o mesmo tamanho.
-            if(nna.getText().length()<12 || referencia.getText().length()<7){
-             JOptionPane.showMessageDialog(rootPane, "Há dados que não têm o tamanho suficiente");
-            }
-            else{
-            
-        
-        try {
-             
-             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora,STOCK,SIG) VALUES('"+nna.getText().toUpperCase()+"' , '"+nome.getText().toUpperCase()+"' , "+Float.parseFloat(preco.getText())+" , "+Integer.parseInt(referencia.getText())+" , "+comboSplit()+",0,0)");
-             
-             JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
-    
-                    limparCampos();
-                    tabelaConsumivel();
-             
-        } catch (SQLException | ClassNotFoundException ex) {
-            
-            JOptionPane.showMessageDialog(rootPane, "ERRO!");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO!");
-        }
-        }
-        }
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
-    private void tabelaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaFocusLost
-        // TODO add your handling code here:
-        //tabela.getSelectionModel().clearSelection();
-        btnAdicionar.setEnabled(true);
-        
-    }//GEN-LAST:event_tabelaFocusLost
-
-    private void referenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_referenciaKeyTyped
-        // TODO add your handling code here:
-        if(referencia.getText().length()>=8)
-        {
-            //referencia.setText(referencia.getText().substring(0, 8));
-        }
-    }//GEN-LAST:event_referenciaKeyTyped
-
-    private void nnaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nnaKeyTyped
-        // TODO add your handling code here:
-        if(nna.getText().length()>=13)
-        {
-            //nna.setText(nna.getText().substring(0, 13));
-        }
-    }//GEN-LAST:event_nnaKeyTyped
-
-    private int comboSplit(){
-        
-        String[] result =comboImpressora.getSelectedItem().toString().split("_");
-            String marca = result[0];
-            String modelo = result[1];
-        
-        try{
-             ResultSet rs;
-             int id = 0;
-             rs = stm.executeQuery("SELECT ID_Impressora FROM IMPRESSORA WHERE IMPRESSORA.MARCA = '"+marca+"' AND IMPRESSORA.Modelo = '"+modelo+"'");
-             while(rs.next())
-             {
-                id = rs.getInt(1);
-             }
-             return id;
-             
-        }catch(Exception exp){
-            return 0;
-        }
-        
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
@@ -525,20 +521,20 @@ public final class Consumivel extends javax.swing.JInternalFrame {
     private javax.swing.JPanel butoes;
     private javax.swing.JComboBox<String> comboImpressora;
     private javax.swing.JPanel dados;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextField nna;
-    private javax.swing.JTextField nome;
-    private javax.swing.JTextField preco;
-    private javax.swing.JTextField referencia;
+    private javax.swing.JLabel labelImpressora;
+    private javax.swing.JLabel labelNNA;
+    private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelPreco;
+    private javax.swing.JLabel labelReferencia;
     private javax.swing.JTable tabela;
+    private javax.swing.JTextField textoNNA;
+    private javax.swing.JTextField textoNome;
+    private javax.swing.JTextField textoPreco;
+    private javax.swing.JTextField textoReferencia;
     // End of variables declaration//GEN-END:variables
 }

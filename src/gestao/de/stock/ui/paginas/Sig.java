@@ -38,11 +38,12 @@ public final class Sig extends javax.swing.JInternalFrame {
         stm = c.fazerConexao().createStatement();
         renderer = new TableColourCellRenderer("Sig",u);
         
-        //painel fixo
+        
         initComponents();
+        //painel fixo
         setPainelFixo();
         
-        //definir as comboboxes
+        //definir as tabelas
         tabelaTodos();
         tabelaPorAbater();
         
@@ -69,7 +70,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         porAbater = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaSig = new javax.swing.JTable();
-        progresso = new javax.swing.JSpinner();
+        spinnerProgresso = new javax.swing.JSpinner();
         btnAdicionar = new javax.swing.JButton();
         todos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -144,7 +145,7 @@ public final class Sig extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 918, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progresso)
+                    .addComponent(spinnerProgresso)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -154,7 +155,7 @@ public final class Sig extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(porAbaterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(porAbaterLayout.createSequentialGroup()
-                        .addComponent(progresso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinnerProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -319,10 +320,10 @@ public final class Sig extends javax.swing.JInternalFrame {
          
          if(tabelaSig.getRowCount() == 0)
          {
-             progresso.setEnabled(false);
+             spinnerProgresso.setEnabled(false);
              btnAdicionar.setEnabled(false);
          }else{
-             progresso.setEnabled(true);
+             spinnerProgresso.setEnabled(true);
              btnAdicionar.setEnabled(true);
          }
 
@@ -330,7 +331,7 @@ public final class Sig extends javax.swing.JInternalFrame {
     
      public int buscarDados(String x) throws SQLException
     {
-        //buscar dados já existentes e inserir-los nas respetivas vaariaveis
+        //buscar dados já existentes e inserir-los nas respetivas variaveis
         ResultSet rs = stm.executeQuery("SELECT "+x+" FROM SIG_TEMP WHERE ID_SIG_TEMP = "+getId()+"");
             
         int valor = 0;
@@ -347,6 +348,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         if(tabelaSig.getSelectedRow()!= -1)
          {
             int row = tabelaSig.getSelectedRow();
+            //Buscar id a partir da tabela
                int value = Integer.parseInt(tabelaSig.getModel().getValueAt(row, 0).toString());
         return value;
          }
@@ -358,6 +360,7 @@ public final class Sig extends javax.swing.JInternalFrame {
          {
             int row = tabelaSig.getSelectedRow();
                String value = tabelaSig.getModel().getValueAt(row, 4).toString();
+               //função de atribuição de id a partir do nome 
                int cons = u.getIdConsumivel(value);
              
              return cons;
@@ -388,7 +391,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         {
         try {
             int stock= buscarDados("QUANTIDADE");
-            int valorExistente = Integer.parseInt(progresso.getValue().toString());
+            int valorExistente = Integer.parseInt(spinnerProgresso.getValue().toString());
             
             int valor = buscarDados("PROGRESSO") + valorExistente;
             
@@ -400,14 +403,14 @@ public final class Sig extends javax.swing.JInternalFrame {
                 u.apagar("SIG_TEMP", getId());
                 u.abaterSig(valor, getIdConsumivel());
                 
-                JOptionPane.showMessageDialog(rootPane, "Quantidade abatida!", "Aviso", 1);
-                progresso.setValue(0);
+                JOptionPane.showMessageDialog(rootPane, "Quantidade abatida!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                spinnerProgresso.setValue(0);
             }else if(valor>stock){
-                JOptionPane.showMessageDialog(rootPane, "Valor utrapassado!", "Aviso", 0);
+                JOptionPane.showMessageDialog(rootPane, "Valor utrapassado!", "Aviso", JOptionPane.WARNING_MESSAGE);
                 
             }else if(valor<stock){
                 stm.executeUpdate("UPDATE SIG_TEMP SET PROGRESSO = "+valor+" WHERE ID_SIG_TEMP = "+getId()+"");
-                progresso.setValue(0);
+                spinnerProgresso.setValue(0);
             }
             
             tabelaPorAbater();
@@ -417,7 +420,7 @@ public final class Sig extends javax.swing.JInternalFrame {
             Logger.getLogger(Sig.class.getName()).log(Level.SEVERE, null, ex);
         }
         }else{
-            JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "Aviso", 2);
+            JOptionPane.showMessageDialog(rootPane, "Selecione um dado da tabela!", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
@@ -431,7 +434,7 @@ public final class Sig extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel porAbater;
-    private javax.swing.JSpinner progresso;
+    private javax.swing.JSpinner spinnerProgresso;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable tabelaSig;
     private javax.swing.JTable tabelaTodos;

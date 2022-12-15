@@ -149,31 +149,31 @@
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="labelNNA" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="nna" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="textoNNA" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jSeparator1" min="-2" pref="234" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel2" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="labelNome" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="nome" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="textoNome" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jSeparator2" min="-2" pref="234" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel4" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="labelPreco" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="preco" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="textoPreco" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jSeparator4" min="-2" pref="234" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel5" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="labelReferencia" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="referencia" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="textoReferencia" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jSeparator5" min="-2" pref="234" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel6" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="labelImpressora" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                           <Component id="comboImpressora" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
@@ -189,9 +189,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNNA" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="nna" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoNNA" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -199,23 +199,23 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNome" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="nome" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoNome" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <Component id="preco" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelPreco" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoPreco" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <Component id="referencia" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelReferencia" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoReferencia" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
@@ -223,7 +223,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelImpressora" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="comboImpressora" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -232,52 +232,52 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="labelNNA">
           <Properties>
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="nna"/>
+              <ComponentRef name="textoNNA"/>
             </Property>
             <Property name="text" type="java.lang.String" value="NNA"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nna">
+        <Component class="javax.swing.JTextField" name="textoNNA">
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nnaKeyTyped"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoNNAKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="labelNome">
           <Properties>
             <Property name="text" type="java.lang.String" value="NOME"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nome">
+        <Component class="javax.swing.JTextField" name="textoNome">
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="labelPreco">
           <Properties>
             <Property name="text" type="java.lang.String" value="PRE&#xc7;O"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="preco">
+        <Component class="javax.swing.JTextField" name="textoPreco">
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator4">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="labelReferencia">
           <Properties>
             <Property name="text" type="java.lang.String" value="REFERENCIA"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="referencia">
+        <Component class="javax.swing.JTextField" name="textoReferencia">
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="referenciaKeyTyped"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoReferenciaKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator5">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="labelImpressora">
           <Properties>
             <Property name="text" type="java.lang.String" value="IMPRESSORA"/>
           </Properties>
@@ -339,7 +339,7 @@
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEditarMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnApagar">
@@ -347,7 +347,7 @@
             <Property name="text" type="java.lang.String" value="Apagar"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnApagarMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnApagarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
