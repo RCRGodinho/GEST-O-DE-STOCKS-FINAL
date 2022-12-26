@@ -6,7 +6,7 @@ package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.ui.pop_ups.Pop_Up_Ic;
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,11 +25,11 @@ public final class Impressora extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm;
     
     
-    public Impressora(Conexao c, Util u) throws Exception {
+    public Impressora(Conexao c, Utilidades u) throws Exception {
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();

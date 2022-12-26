@@ -6,9 +6,10 @@ package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.ui.pop_ups.Pop_Up_Configuração;
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
 public class GestãoDeStockFINAL extends javax.swing.JFrame {
     
     Conexao c = new Conexao();
-    Util u;
+    Utilidades u;
 
      Color preto = new Color(0,0,0);; 
      Color branco = new Color(232, 236, 244);
@@ -37,7 +38,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
      * @throws java.lang.ClassNotFoundException
      */
     public GestãoDeStockFINAL() throws SQLException, ClassNotFoundException {
-        this.u = new Util(c);
+        this.u = new Utilidades(c);
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -77,6 +78,10 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         jMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuInportConsumiveis = new javax.swing.JMenuItem();
+        menuInportImpressoras = new javax.swing.JMenuItem();
+        menuInportCentrosCusto = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -305,7 +310,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
                 .addComponent(paginas))
         );
 
-        jMenu.setText("Aplicação");
+        jMenu.setText("Servidor");
 
         jMenuItem1.setText("Configurações");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -316,6 +321,34 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         jMenu.add(jMenuItem1);
 
         menuBar.add(jMenu);
+
+        jMenu1.setText("Importação");
+
+        menuInportConsumiveis.setText("Consumiveis");
+        menuInportConsumiveis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuInportConsumiveisActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuInportConsumiveis);
+
+        menuInportImpressoras.setText("Impressoras");
+        menuInportImpressoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuInportImpressorasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuInportImpressoras);
+
+        menuInportCentrosCusto.setText("Centros Custo");
+        menuInportCentrosCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuInportCentrosCustoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuInportCentrosCusto);
+
+        menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
 
@@ -729,6 +762,30 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pagina6MouseExited
 
+    private void menuInportConsumiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportConsumiveisActionPerformed
+        try {
+            u.importarExcel("consumivel");
+        } catch (IOException ex) {
+            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuInportConsumiveisActionPerformed
+
+    private void menuInportImpressorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportImpressorasActionPerformed
+        try {
+            u.importarExcel("impressora");
+        } catch (IOException ex) {
+            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuInportImpressorasActionPerformed
+
+    private void menuInportCentrosCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportCentrosCustoActionPerformed
+        try {
+            u.importarExcel("centro_custo");
+        } catch (IOException ex) {
+            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuInportCentrosCustoActionPerformed
+
     
     
     /**
@@ -775,10 +832,14 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel logoMainn;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuInportCentrosCusto;
+    private javax.swing.JMenuItem menuInportConsumiveis;
+    private javax.swing.JMenuItem menuInportImpressoras;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel pagina1;
     private javax.swing.JLabel pagina2;

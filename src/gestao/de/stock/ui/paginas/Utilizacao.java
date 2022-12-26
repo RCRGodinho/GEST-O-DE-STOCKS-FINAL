@@ -6,7 +6,7 @@ package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.ui.pop_ups.Pop_Up_Analise;
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,12 +28,12 @@ public final class Utilizacao extends javax.swing.JInternalFrame {
 //Inicializar os contrutores
     
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm ;
         
     boolean en;
     
-    public Utilizacao(Conexao c, Util u) throws Exception {
+    public Utilizacao(Conexao c, Utilidades u) throws Exception {
         //variaveis de conexao
         this.c = c;
         this.u = u;

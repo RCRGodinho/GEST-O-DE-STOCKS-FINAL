@@ -5,7 +5,7 @@
 package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,11 +24,11 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm;
     
     
-    public CentroCusto(Conexao c, Util u) throws Exception {
+    public CentroCusto(Conexao c, Utilidades u) throws Exception {
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();

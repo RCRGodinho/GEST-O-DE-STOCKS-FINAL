@@ -7,7 +7,7 @@ package gestao.de.stock.ui.paginas;
 import gestao.de.stock.ui.pop_ups.Pop_Up_AnaliseAbate;
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.TableColourCellRenderer;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,12 +26,12 @@ public final class Sig extends javax.swing.JInternalFrame {
 //Inicializar os contrutores
     
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm ;
     TableColourCellRenderer renderer;
         
     
-    public Sig(Conexao c,Util u) throws Exception {
+    public Sig(Conexao c,Utilidades u) throws Exception {
         //variaveis de conexao e utlidades
         this.c = c;
         this.u = u;
@@ -382,7 +382,7 @@ public final class Sig extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        u.exportarExcel(tabelaSig);
+        u.exportarExcel(tabelaTodos);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed

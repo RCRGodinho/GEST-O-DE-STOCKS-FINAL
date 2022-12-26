@@ -5,7 +5,7 @@
 package gestao.de.stock.ui.paginas.analise;
 
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.awt.BorderLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +28,7 @@ public class AnaliseStock extends javax.swing.JFrame {
     String dataFim;
     
      Conexao c;
-     Util u;
+     Utilidades u;
         Statement stm;
 
     /**
@@ -40,7 +40,7 @@ public class AnaliseStock extends javax.swing.JFrame {
      * @param u
      * @throws java.lang.Exception
      */
-    public AnaliseStock(String consumivel, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
+    public AnaliseStock(String consumivel, String dataInicio, String dataFim, Conexao c, Utilidades u) throws Exception {
         initComponents();
         this.consumivel = consumivel;
         

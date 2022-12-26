@@ -5,7 +5,7 @@
 package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,7 +24,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm ;
     
     /**
@@ -33,7 +33,7 @@ public final class Consumivel extends javax.swing.JInternalFrame {
      * @param u
      * @throws Exception
      */
-    public Consumivel(Conexao c,Util u) throws Exception {
+    public Consumivel(Conexao c,Utilidades u) throws Exception {
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();

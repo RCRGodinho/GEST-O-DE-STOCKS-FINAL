@@ -17,9 +17,9 @@ import javax.swing.table.TableCellRenderer;
  */
 public class TableColourCellRenderer implements TableCellRenderer{
     String tabela;
-    Util u;
+    Utilidades u;
     
-    public TableColourCellRenderer(String tabela,Util u) {
+    public TableColourCellRenderer(String tabela,Utilidades u) {
         this.tabela = tabela;
         this.u = u;
     }

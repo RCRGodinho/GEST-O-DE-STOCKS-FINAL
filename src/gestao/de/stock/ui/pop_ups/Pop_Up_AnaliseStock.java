@@ -5,7 +5,7 @@
 package gestao.de.stock.ui.pop_ups;
 
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import gestao.de.stock.ui.paginas.analise.AnaliseStock;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -24,7 +24,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
     //Variaveis
     
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm ;
 
     /**
@@ -33,7 +33,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
      * @param u
      * @throws java.lang.Exception
      */
-    public Pop_Up_AnaliseStock(Conexao c,Util u) throws Exception{
+    public Pop_Up_AnaliseStock(Conexao c,Utilidades u) throws Exception{
         this.c = c;
         this.u = u;
         stm = c.fazerConexao().createStatement();

@@ -6,7 +6,7 @@ package gestao.de.stock.ui.paginas;
 
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.TableColourCellRenderer;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import gestao.de.stock.ui.pop_ups.Pop_Up_AnaliseStock;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
@@ -28,13 +28,13 @@ public final class Stock extends javax.swing.JInternalFrame {
 
     //Inicializar os contrutores
     Conexao c;
-    Util u;
+    Utilidades u;
     Statement stm;
     int stockAtivo;
     int sigAtivo;
     TableColourCellRenderer renderer;
     
-    public Stock(Conexao c,Util u) throws Exception {
+    public Stock(Conexao c,Utilidades u) throws Exception {
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();

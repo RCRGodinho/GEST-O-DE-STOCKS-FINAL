@@ -5,7 +5,7 @@
 package gestao.de.stock.ui.paginas.analise;
 
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Util;
+import gestao.de.stock.api.Utilidades;
 import java.awt.BorderLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +29,7 @@ public class AnaliseAbate extends javax.swing.JFrame {
     String dataFim;
     
      Conexao c;
-     Util u;
+     Utilidades u;
         Statement stm;
 
     /**
@@ -42,7 +42,7 @@ public class AnaliseAbate extends javax.swing.JFrame {
      * @param u
      * @throws java.lang.Exception
      */
-    public AnaliseAbate(String objeto, String tipo, String dataInicio, String dataFim, Conexao c, Util u) throws Exception {
+    public AnaliseAbate(String objeto, String tipo, String dataInicio, String dataFim, Conexao c, Utilidades u) throws Exception {
         initComponents();
         this.objeto = objeto;
         this.tipo = tipo;
