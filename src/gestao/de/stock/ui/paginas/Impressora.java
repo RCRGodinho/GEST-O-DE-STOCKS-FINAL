@@ -120,7 +120,9 @@ public final class Impressora extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tabela.getColumnModel().getColumn(0).setMinWidth(0);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tabela.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         labelMarca.setLabelFor(textoMarca);

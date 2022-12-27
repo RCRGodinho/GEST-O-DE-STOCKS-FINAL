@@ -56,13 +56,14 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
              
          
              //criar uma query e executar
-         ResultSet rs = stm.executeQuery("SELECT ID_IC, IC, (MARCA || '_' || MODELO) AS IMPRESSORA "
+         ResultSet rs = stm.executeQuery("SELECT ID_IC, IC, PRETO, COR, (MARCA || '_' || MODELO) AS IMPRESSORA "
                                        + "FROM IC a, Impressora b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
              
            while(rs.next())
            {
                //passar os dados da BD para um object
-               Object o[] = {rs.getInt("ID_IC"),rs.getString("IC"), rs.getString("IMPRESSORA")};
+               Object o[] = {rs.getInt("ID_IC"),rs.getString("IC"), rs.getInt("PRETO"),
+                   rs.getInt("COR"), rs.getString("IMPRESSORA")};
                //Adicionar os dados à tabela
                table.addRow(o);
        }

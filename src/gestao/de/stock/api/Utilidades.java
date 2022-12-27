@@ -13,16 +13,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -38,10 +38,12 @@ public class Utilidades {
 
     Conexao c;
     Statement stm;
+    Statement insert;
 
     public Utilidades(Conexao c) throws SQLException, ClassNotFoundException {
         this.c = c;
         stm = this.c.fazerConexao().createStatement();
+        insert = this.c.fazerConexao().createStatement();
     }
 
     public void exportarExcel(JTable tabela) {
@@ -114,7 +116,7 @@ public class Utilidades {
         }
     }
 
-    public void importarExcel(String tabela) throws FileNotFoundException, IOException {
+    public int importarExcel(String tabela) throws FileNotFoundException, IOException, SQLException, ClassNotFoundException {
 
         //Localização para guardar ficheiro
         JFileChooser excelFileChooser = new JFileChooser();
@@ -138,50 +140,162 @@ public class Utilidades {
             XSSFWorkbook excelJTableInporter = new XSSFWorkbook(excelBIS);
             XSSFSheet excelSheet = excelJTableInporter.getSheetAt(0);
 
-            //verificar qual a tabela escolhida
+            //Inicializar variavies de modo a fazer comunicação com a bd
+            String q = "";
+            ArrayList<String> values = new ArrayList<>();
+            ArrayList<String> queries = new ArrayList<>();
+            //verificar qual a tabela escolhida    
             switch (tabela) {
                 case "consumivel" -> {
+                    //Buscar dados que vão ser inseridos
+                    for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
 
-                    for (int y = 1; y < excelSheet.getLastRowNum(); y++) {
+                        q = "INSERT INTO CONSUMIVEIS (NNA, NOME, PRECO, REFERENCIA, ID_IMPRESSORA) "
+                                + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
                         for (int z = 0; z < 5; z++) {
                             XSSFCell cell = excelRow.getCell(z);
-                            System.err.print(cell + " ");
+
+                            //Quando chegar à impressora, transformar no id
+                            if (z == 4) {
+                                String impressora = cell.toString();
+                                int id = getIdImpressora(impressora);
+                                values.add(Integer.toString(id));
+                            } else {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    values.add("'" + cell.toString() + "'");
+                                } else {
+                                    values.add(cell.toString());
+                                }
+                            }
                         }
-                        System.err.println("");
+
+                        //Substituir [] por () nos values
+                        String valoresFinais = Arrays.toString(values.toArray()).replace("[", "(").replace("]", ")");
+                        //Adicionar dados à query
+                        q += valoresFinais;
+                        System.out.println(q);
+                        insert.addBatch(q);
+                        queries.add(q);
+                        values.clear();
                     }
                 }
-                case "impressora" -> {
-                    
-                    for (int y = 1; y < excelSheet.getLastRowNum(); y++) {
+
+                case "ic" -> {
+                    //Buscar dados que vão ser inseridos
+                    for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
+
+                        q = "INSERT INTO IC (IC, PRETO, COR, IMPRESSORA) "
+                                + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
                         for (int z = 0; z < 5; z++) {
                             XSSFCell cell = excelRow.getCell(z);
-                            System.err.print(cell + " ");
-                        }
-                        System.err.println("");
-                    }
 
+                            //Quando chegar à impressora, transformar no id
+                            if (z == 3) {
+                                String impressora = cell.toString();
+                                int id = getIdImpressora(impressora);
+                                values.add(Integer.toString(id));
+                            } else {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    values.add("'" + cell.toString() + "'");
+                                } else {
+                                    values.add(cell.toString());
+                                }
+                            }
+                        }
+
+                        //Substituir [] por () nos values
+                        String valoresFinais = Arrays.toString(values.toArray()).replace("[", "(").replace("]", ")");
+                        //Adicionar dados à query
+                        q += valoresFinais;
+                        System.out.println(q);
+                        insert.addBatch(q);
+                        values.clear();
+                    }
+                }
+
+                case "impressora" -> {
+                    //Buscar dados que vão ser inseridos
+                    for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
+
+                        q = "INSERT INTO IMPRESSORA (MARCA, MODELO) "
+                                + "VALUES ";
+                        XSSFRow excelRow = excelSheet.getRow(y);
+
+                        for (int z = 0; z < 2; z++) {
+                            XSSFCell cell = excelRow.getCell(z);
+
+                            values.add("'" + cell.toString() + "'");
+                        }
+                        //Substituir [] por () nos values
+                        String valoresFinais = Arrays.toString(values.toArray()).replace("[", "(").replace("]", ")");
+
+                        //Adicionar dados à query
+                        q += valoresFinais;
+                        System.out.println(q);
+                        insert.addBatch(q);
+
+                        queries.add(q);
+                        values.clear();
+                    }
                 }
                 case "centro_custo" -> {
-                    
-                    for (int y = 1; y < excelSheet.getLastRowNum(); y++) {
+                    //Buscar dados que vão ser inseridos
+                    for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
+
+                        q = "INSERT INTO IMPRESSORA (RESPONSAVEL, TEXTO, CUSTO, LOCALIZACAO) "
+                                + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
-                        for (int z = 0; z < 5; z++) {
+                        for (int z = 0; z < 4; z++) {
                             XSSFCell cell = excelRow.getCell(z);
-                            System.err.print(cell + " ");
+
+                            if (cell.getCellType() == CellType.STRING) {
+                                values.add("'" + cell.toString() + "'");
+                            } else {
+                                values.add(cell.toString());
+                            }
                         }
-                        System.err.println("");
                     }
 
+                    //Substituir [] por () nos values
+                    String valoresFinais = Arrays.toString(values.toArray()).replace("[", "(").replace("]", ")");
+
+                    //Adicionar dados à query
+                    q += valoresFinais;
+                    System.out.println(q);
+                    queries.add(q);
+                    insert.addBatch(q);
+                    values.clear();
                 }
+            }
+
+            Component opcao = null;
+
+            int op = JOptionPane.showConfirmDialog(opcao, "A importar: " + queries.size() + " dados.\nContinuar?",
+                    "Importar " + tabela.toUpperCase(), JOptionPane.NO_OPTION);
+
+            if (op == 0) {
+
+                apagarTodosDados(tabela);
+
+                long[] res = insert.executeLargeBatch();
+                if (res.length != 0) {
+                    insert.clearBatch();
+                    return res.length;
+                } else {
+                    insert.clearBatch();
+                    return 0;
+                }
+
             }
 
         }
 
+        return 0;
     }
 
     public void comboOracle(ArrayList x, JComboBox c) throws SQLException, ClassNotFoundException, Exception {
@@ -400,6 +514,10 @@ public class Utilidades {
 
     }
 
+    public void apagarTodosDados(String tabela) throws SQLException {
+        stm.execute("DELETE FROM " + tabela.toUpperCase());
+    }
+
     public int getIdConsumivel(String consumivel) throws SQLException {
         if (consumivel.isBlank()) {
             return 0;
@@ -414,6 +532,27 @@ public class Utilidades {
         int id = 0;
 
         ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '" + cons + "' AND MARCA = '" + marca + "' AND MODELO = '" + modelo + "'");
+        while (rs.next()) {
+            id = rs.getInt(1);
+        }
+
+        return id;
+    }
+
+    public int getIdImpressora(String impressora) throws SQLException {
+        if (impressora.isBlank()) {
+            return 0;
+        }
+
+        String toUpperCase = impressora.toUpperCase();
+        String[] result = toUpperCase.split("_");
+        String marca = result[0];
+        String modelo = result[1];
+
+        int id = 0;
+
+        ResultSet rs = stm.executeQuery("SELECT ID_IMPRESSORA FROM IMPRESSORA "
+                + "WHERE MARCA = '" + marca + "' AND MODELO = '" + modelo + "'");
         while (rs.next()) {
             id = rs.getInt(1);
         }
