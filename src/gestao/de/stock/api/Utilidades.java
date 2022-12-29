@@ -121,7 +121,7 @@ public class Utilidades {
         //Localização para guardar ficheiro
         JFileChooser excelFileChooser = new JFileChooser();
 
-        excelFileChooser.setDialogTitle("Selecionar Ficheiro");
+        excelFileChooser.setDialogTitle("Selecionar Ficheiro: " + tabela);
         //Mostrar apenas ficheiros com certas extenções
 
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("Ficheiros Excel", "xls", "xlsx", "xlsm");
@@ -142,32 +142,42 @@ public class Utilidades {
 
             //Inicializar variavies de modo a fazer comunicação com a bd
             String q = "";
-            ArrayList<String> values = new ArrayList<>();
-            ArrayList<String> queries = new ArrayList<>();
+            ArrayList<Object> values = new ArrayList<>();
+            ArrayList<Object> queries = new ArrayList<>();
             //verificar qual a tabela escolhida    
             switch (tabela) {
                 case "consumivel" -> {
                     //Buscar dados que vão ser inseridos
                     for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
 
-                        q = "INSERT INTO CONSUMIVEIS (NNA, NOME, PRECO, REFERENCIA, ID_IMPRESSORA) "
+                        q = "INSERT /*+ ignore_row_on_dupkey_index ( CONSUMIVEL (NNA)) */ INTO CONSUMIVEL (NNA, NOME, PRECO, REFERENCIA, ID_IMPRESSORA) "
                                 + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
                         for (int z = 0; z < 5; z++) {
                             XSSFCell cell = excelRow.getCell(z);
-
-                            //Quando chegar à impressora, transformar no id
-                            if (z == 4) {
-                                String impressora = cell.toString();
-                                int id = getIdImpressora(impressora);
-                                values.add(Integer.toString(id));
-                            } else {
-                                if (cell.getCellType() == CellType.STRING) {
-                                    values.add("'" + cell.toString() + "'");
-                                } else {
-                                    values.add(cell.toString());
+                            if(cell!= null)
+                            {
+                                switch (z) {
+                                case 2,3 -> {
+                                    values.add(cell.getRawValue());
                                 }
+                                case 4 -> {
+                                    String impressora = cell.toString();
+                                    int id = getIdImpressora(impressora);
+                                    values.add(id);
+                                }
+                                default -> {
+                                    values.add("'" + cell + "'");
+                                }
+                            }
+                            }else{
+                                if(cell.getCellType() == CellType.NUMERIC)
+                                {
+                                    values.add(0);
+                                }
+                                else
+                                    values.add("'INDEFINIDO'");
                             }
                         }
 
@@ -186,7 +196,7 @@ public class Utilidades {
                     //Buscar dados que vão ser inseridos
                     for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
 
-                        q = "INSERT INTO IC (IC, PRETO, COR, IMPRESSORA) "
+                        q = "INSERT /*+ ignore_row_on_dupkey_index ( IC (IC)) */ INTO IC (IC, PRETO, COR, ID_IMPRESSORA) "
                                 + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
@@ -221,7 +231,7 @@ public class Utilidades {
                     //Buscar dados que vão ser inseridos
                     for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
 
-                        q = "INSERT INTO IMPRESSORA (MARCA, MODELO) "
+                        q = "INSERT /*+ ignore_row_on_dupkey_index ( IMPRESSORA (MODELO)) */ INTO IMPRESSORA (MARCA, MODELO) "
                                 + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
@@ -246,30 +256,35 @@ public class Utilidades {
                     //Buscar dados que vão ser inseridos
                     for (int y = 1; y <= excelSheet.getLastRowNum(); y++) {
 
-                        q = "INSERT INTO IMPRESSORA (RESPONSAVEL, TEXTO, CUSTO, LOCALIZACAO) "
+                        q = "INSERT /*+ ignore_row_on_dupkey_index ( CENTRO_CUSTO (CUSTO)) */ INTO CENTRO_CUSTO (RESPONSAVEL, TEXTO, LOCALIZACAO, CUSTO) "
                                 + "VALUES ";
                         XSSFRow excelRow = excelSheet.getRow(y);
 
                         for (int z = 0; z < 4; z++) {
                             XSSFCell cell = excelRow.getCell(z);
 
-                            if (cell.getCellType() == CellType.STRING) {
-                                values.add("'" + cell.toString() + "'");
+                            if (cell != null) {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    values.add("'" + cell.toString() + "'");
+                                } else {
+                                    values.add(cell.getRawValue());
+                                }
                             } else {
-                                values.add(cell.toString());
+                                values.add("'INDEFINIDO'");
                             }
                         }
+                        //Substituir [] por () nos values
+                        String valoresFinais = Arrays.toString(values.toArray()).replace("[", "(").replace("]", ")");
+
+                        //Adicionar dados à query
+                        q += valoresFinais;
+                        System.out.println(q);
+                        insert.addBatch(q);
+
+                        queries.add(q);
+                        values.clear();
                     }
 
-                    //Substituir [] por () nos values
-                    String valoresFinais = Arrays.toString(values.toArray()).replace("[", "(").replace("]", ")");
-
-                    //Adicionar dados à query
-                    q += valoresFinais;
-                    System.out.println(q);
-                    queries.add(q);
-                    insert.addBatch(q);
-                    values.clear();
                 }
             }
 
@@ -280,13 +295,13 @@ public class Utilidades {
 
             if (op == 0) {
 
-                apagarTodosDados(tabela);
-
                 long[] res = insert.executeLargeBatch();
                 if (res.length != 0) {
+                    queries.clear();
                     insert.clearBatch();
                     return res.length;
                 } else {
+                    queries.clear();
                     insert.clearBatch();
                     return 0;
                 }

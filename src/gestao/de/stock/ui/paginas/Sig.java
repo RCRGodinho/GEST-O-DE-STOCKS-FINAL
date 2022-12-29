@@ -281,7 +281,8 @@ public final class Sig extends javax.swing.JInternalFrame {
          }
        catch(SQLException exp)
        {
-           throw new Exception (exp.getMessage());
+           JOptionPane.showMessageDialog(rootPane, "TABELA NÃO EXITE\nVERIFICAR BD", "ERRO", JOptionPane.ERROR_MESSAGE);
+           this.dispose();
        }
 
      }
@@ -315,7 +316,8 @@ public final class Sig extends javax.swing.JInternalFrame {
          }
        catch(SQLException exp)
        {
-           throw new Exception (exp.getMessage());
+           JOptionPane.showMessageDialog(rootPane, "TABELA NÃO EXITE\nVERIFICAR BD", "ERRO", JOptionPane.ERROR_MESSAGE);
+           this.dispose();
        }
          
          if(tabelaSig.getRowCount() == 0)

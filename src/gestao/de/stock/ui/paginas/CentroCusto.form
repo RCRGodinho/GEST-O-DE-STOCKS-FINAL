@@ -86,13 +86,13 @@
                 <Column editable="false" title="ID" type="java.lang.Integer"/>
                 <Column editable="false" title="RESPONSAVEL" type="java.lang.String"/>
                 <Column editable="false" title="TEXTO" type="java.lang.String"/>
-                <Column editable="false" title="CUSTO" type="java.lang.Integer"/>
                 <Column editable="false" title="LOCALIZACAO" type="java.lang.String"/>
+                <Column editable="false" title="CUSTO" type="java.lang.Integer"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="true">
+                <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -202,7 +202,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="labelCusto">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CUSTO"/>
+            <Property name="text" type="java.lang.String" value="LOCALIZACAO"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -210,9 +210,9 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JTextField" name="textoCusto">
+        <Component class="javax.swing.JTextField" name="textoLocalizacao">
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoCustoKeyTyped"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoLocalizacaoKeyTyped"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -229,7 +229,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="labelLocalizacao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="LOCALIZACAO"/>
+            <Property name="text" type="java.lang.String" value="CUSTO"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -237,7 +237,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JTextField" name="textoLocalizacao">
+        <Component class="javax.swing.JTextField" name="textoCusto">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="104" y="135" width="142" height="-1"/>

@@ -63,10 +63,10 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         textoTexto = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         labelCusto = new javax.swing.JLabel();
-        textoCusto = new javax.swing.JTextField();
+        textoLocalizacao = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         labelLocalizacao = new javax.swing.JLabel();
-        textoLocalizacao = new javax.swing.JTextField();
+        textoCusto = new javax.swing.JTextField();
         butoes = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -86,11 +86,11 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "RESPONSAVEL", "TEXTO", "CUSTO", "LOCALIZACAO"
+                "ID", "RESPONSAVEL", "TEXTO", "LOCALIZACAO", "CUSTO"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -122,7 +122,9 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tabela.getColumnModel().getColumn(0).setMinWidth(0);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tabela.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         dados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -144,20 +146,20 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         dados.add(textoTexto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 53, 142, -1));
         dados.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 78, 234, 10));
 
-        labelCusto.setText("CUSTO");
+        labelCusto.setText("LOCALIZACAO");
         dados.add(labelCusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 96, 80, -1));
 
-        textoCusto.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoLocalizacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                textoCustoKeyTyped(evt);
+                textoLocalizacaoKeyTyped(evt);
             }
         });
-        dados.add(textoCusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 94, 142, -1));
+        dados.add(textoLocalizacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 94, 142, -1));
         dados.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 119, 234, 10));
 
-        labelLocalizacao.setText("LOCALIZACAO");
+        labelLocalizacao.setText("CUSTO");
         dados.add(labelLocalizacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 135, 80, -1));
-        dados.add(textoLocalizacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 135, 142, -1));
+        dados.add(textoCusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 135, 142, -1));
 
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +250,7 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
            {
                //passar os dados da BD para um object
                Object o[] = {rs.getInt("ID_CENTRO_CUSTO"),rs.getString("RESPONSAVEL"), rs.getString("TEXTO"),
-                rs.getInt("CUSTO"), rs.getString("LOCALIZACAO")};
+                rs.getString("LOCALIZACAO"),rs.getInt("CUSTO")};
                //Adicionar os dados à tabela
                table.addRow(o);
        }
@@ -265,9 +267,9 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         
         textoResponsavel.setText("");
         textoTexto.setText("");
+        textoLocalizacao.setText("");
         textoCusto.setText("");
-        textoLocalizacao.setText("");
-        textoLocalizacao.setText("");
+        textoCusto.setText("");
     }
     
     void buscarDados(){
@@ -281,8 +283,8 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
             
             textoResponsavel.setText(tabela.getModel().getValueAt(row, 1).toString());
             textoTexto.setText(tabela.getModel().getValueAt(row, 2).toString());
-            textoCusto.setText(tabela.getModel().getValueAt(row, 3).toString());
-            textoLocalizacao.setText(tabela.getModel().getValueAt(row, 4).toString());
+            textoLocalizacao.setText(tabela.getModel().getValueAt(row, 3).toString());
+            textoCusto.setText(tabela.getModel().getValueAt(row, 4).toString());
         }
     }
     
@@ -306,7 +308,7 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         //Verificar se os campos estão vazios.
-        if(textoResponsavel.getText().isEmpty() || textoTexto.getText().isEmpty()|| textoCusto.getText().isEmpty() || textoLocalizacao.getText().isEmpty())
+        if(textoResponsavel.getText().isEmpty() || textoTexto.getText().isEmpty()|| textoLocalizacao.getText().isEmpty() || textoCusto.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", JOptionPane.WARNING_MESSAGE);
         }
@@ -317,8 +319,8 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
                     Object centroCusto = Integer.parseInt(textoCusto.getText());
                     Object localizacao = textoLocalizacao.getText().toUpperCase();
 
-                 stm.executeUpdate("INSERT INTO CENTRO_CUSTO(RESPONSAVEL,TEXTO, CUSTO, LOCALIZACAO) "
-                                 + "VALUES('"+responsavel+"' , '"+texto+"' , "+centroCusto+" , "+localizacao+")");
+                 stm.executeUpdate("INSERT INTO CENTRO_CUSTO(RESPONSAVEL,TEXTO, LOCALIZACAO, CUSTO) "
+                                 + "VALUES('"+responsavel+"' , '"+texto+"' , "+localizacao+" , "+centroCusto+")");
 
 
                  JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -341,17 +343,17 @@ public final class CentroCusto extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaFocusLost
 
-    private void textoCustoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoCustoKeyTyped
+    private void textoLocalizacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoLocalizacaoKeyTyped
         // TODO add your handling code here:
-        if(textoCusto.getText().length()>=8)
+        if(textoLocalizacao.getText().length()>=8)
         {
        // umc.setText(umc.getText().substring(0, 8));
         }
-    }//GEN-LAST:event_textoCustoKeyTyped
+    }//GEN-LAST:event_textoLocalizacaoKeyTyped
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         
-        if(textoResponsavel.getText().isEmpty() || textoTexto.getText().isEmpty() || textoLocalizacao.getText().isEmpty() || textoLocalizacao.getText().isEmpty())
+        if(textoResponsavel.getText().isEmpty() || textoTexto.getText().isEmpty() || textoCusto.getText().isEmpty() || textoCusto.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", JOptionPane.WARNING_MESSAGE);
         }

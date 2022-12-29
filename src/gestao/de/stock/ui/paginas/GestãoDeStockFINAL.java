@@ -759,7 +759,11 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
 
     private void menuInportConsumiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportConsumiveisActionPerformed
         try {
-            u.importarExcel("consumivel");
+            int res = u.importarExcel("consumivel");
+
+            if (res > 0) {
+                JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
+            }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -770,7 +774,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             int res = u.importarExcel("impressora");
 
             if (res > 0) {
-                JOptionPane.showMessageDialog(rootPane, "Importado: "+res+" dados com sucesso!");
+                JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
             }
 
         } catch (IOException | SQLException | ClassNotFoundException ex) {
@@ -780,15 +784,23 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
 
     private void menuInportCentrosCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportCentrosCustoActionPerformed
         try {
-            u.importarExcel("centro_custo");
+            int res = u.importarExcel("centro_custo");
+
+            if (res > 0) {
+                JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
+            }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuInportCentrosCustoActionPerformed
 
     private void menuInportICActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportICActionPerformed
         try {
-            u.importarExcel("ic");
+           int res = u.importarExcel("ic");
+
+            if (res > 0) {
+                JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
+            }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }

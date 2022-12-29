@@ -389,8 +389,8 @@ public final class Consumivel extends javax.swing.JInternalFrame {
             Object idImpressora = u.comboId("impressoraMarcaModelo", comboImpressora);
              
             //Query de insereção, inicializando o stock a 0
-             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora,STOCK,SIG) "
-                             + "VALUES('"+nna+"' , '"+nome+"' , "+preco+" , "+referencia+" , "+idImpressora+",0,0)");
+             stm.executeUpdate("INSERT INTO Consumivel(NNA,NOME,Preco,Referencia,ID_Impressora) "
+                             + "VALUES('"+nna+"' , '"+nome+"' , "+preco+" , "+referencia+" , "+idImpressora+")");
              
              JOptionPane.showMessageDialog(rootPane, "Dado inserido com sucesso!");
     
