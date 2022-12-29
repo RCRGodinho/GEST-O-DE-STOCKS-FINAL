@@ -38,7 +38,7 @@ public final class Stock extends javax.swing.JInternalFrame {
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();
-        renderer = new TableColourCellRenderer("Stock",u);
+        renderer = new TableColourCellRenderer("stock",u);
         
         initComponents();
         setPainelFixo();
@@ -475,6 +475,7 @@ public final class Stock extends javax.swing.JInternalFrame {
              //buscar dados de spinnerStock e sig
             buscarDados();
             int idConsumivel = getIdConsumivel();
+            
             if(idConsumivel != 0)
             {
                 if(datePickerDataAdicao.getDate()!=null)
@@ -491,7 +492,7 @@ public final class Stock extends javax.swing.JInternalFrame {
                             "WHERE ID_CONSUMIVEL = "+idConsumivel+"";
                  stm.executeUpdate(q);
 
-                 stm.executeQuery("INSERT INTO REGISTO_STOCK (Quantidade, DATA, ID_CONSUMIVEL) "
+                 stm.executeQuery("INSERT INTO REGISTO_STOCK (QUANTIDADE, DATA_REGISTO, ID_CONSUMIVEL) "
                                 + "VALUES("+stock+", TO_DATE('"+data+"', 'DD/MM/YYYY'), "+idConsumivel+")");
 
                  JOptionPane.showMessageDialog(rootPane, "Stock adicionado!");

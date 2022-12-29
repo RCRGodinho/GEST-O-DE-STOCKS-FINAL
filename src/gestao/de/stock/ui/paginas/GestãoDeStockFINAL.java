@@ -9,7 +9,6 @@ import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Utilidades;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class GestãoDeStockFINAL extends javax.swing.JFrame {
 
-    Conexao c = new Conexao();
+    Conexao c;
     Utilidades u;
 
     Color preto = new Color(0, 0, 0);
@@ -41,7 +40,8 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public GestãoDeStockFINAL() throws SQLException, ClassNotFoundException {
+    public GestãoDeStockFINAL() throws SQLException, ClassNotFoundException, IOException {
+        this.c = new Conexao();
         this.u = new Utilidades(c);
         initComponents();
         setResizable(false);
@@ -839,7 +839,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             public void run() {
                 try {
                     new GestãoDeStockFINAL().setVisible(true);
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

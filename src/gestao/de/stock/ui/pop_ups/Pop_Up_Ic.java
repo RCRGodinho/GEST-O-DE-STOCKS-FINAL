@@ -280,9 +280,11 @@ public class Pop_Up_Ic extends javax.swing.JFrame {
         try {
             Object ic = textIC.getText();
             Object idImpressora = u.comboId("impressora", comboImpressora);
+            Object preto = spinnerPreto.getValue();
+            Object cor = spinnerCor.getValue();
             
-            stm.executeQuery("INSERT (IC, ID_IMPRESSORA) INTO IC "
-                           + "VALUES('"+ic+"', "+idImpressora+")");
+            stm.executeQuery("INSERT INTO IC (IC,PRETO, COR, ID_IMPRESSORA) "
+                           + "VALUES('"+ic+"',"+preto+", "+cor+", "+idImpressora+")");
             
             JOptionPane.showMessageDialog(rootPane, "IC adicionado com sucesso", "SUCESSO!", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {

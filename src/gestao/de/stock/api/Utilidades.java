@@ -156,28 +156,26 @@ public class Utilidades {
 
                         for (int z = 0; z < 5; z++) {
                             XSSFCell cell = excelRow.getCell(z);
-                            if(cell!= null)
-                            {
+                            if (cell != null) {
                                 switch (z) {
-                                case 2,3 -> {
-                                    values.add(cell.getRawValue());
+                                    case 2,3 -> {
+                                        values.add(cell.getRawValue());
+                                    }
+                                    case 4 -> {
+                                        String impressora = cell.toString();
+                                        int id = getIdImpressora(impressora);
+                                        values.add(id);
+                                    }
+                                    default -> {
+                                        values.add("'" + cell + "'");
+                                    }
                                 }
-                                case 4 -> {
-                                    String impressora = cell.toString();
-                                    int id = getIdImpressora(impressora);
-                                    values.add(id);
-                                }
-                                default -> {
-                                    values.add("'" + cell + "'");
-                                }
-                            }
-                            }else{
-                                if(cell.getCellType() == CellType.NUMERIC)
-                                {
+                            } else {
+                                if (cell.getCellType() == CellType.NUMERIC) {
                                     values.add(0);
-                                }
-                                else
+                                } else {
                                     values.add("'INDEFINIDO'");
+                                }
                             }
                         }
 
@@ -310,7 +308,7 @@ public class Utilidades {
 
         }
 
-        return 0;
+        return -1;
     }
 
     public void comboOracle(ArrayList x, JComboBox c) throws SQLException, ClassNotFoundException, Exception {
@@ -329,6 +327,7 @@ public class Utilidades {
         ResultSet rs;
 
         switch (x) {
+            //Listar Consumiveis
             case "consumivel" -> {
 
                 rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
@@ -337,6 +336,7 @@ public class Utilidades {
                     list.add(rs.getString("NOME"));
                 }
             }
+            //Listar Impressosras
             case "impressora" -> {
                 rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO) AS IMPRESSORA FROM IMPRESSORA");
 
@@ -344,6 +344,7 @@ public class Utilidades {
                     list.add(rs.getString("IMPRESSORA"));
                 }
             }
+            //Listar Centros custo
             case "centro_custo" -> {
 
                 rs = stm.executeQuery("SELECT CUSTO FROM CENTRO_CUSTO");
@@ -352,6 +353,7 @@ public class Utilidades {
                     list.add(rs.getString("CUSTO"));
                 }
             }
+            //Listar localizaçoes dos centros custo
             case "localizacao" -> {
 
                 rs = stm.executeQuery("SELECT LOCALIZACAO FROM CENTRO_CUSTO");
@@ -360,6 +362,7 @@ public class Utilidades {
                     list.add(rs.getString("LOCALIZACAO"));
                 }
             }
+            //Listar Ics
             case "ic" -> {
 
                 rs = stm.executeQuery("SELECT IC FROM IC");
@@ -368,6 +371,7 @@ public class Utilidades {
                     list.add(rs.getString("IC"));
                 }
             }
+            //Listar tabelas
             case "tabelas" -> {
 
                 list.add("centro_custo".toUpperCase());
@@ -388,6 +392,7 @@ public class Utilidades {
             int id = 0;
 
             switch (x) {
+                //Buscar id consumivel a partir do nome, marca e modelo 
                 case "consumivel" -> {
                     String[] result = c.getSelectedItem().toString().split("_");
                     String marca = result[0];
@@ -400,6 +405,7 @@ public class Utilidades {
                     }
 
                 }
+                //Buscar id Centro Custo a partir da LOCALIZACAO
                 case "localizacao" -> {
                     rs = stm.executeQuery("SELECT ID_CENTRO_CUSTO FROM CENTRO_CUSTO WHERE LOCALIZACAO = '" + c.getSelectedItem() + "'");
                     while (rs.next()) {
@@ -407,6 +413,7 @@ public class Utilidades {
                     }
 
                 }
+                //Buscar id Centro Custo a partir do CUSTO
                 case "centro_custo" -> {
                     rs = stm.executeQuery("SELECT ID_CENTRO_CUSTO FROM CENTRO_CUSTO WHERE CUSTO = '" + c.getSelectedItem() + "'");
                     while (rs.next()) {
@@ -414,6 +421,7 @@ public class Utilidades {
                     }
 
                 }
+                //Buscar id IC a partir do IC
                 case "ic" -> {
                     rs = stm.executeQuery("SELECT ID_IC FROM IC WHERE IC = '" + c.getSelectedItem() + "'");
                     while (rs.next()) {
@@ -421,6 +429,7 @@ public class Utilidades {
                     }
 
                 }
+                //Buscar id impressora a partir do IC
                 case "impressora" -> {
                     rs = stm.executeQuery("SELECT a.ID_Impressora FROM IMPRESSORA a, IC b  "
                             + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.IC = '" + c.getSelectedItem() + "'");
@@ -429,6 +438,7 @@ public class Utilidades {
                     }
 
                 }
+                //Buscar id impressora a partir da Marca e Modelo
                 case "impressoraMarcaModelo" -> {
                     String[] result = c.getSelectedItem().toString().split("_");
                     String marca = result[0];
@@ -458,6 +468,7 @@ public class Utilidades {
         ResultSet rs;
 
         switch (x) {
+            //Buscar Localização a partir do id do IC
             case "centro_custo" -> {
                 rs = stm.executeQuery("SELECT Localizacao FROM CENTRO_CUSTO a, Utilizacao b WHERE a.ID_CENTRO_CUSTO = b.ID_CENTRO_CUSTO AND b.ID_IC = " + comboId("impressora", c) + "");
                 while (rs.next()) {
@@ -465,6 +476,7 @@ public class Utilidades {
                 }
 
             }
+            //Buscar Marca e Modelo a partir do id do IC
             case "impressora" -> {
                 rs = stm.executeQuery("SELECT (Marca || ' ' || Modelo) AS IMPRESSORA FROM Impressora a, IC b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND b.ID_IC = " + comboId("impressora", c) + "");
                 while (rs.next()) {
@@ -475,38 +487,41 @@ public class Utilidades {
         return null;
     }
 
-    public Component tableStockColourRenderer(Component c, int row, int column, JTable table) {
-        if (column == 3) {
-            int stock = Integer.parseInt(table.getModel().getValueAt(row, column - 1).toString());
-            int sig = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+    //Definir a cor das celulas das tabelas
+    public Component tableColourRenderer(String tabela, Component c, int row, int column, JTable table) {
 
-            if (stock != sig) {
-                c.setBackground(Color.RED);
-                c.setForeground(table.getForeground());
+        switch (tabela) {
+            case "stock" -> {
+                if (column == 3) {
+                    int stock = Integer.parseInt(table.getModel().getValueAt(row, column - 1).toString());
+                    int sig = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+
+                    if (stock != sig) {
+                        c.setBackground(Color.RED);
+                        c.setForeground(table.getForeground());
+                    }
+
+                } else {
+                    c.setBackground(table.getBackground());
+                    c.setForeground(table.getForeground());
+                }
             }
+            case "sig" -> {
+                if (column == 7) {
+                    int progresso = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
 
-        } else {
-            c.setBackground(table.getBackground());
-            c.setForeground(table.getForeground());
-        }
-        return c;
-    }
-
-    public Component tableSigColourRenderer(Component c, int row, int column, JTable table) {
-
-        if (column == 7) {
-            int progresso = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
-
-            if (progresso == 0) {
-                c.setBackground(Color.RED);
-                c.setForeground(table.getForeground());
-            } else {
-                c.setBackground(Color.YELLOW);
-                c.setForeground(table.getForeground());
+                    if (progresso == 0) {
+                        c.setBackground(Color.RED);
+                        c.setForeground(table.getForeground());
+                    } else {
+                        c.setBackground(Color.YELLOW);
+                        c.setForeground(table.getForeground());
+                    }
+                } else {
+                    c.setBackground(table.getBackground());
+                    c.setForeground(table.getForeground());
+                }
             }
-        } else {
-            c.setBackground(table.getBackground());
-            c.setForeground(table.getForeground());
         }
         return c;
     }
@@ -534,7 +549,7 @@ public class Utilidades {
     }
 
     public int getIdConsumivel(String consumivel) throws SQLException {
-        if (consumivel.isBlank()) {
+        if (consumivel.isBlank() || consumivel.contains("-")) {
             return 0;
         }
 
@@ -542,11 +557,11 @@ public class Utilidades {
         String[] result = toUpperCase.split("_");
         String marca = result[0];
         String modelo = result[1];
-        String cons = result[2];
+        String nome = result[2];
 
         int id = 0;
 
-        ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '" + cons + "' AND MARCA = '" + marca + "' AND MODELO = '" + modelo + "'");
+        ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '" + nome + "' AND MARCA = '" + marca + "' AND MODELO = '" + modelo + "'");
         while (rs.next()) {
             id = rs.getInt(1);
         }

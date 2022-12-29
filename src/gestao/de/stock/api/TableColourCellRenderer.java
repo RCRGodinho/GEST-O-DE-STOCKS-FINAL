@@ -34,12 +34,7 @@ public class TableColourCellRenderer implements TableCellRenderer{
         Component c = RENDERER.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
        
-        if(tabela.equals("Stock"))
-        {
-            c = u.tableStockColourRenderer(c, row, column, table);
-        }else if(tabela.equals("Sig")){
-            c = u.tableSigColourRenderer(c, row, column, table);
-        }
+        u.tableColourRenderer(tabela, c, row, column, table);
         
         return c;
     }

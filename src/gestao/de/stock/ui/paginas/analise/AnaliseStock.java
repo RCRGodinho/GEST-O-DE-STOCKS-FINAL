@@ -21,18 +21,19 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author PAT
  */
 public class AnaliseStock extends javax.swing.JFrame {
-    
+
     ResultSet rs;
     String consumivel;
     String dataInicio;
     String dataFim;
-    
-     Conexao c;
-     Utilidades u;
-        Statement stm;
+
+    Conexao c;
+    Utilidades u;
+    Statement stm;
 
     /**
      * Creates new form Analise
+     *
      * @param consumivel
      * @param dataInicio
      * @param dataFim
@@ -43,119 +44,111 @@ public class AnaliseStock extends javax.swing.JFrame {
     public AnaliseStock(String consumivel, String dataInicio, String dataFim, Conexao c, Utilidades u) throws Exception {
         initComponents();
         this.consumivel = consumivel;
-        
+
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();
-        
-        setLocationRelativeTo(null);
-        
-        
-       criaTabela();
-       criaGrafico();
-     
-       if(consumivel.isBlank())
-           setTitle("Análise de Stocks - Todas as entradas");
-       else
-            setTitle("Análise de Stocks - "+consumivel);
-    }
-    
-    private void criaGrafico() throws SQLException
-    {
-        
-         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-         
-         rs = stm.executeQuery(query());
-         
-         while(rs.next())
-         {
-             //dados para inserir na tabela
-             dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
-         
-         }
-         
-         String titulo;
-         if(consumivel.isBlank())
-             titulo = "Análise: Todos os consumiveis";
-            else
-                titulo = "Análise: "+consumivel;
-         
-         
-         
-         //define o gráfico e o tipo de dados que vai utilizar
-         JFreeChart grafico = ChartFactory.createBarChart3D(titulo+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ENTRADAS", dataset);
-         
-         
-         grafico.setAntiAlias(false);
-         ChartPanel panel = new ChartPanel(grafico);
-         panel.setBackground(getTabela().getBackground());
-         
-         
-         painelGrafico.setLayout(new java.awt.BorderLayout());
-         painelGrafico.add(panel, BorderLayout.CENTER);
-         painelGrafico.validate();
 
-         rs = null;
+        setLocationRelativeTo(null);
+
+        criaTabela();
+        criaGrafico();
+
+        //Alterar título caso haja consumivel ou nao
+        if (consumivel.isBlank()) {
+            setTitle("Análise de Stocks - Todas as entradas");
+        } else {
+            setTitle("Análise de Stocks - " + consumivel);
+        }
     }
-    
-    /**
-     *
-     * @throws Exception
-     * Cria tabela para análise
-     */
-    private void criaTabela() throws Exception
-    {
-        try{
-             //definir a tabela
-             DefaultTableModel table = (DefaultTableModel) getTabela().getModel();
-             table.setRowCount(0);
-             
-             //criar uma query e executar
-                rs = stm.executeQuery(query());
-             
-         
-           while(rs.next())
-           {
-               //passar os dados da BD para um object
-               Object o[] = {rs.getString("NNA"),rs.getString("CONSUMIVEL"),
-                    rs.getString("DATA"), rs.getInt("QUANTIDADE")};
-               //Adicionar os dados à tabela
-               table.addRow(o);
-         }
-         }
-       catch(SQLException exp)
-       {
-           throw new Exception (exp.getMessage());
-       }
+
+    private void criaGrafico() throws SQLException {
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        rs = stm.executeQuery(query());
+
+        while (rs.next()) {
+            //dados para inserir na tabela
+            dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA_REGISTO"));
+
+        }
+
+        String titulo;
+        if (consumivel.isBlank()) {
+            titulo = "Análise: Todos os consumiveis";
+        } else {
+            titulo = "Análise: " + consumivel;
+        }
+
+        titulo += "|| Entre: " + dataInicio + " - " + dataFim;
+
+        //define o gráfico e o tipo de dados que vai utilizar
+        JFreeChart grafico = ChartFactory.createBarChart3D(titulo, "Data", "ENTRADAS", dataset);
+
+        grafico.setAntiAlias(false);
+        ChartPanel panel = new ChartPanel(grafico);
+        panel.setBackground(getTabela().getBackground());
+
+        painelGrafico.setLayout(new java.awt.BorderLayout());
+        painelGrafico.add(panel, BorderLayout.CENTER);
+        painelGrafico.validate();
+
         rs = null;
     }
-    
+
+    /**
+     *
+     * @throws Exception Cria tabela para análise
+     */
+    private void criaTabela() throws Exception {
+        try {
+            //definir a tabela
+            DefaultTableModel table = (DefaultTableModel) getTabela().getModel();
+            table.setRowCount(0);
+
+            //criar uma query e executar
+            rs = stm.executeQuery(query());
+
+            while (rs.next()) {
+                //passar os dados da BD para um object
+                Object o[] = {rs.getString("NNA"), rs.getString("CONSUMIVEL"),
+                    rs.getString("DATA_REGISTO"), rs.getInt("QUANTIDADE")};
+                //Adicionar os dados à tabela
+                table.addRow(o);
+            }
+        } catch (SQLException exp) {
+            throw new Exception(exp.getMessage());
+        }
+        
+        rs = null;
+    }
+
     //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
-    public String query() throws SQLException
-    {
+    public String query() throws SQLException {
         int id = u.getIdConsumivel(consumivel);
         
-        String q = "SELECT NNA, to_char(DATA,'DD/MM/YYYY') DATA, "
-                 + "(MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, QUANTIDADE "
-                 + "FROM Consumivel a, Impressora b, Registo_Stock c "
-                 + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_CONSUMIVEL = c.ID_CONSUMIVEL "
-                 + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') ";
-                
-                if(id>=1){
-                    q = q+ "AND c.ID_CONSUMIVEL = "+id+" ";
-                }
-                 q = q+ "ORDER BY DATA";
-        
-                 
+        System.out.println(id);
+        //Inicializar a query
+        String q = "SELECT NNA, to_char(DATA_REGISTO,'DD/MM/YYYY') DATA_REGISTO, "
+                + "(MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, QUANTIDADE "
+                + "FROM CONSUMIVEL a, IMPRESSORA b, REGISTO_STOCK c "
+                + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA AND a.ID_CONSUMIVEL = c.ID_CONSUMIVEL "
+                + "AND DATA_REGISTO BETWEEN to_date('" + dataInicio + "', 'DD/MM/YYYY') AND to_date('" + dataFim + "','DD/MM/YYYY') ";
+
+        //Verificar se algum consumivel foi selecionado
+        if (id > 0) {
+            q = q + "AND c.ID_CONSUMIVEL = " + id + " ";
+        }
+        q = q + "ORDER BY DATA_REGISTO";
+
         return q;
     }
-    
+
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

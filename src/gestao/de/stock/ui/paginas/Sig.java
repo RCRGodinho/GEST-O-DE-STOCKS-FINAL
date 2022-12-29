@@ -36,7 +36,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         this.c = c;
         this.u = u;
         stm = c.fazerConexao().createStatement();
-        renderer = new TableColourCellRenderer("Sig",u);
+        renderer = new TableColourCellRenderer("sig",u);
         
         
         initComponents();

@@ -291,7 +291,7 @@ public class Pop_Up_AnaliseStock extends javax.swing.JFrame {
                 
             } catch(Exception ex)
             {
-                 JOptionPane.showMessageDialog(rootPane, "Erro a construir");
+                 JOptionPane.showMessageDialog(rootPane, "Erro a construir" + ex);
             }
     }
    
