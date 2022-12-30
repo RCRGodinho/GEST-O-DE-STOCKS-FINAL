@@ -130,9 +130,6 @@ public final class Consumivel extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setMinWidth(0);
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tabela.getColumnModel().getColumn(0).setMaxWidth(0);
             tabela.getColumnModel().getColumn(5).setResizable(false);
         }
 

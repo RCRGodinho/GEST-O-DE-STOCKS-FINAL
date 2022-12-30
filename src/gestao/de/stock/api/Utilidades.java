@@ -42,8 +42,7 @@ public class Utilidades {
 
     public Utilidades(Conexao c) throws SQLException, ClassNotFoundException {
         this.c = c;
-        stm = this.c.fazerConexao().createStatement();
-        insert = this.c.fazerConexao().createStatement();
+        stm = c.fazerConexao().createStatement();
     }
 
     public void exportarExcel(JTable tabela) {
@@ -330,7 +329,8 @@ public class Utilidades {
             //Listar Consumiveis
             case "consumivel" -> {
 
-                rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA");
+                rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO || '_'|| NOME) AS NOME FROM CONSUMIVEL a, IMPRESSORA b "
+                        + "WHERE a.ID_IMPRESSORA = b.ID_IMPRESSORA ORDER BY NOME");
 
                 while (rs.next()) {
                     list.add(rs.getString("NOME"));
@@ -338,7 +338,7 @@ public class Utilidades {
             }
             //Listar Impressosras
             case "impressora" -> {
-                rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO) AS IMPRESSORA FROM IMPRESSORA");
+                rs = stm.executeQuery("SELECT (MARCA || '_' || MODELO) AS IMPRESSORA FROM IMPRESSORA ORDER BY IMPRESSORA");
 
                 while (rs.next()) {
                     list.add(rs.getString("IMPRESSORA"));
@@ -347,7 +347,7 @@ public class Utilidades {
             //Listar Centros custo
             case "centro_custo" -> {
 
-                rs = stm.executeQuery("SELECT CUSTO FROM CENTRO_CUSTO");
+                rs = stm.executeQuery("SELECT CUSTO FROM CENTRO_CUSTO ORDER BY CUSTO");
 
                 while (rs.next()) {
                     list.add(rs.getString("CUSTO"));
@@ -356,7 +356,7 @@ public class Utilidades {
             //Listar localizaçoes dos centros custo
             case "localizacao" -> {
 
-                rs = stm.executeQuery("SELECT LOCALIZACAO FROM CENTRO_CUSTO");
+                rs = stm.executeQuery("SELECT LOCALIZACAO FROM CENTRO_CUSTO ORDER BY LOCALIZACAO");
 
                 while (rs.next()) {
                     list.add(rs.getString("LOCALIZACAO"));
@@ -365,7 +365,7 @@ public class Utilidades {
             //Listar Ics
             case "ic" -> {
 
-                rs = stm.executeQuery("SELECT IC FROM IC");
+                rs = stm.executeQuery("SELECT IC FROM IC ORDER BY IC");
 
                 while (rs.next()) {
                     list.add(rs.getString("IC"));
@@ -526,22 +526,25 @@ public class Utilidades {
         return c;
     }
 
-    public void abaterSig(int valor, int id) throws SQLException {
+    public boolean abaterSig(int valor, int id) throws SQLException {
         ResultSet rs = stm.executeQuery("SELECT SIG FROM CONSUMIVEL WHERE ID_CONSUMIVEL = " + id + "");
         int valorSig = 0;
 
         while (rs.next()) {
             valorSig = rs.getInt("SIG");
         }
-
+        
+        if(valor > valorSig){
+            return false;
+        }
         int valorTotal = valorSig - valor;
 
         stm.executeUpdate("UPDATE CONSUMIVEL SET SIG = " + valorTotal + " WHERE ID_CONSUMIVEL = " + id + "");
+        return true;
     }
 
     public void apagar(String tabela, int id) throws SQLException {
         stm.execute("DELETE FROM " + tabela.toUpperCase() + " WHERE ID_" + tabela.toUpperCase() + " = " + id + "");
-
     }
 
     public void apagarTodosDados(String tabela) throws SQLException {
@@ -561,10 +564,13 @@ public class Utilidades {
 
         int id = 0;
 
-        ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '" + nome + "' AND MARCA = '" + marca + "' AND MODELO = '" + modelo + "'");
+        ResultSet rs = stm.executeQuery("SELECT ID_CONSUMIVEL FROM CONSUMIVEL a, IMPRESSORA b WHERE NOME = '" + nome + "' AND MARCA = '" + marca + "' AND MODELO = '" + modelo + "' "
+                + "AND a.ID_IMPRESSORA = b.ID_IMPRESSORA");
         while (rs.next()) {
             id = rs.getInt(1);
         }
+        System.out.println(marca+modelo+nome);
+        System.out.println(id);
 
         return id;
     }

@@ -20,12 +20,12 @@ public class Conexao {
     private String driver;
     private String user;
     private String pass;
-    Configuracao conf = new Configuracao();
+    Propriedade conf = new Propriedade();
 
     Connection conn;
 
     public Conexao() throws IOException {
-
+        
         if (conf.verificarFicheiro()) {
             orcUrl = conf.carregarPropriedade("orcUrl");
             driver = conf.carregarPropriedade("driver");
@@ -85,7 +85,21 @@ public class Conexao {
             return null;
         }
     }
-
+    
+    public boolean testarConexao() throws ClassNotFoundException
+    {
+       
+        try {
+            if(fazerConexao() != null)
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            return false;
+        }
+        return false;
+    }
+    
     public String getOrcUrl() {
         return orcUrl;
     }

@@ -5,8 +5,10 @@
 package gestao.de.stock.ui.pop_ups;
 
 import gestao.de.stock.api.Conexao;
-import gestao.de.stock.api.Configuracao;
+import gestao.de.stock.api.Propriedade;
+import gestao.de.stock.ui.paginas.GestaoDeStockFINAL;
 import java.awt.Color;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author PAT
  */
-public class Pop_Up_Configuração extends javax.swing.JFrame {
+public class Pop_Up_ConfiguracaoServidor extends javax.swing.JFrame {
 
     //Variaveis
     Conexao c;
@@ -26,28 +28,35 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
     String userS;
     String passS;
     boolean en = false;
+    private boolean desdeInicio = false;
 
-    Configuracao conf = new Configuracao();
+    Propriedade conf = new Propriedade();
 
     /**
      * Creates new form Pop_Up_Analise
      *
      * @param c
+     * @param desdeInicio
      * @throws java.lang.Exception
      */
-    public Pop_Up_Configuração(Conexao c) throws Exception {
+    public Pop_Up_ConfiguracaoServidor(Conexao c, boolean desdeInicio) throws Exception {
+        this.desdeInicio = desdeInicio;
         this.c = c;
-
-        initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
-
+        initComponents();
+        setAlwaysOnTop(true);
         oracleURL.setText(c.getOrcUrl());
         driver.setText(c.getDriver());
         user.setText(c.getUser());
         pass.setText(c.getPass());
 
         setTitle("Configuração da ligação");
+        
+        if(isDesdeInicio())
+        {
+            JOptionPane.showMessageDialog(rootPane, "Erro na conexão! Verifique configurações do servidor.", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
@@ -180,7 +189,7 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
                     en = true;
                 }
             } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(Pop_Up_Configuração.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Pop_Up_ConfiguracaoServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -191,17 +200,32 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
 
         if (en) {
             conf.guardarPropriedade("orcUrl", orcUrlS);
-            c.setUser(userS);
-
-            c.setDriver(driverS);
-            conf.guardarPropriedade("driver", driverS);
             c.setOrcUrl(orcUrlS);
 
+            conf.guardarPropriedade("driver", driverS);
+            c.setDriver(driverS);
+
             conf.guardarPropriedade("user", userS);
-            c.setPass(passS);
+            c.setUser(userS);
+
             conf.guardarPropriedade("pass", passS);
+            c.setPass(passS);
 
             JOptionPane.showMessageDialog(rootPane, "Dados guardados com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+            if(isDesdeInicio())
+            {
+                try {
+                    GestaoDeStockFINAL gs = new GestaoDeStockFINAL();
+                    gs.setVisible(true);
+                    this.dispose();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Pop_Up_ConfiguracaoServidor.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Pop_Up_ConfiguracaoServidor.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(Pop_Up_ConfiguracaoServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "A conexão tem que ser validada primeiro!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -231,5 +255,19 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
     private javax.swing.JButton testar;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the desdeInicio
+     */
+    private boolean isDesdeInicio() {
+        return desdeInicio;
+    }
+
+    /**
+     * @param concluido the desdeInicio to set
+     */
+    public void setDesdeInicio(boolean concluido) {
+        this.desdeInicio = concluido;
+    }
 
 }

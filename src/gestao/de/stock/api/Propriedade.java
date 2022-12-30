@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author PAT
  */
-public class Configuracao {
+public class Propriedade {
 
     public static Properties prop = new Properties();
     private String file = "config.server";
@@ -29,12 +29,17 @@ public class Configuracao {
             prop.store(new FileOutputStream(getFile()), null);
 
         } catch (IOException ex) {
-            Logger.getLogger(Configuracao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Propriedade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void guardarPropriedade(String title, String value) {
-        prop.replace(title, value);
+        try {
+            prop.replace(title, value);
+            prop.store(new FileOutputStream(getFile()), null);
+        } catch (IOException ex) {
+            Logger.getLogger(Propriedade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String carregarPropriedade(String title) {
@@ -50,7 +55,7 @@ public class Configuracao {
 
     public boolean verificarFicheiro() throws IOException {
 
-        try ( FileInputStream f = new FileInputStream(new File("config.properties"))) {
+        try ( FileInputStream f = new FileInputStream(new File(getFile()))) {
             return true;
         } catch (FileNotFoundException ex) {
             return false;

@@ -148,15 +148,12 @@ public final class Stock extends javax.swing.JInternalFrame {
         tabela.setShowGrid(true);
         tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabela);
-        if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setMinWidth(0);
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tabela.getColumnModel().getColumn(0).setMaxWidth(0);
-        }
 
         labelAdicionar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelAdicionar.setText("ADICIONAR STOCK");
         labelAdicionar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        spinnerStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         btnAdicionar.setText("ADICIONAR");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -221,6 +218,8 @@ public final class Stock extends javax.swing.JInternalFrame {
         labelAbaterStock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelAbaterStock.setText("ABATER STOCK");
         labelAbaterStock.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        spinnerAbaterStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         btnAbaterStock.setText("ABATER");
         btnAbaterStock.addActionListener(new java.awt.event.ActionListener() {
@@ -300,6 +299,8 @@ public final class Stock extends javax.swing.JInternalFrame {
         labelSig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelSig.setText("SIG");
         labelSig.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        spinnerSig.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         btnAbaterSig.setText("ABATER");
         btnAbaterSig.addActionListener(new java.awt.event.ActionListener() {
@@ -514,10 +515,11 @@ public final class Stock extends javax.swing.JInternalFrame {
             if (getIdConsumivel() != 0) {
                 int subSig = Integer.parseInt(spinnerSig.getValue().toString());
 
-                u.abaterSig(subSig, getIdConsumivel());
-
-                JOptionPane.showMessageDialog(rootPane, "Consumiveis abatidos!");
-
+                if (u.abaterSig(subSig, getIdConsumivel())) {
+                    JOptionPane.showMessageDialog(rootPane, "Consumiveis abatidos!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "VALOR DE STOCK ULTRAPASSADO", "ERRO", JOptionPane.WARNING_MESSAGE);
+                }
                 tabelaStock();
                 tabela.clearSelection();
                 limparCampos();
@@ -540,54 +542,58 @@ public final class Stock extends javax.swing.JInternalFrame {
 
             if (getIdConsumivel() != 0) {
                 //query para abater spinnerStock
-                int subStock = stockAtivo - Integer.parseInt(spinnerAbaterStock.getValue().toString());
+                int stockIntroduzido = Integer.parseInt(spinnerAbaterStock.getValue().toString());
+                int subStock = stockAtivo - stockIntroduzido;
 
                 if (spinnerAbaterStock.getValue().equals(0) || comboIC.getSelectedIndex() == 0 || comboCusto.getSelectedIndex() == 0 || datePickerDataAbate.getDate() == null) {
                     JOptionPane.showMessageDialog(rootPane, "Todos os dados têm que ser preenchidos!", "ERRO", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    stm.executeUpdate("UPDATE CONSUMIVEL SET STOCK = " + subStock + " "
-                            + "WHERE ID_CONSUMIVEL = " + getIdConsumivel());
 
-                    Object quantidade = spinnerAbaterStock.getValue();
-                    Object data = DateFormat.getDateInstance().format(datePickerDataAbate.getDate());
-                    
-                    Object idIc = u.comboId("ic", comboIC);
-                    Object idCentroCusto = u.comboId("localizacao", comboCusto);
-                    Object idConsumivel = getIdConsumivel();
+                    if (stockIntroduzido <= stockAtivo) {
+                        stm.executeUpdate("UPDATE CONSUMIVEL SET STOCK = " + subStock + " "
+                                + "WHERE ID_CONSUMIVEL = " + getIdConsumivel());
 
-                    //Inserir dados na tabela SIG
-                    String q = "INSERT INTO SIG (QUANTIDADE,DATA_UTIL,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
-                            + "VALUES(" + quantidade + ", TO_DATE('" + data + "', 'DD/MM/YYYY'), "
-                            + "" + idIc + ", " + idCentroCusto + ", " + idConsumivel + ")";
+                        Object quantidade = spinnerAbaterStock.getValue();
+                        Object data = DateFormat.getDateInstance().format(datePickerDataAbate.getDate());
 
-                    //Verificar se os dados são iguais entre a tebela temporaria e a de todos
-                    PreparedStatement ps = c.fazerConexao().prepareStatement(q,
-                            new String[]{"ID_SIG"});
+                        Object idIc = u.comboId("ic", comboIC);
+                        Object idCentroCusto = u.comboId("localizacao", comboCusto);
+                        Object idConsumivel = getIdConsumivel();
 
-                    // variavel para guardar o valor
-                    Long idSIG = null;
+                        //Inserir dados na tabela SIG
+                        String q = "INSERT INTO SIG (QUANTIDADE,DATA_UTIL,ID_IC,ID_CENTRO_CUSTO, ID_CONSUMIVEL) "
+                                + "VALUES(" + quantidade + ", TO_DATE('" + data + "', 'DD/MM/YYYY'), "
+                                + "" + idIc + ", " + idCentroCusto + ", " + idConsumivel + ")";
 
-                    // executa a query e se for realizada com exito, guardar o id
-                    if (ps.executeUpdate() > 0) {
+                        //Verificar se os dados são iguais entre a tebela temporaria e a de todos
+                        PreparedStatement ps = c.fazerConexao().prepareStatement(q,
+                                new String[]{"ID_SIG"});
 
-                        ResultSet rs = ps.getGeneratedKeys();
+                        // variavel para guardar o valor
+                        Long idSIG = null;
 
-                        //se rs tem dados, guardar chave primária do ultima dado inserido
-                        if (null != rs && rs.next()) {
+                        // executa a query e se for realizada com exito, guardar o id
+                        if (ps.executeUpdate() > 0) {
 
-                            //id gerado pela sequencia
-                            idSIG = rs.getLong(1);
+                            ResultSet rs = ps.getGeneratedKeys();
+
+                            //se rs tem dados, guardar chave primária do ultima dado inserido
+                            if (null != rs && rs.next()) {
+
+                                //id gerado pela sequencia
+                                idSIG = rs.getLong(1);
+                            }
                         }
+
+                        stm.executeQuery("INSERT INTO SIG_TEMP (QUANTIDADE,ID_SIG) "
+                                + "VALUES(" + quantidade + ", " + idSIG + ")");
+                        limparCampos();
+                        tabela.clearSelection();
+                        tabelaStock();
+                        JOptionPane.showMessageDialog(rootPane, "Stock abatido!\nPOR ABATER EM SIG!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Stock ultrapassado", "ERRO", JOptionPane.ERROR_MESSAGE);
                     }
-
-                    stm.executeQuery("INSERT INTO SIG_TEMP (QUANTIDADE,ID_SIG) "
-                            + "VALUES(" + quantidade + ", " + idSIG + ")");
-
-                    JOptionPane.showMessageDialog(rootPane, "Stock abatido!\nPOR ABATER EM SIG!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-                    tabelaStock();
-                    tabela.clearSelection();
-                    limparCampos();
                 }
 
             } else {

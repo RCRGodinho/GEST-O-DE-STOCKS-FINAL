@@ -4,7 +4,7 @@
  */
 package gestao.de.stock.ui.paginas;
 
-import gestao.de.stock.ui.pop_ups.Pop_Up_Configuração;
+import gestao.de.stock.ui.pop_ups.Pop_Up_ConfiguracaoServidor;
 import gestao.de.stock.api.Conexao;
 import gestao.de.stock.api.Utilidades;
 import java.awt.Color;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author PAT
  */
-public class GestãoDeStockFINAL extends javax.swing.JFrame {
+public class GestaoDeStockFINAL extends javax.swing.JFrame {
 
     Conexao c;
     Utilidades u;
@@ -39,19 +39,22 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
      *
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
+     * @throws java.io.IOException
      */
-    public GestãoDeStockFINAL() throws SQLException, ClassNotFoundException, IOException {
+    public GestaoDeStockFINAL() throws SQLException, ClassNotFoundException, IOException, Exception {
+        initComponents();
         this.c = new Conexao();
         this.u = new Utilidades(c);
-        initComponents();
+        
         setResizable(false);
         setLocationRelativeTo(null);
 
         setTitle("Gestão de Stocks");
-
+        
         Main main = new Main();
-        paginas.add(main).setVisible(true);
-
+        paginas.add(main).setVisible(true); 
+        
+        
     }
 
     /**
@@ -377,6 +380,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void pagina3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagina3MouseClicked
         try {
             // TODO add your handling code here:
@@ -411,7 +415,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             //Adicionar a nova página
             paginas.add(hm).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_pagina3MouseClicked
 
@@ -464,7 +468,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             //Adicionar a nova página
             paginas.add(hm).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_pagina4MouseClicked
 
@@ -517,7 +521,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             //Adicionar a nova página
             paginas.add(hm).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_pagina5MouseClicked
 
@@ -605,7 +609,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             //Adicionar a nova página
             paginas.add(hm).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_pagina1MouseClicked
@@ -661,7 +665,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             //Adicionar a nova página
             paginas.add(hm).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_pagina2MouseClicked
 
@@ -692,12 +696,12 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             //Inicializar e abrir o Pop Up da configuração
-            Pop_Up_Configuração hm = new Pop_Up_Configuração(c);
+            Pop_Up_ConfiguracaoServidor hm = new Pop_Up_ConfiguracaoServidor(c,false);
 
             hm.setVisible(true);
 
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -737,7 +741,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             //Adicionar a nova página
             paginas.add(hm).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_pagina6MouseClicked
 
@@ -765,7 +769,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
             }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuInportConsumiveisActionPerformed
 
@@ -778,7 +782,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
             }
 
         } catch (IOException | SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuInportImpressorasActionPerformed
 
@@ -790,7 +794,7 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
             }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuInportCentrosCustoActionPerformed
 
@@ -802,49 +806,10 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
             }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestaoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuInportICActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new GestãoDeStockFINAL().setVisible(true);
-                } catch (SQLException | ClassNotFoundException | IOException ex) {
-                    Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu;

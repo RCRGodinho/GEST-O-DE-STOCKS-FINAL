@@ -124,6 +124,8 @@ public final class Sig extends javax.swing.JInternalFrame {
             tabelaSig.getColumnModel().getColumn(7).setResizable(false);
         }
 
+        spinnerProgresso.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         btnAdicionar.setText("ADICIONAR");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,7 +322,7 @@ public final class Sig extends javax.swing.JInternalFrame {
 
     public int buscarDados(String x) throws SQLException {
         //buscar dados já existentes e inserir-los nas respetivas variaveis
-        ResultSet rs = stm.executeQuery("SELECT " + x + " FROM SIG_TEMP WHERE ID_SIG_TEMP = " + getId() + "");
+        ResultSet rs = stm.executeQuery("SELECT " + x + " FROM SIG_TEMP WHERE ID_SIG_TEMP = " + getIdTabelaSig() + "");
 
         int valor = 0;
         while (rs.next()) {
@@ -330,7 +332,7 @@ public final class Sig extends javax.swing.JInternalFrame {
         return valor;
     }
 
-    public int getId() {
+    public int getIdTabelaSig() {
         //buscar o ID de modo a fazer query na bd
         if (tabelaSig.getSelectedRow() != -1) {
             int row = tabelaSig.getSelectedRow();
@@ -348,7 +350,8 @@ public final class Sig extends javax.swing.JInternalFrame {
             String value = tabelaSig.getModel().getValueAt(row, 4).toString();
             //função de atribuição de id a partir do nome 
             int cons = u.getIdConsumivel(value);
-
+            System.out.println(value);
+            System.out.println(cons);
             return cons;
         }
         return 0;
@@ -380,10 +383,10 @@ public final class Sig extends javax.swing.JInternalFrame {
 
                 int valor = buscarDados("PROGRESSO") + valorExistente;
 
-                System.err.println(stock + " / " + valor);
+                System.out.println(stock + " / " + valor);
 
                 if (valor == stock) {
-                    u.apagar("SIG_TEMP", getId());
+                    u.apagar("SIG_TEMP", getIdTabelaSig());
                     u.abaterSig(valor, getIdConsumivel());
 
                     JOptionPane.showMessageDialog(rootPane, "Quantidade abatida!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -392,7 +395,7 @@ public final class Sig extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(rootPane, "Valor utrapassado!", "Aviso", JOptionPane.WARNING_MESSAGE);
 
                 } else if (valor < stock) {
-                    stm.executeUpdate("UPDATE SIG_TEMP SET PROGRESSO = " + valor + " WHERE ID_SIG_TEMP = " + getId() + "");
+                    stm.executeUpdate("UPDATE SIG_TEMP SET PROGRESSO = " + valor + " WHERE ID_SIG_TEMP = " + getIdTabelaSig() + "");
                     spinnerProgresso.setValue(0);
                 }
 

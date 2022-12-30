@@ -74,7 +74,7 @@ public class AnaliseAbate extends javax.swing.JFrame {
 
         while (rs.next()) {
             //dados para inserir na tabela
-            dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
+            dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA_UTIL"));
 
         }
         String titulo;
@@ -126,8 +126,8 @@ public class AnaliseAbate extends javax.swing.JFrame {
 
     //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
     public String query() {
-        String q = "SELECT NNA , IC, to_char(DATA_UTIL,'DD/MM/YYYY') DATA_UTIL, "
-                + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, LOCALIZACAO "
+        String q = "SELECT b.NNA , d.IC, to_char(DATA_UTIL,'DD/MM/YYYY') DATA_UTIL, "
+                + "a.QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, c.LOCALIZACAO "
                 + "FROM Sig a, Consumivel b, Centro_Custo c, IC d, Impressora e "
                 + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC "
                 + "AND DATA_UTIL BETWEEN to_date('" + dataInicio + "', 'DD/MM/YYYY') AND to_date('" + dataFim + "','DD/MM/YYYY') ";
@@ -139,15 +139,15 @@ public class AnaliseAbate extends javax.swing.JFrame {
                 String modelo = result[1];
                 String nome = result[2];
 
-                q = q + "AND MARCA LIKE '%" + marca + "%' AND MODELO LIKE '%" + modelo + "%' AND NOME LIKE '%" + nome + "%' ";
+                q = q + "AND e.MARCA LIKE '%" + marca + "%' AND e.MODELO LIKE '%" + modelo + "%' AND b.NOME LIKE '%" + nome + "%' ";
             }
             case ("centro_custo") -> {
 
-                q = q + "AND LOCALIZACAO LIKE '%" + objeto + "%' ";
+                q = q + "AND c.LOCALIZACAO LIKE '%" + objeto + "%' ";
             }
             case ("ic") -> {
 
-                q = q + "AND IC LIKE '%" + objeto + "%' ";
+                q = q + "AND d.IC LIKE '%" + objeto + "%' ";
             }
         }
         q = q + "ORDER BY DATA_UTIL";

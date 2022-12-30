@@ -1,4 +1,4 @@
-#Thu Dec 29 18:44:59 WET 2022
+#Fri Dec 30 22:04:37 WET 2022
 driver=oracle.jdbc.OracleDriver
 orcUrl=jdbc\:oracle\:thin\:@//localhost\:1521/teste
 pass=admin
