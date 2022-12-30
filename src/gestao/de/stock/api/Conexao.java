@@ -4,15 +4,10 @@
  */
 package gestao.de.stock.api;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.JTextArea;
 
 /**
@@ -31,8 +26,6 @@ public class Conexao {
 
     public Conexao() throws IOException {
 
-        System.out.println(conf.verificarFicheiro());
-        
         if (conf.verificarFicheiro()) {
             orcUrl = conf.carregarPropriedade("orcUrl");
             driver = conf.carregarPropriedade("driver");

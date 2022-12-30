@@ -790,13 +790,13 @@ public class GestãoDeStockFINAL extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");
             }
         } catch (IOException | SQLException | ClassNotFoundException ex) {
-             Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestãoDeStockFINAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuInportCentrosCustoActionPerformed
 
     private void menuInportICActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInportICActionPerformed
         try {
-           int res = u.importarExcel("ic");
+            int res = u.importarExcel("ic");
 
             if (res > 0) {
                 JOptionPane.showMessageDialog(rootPane, "Importado: " + res + " dados com sucesso!");

@@ -21,19 +21,20 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author PAT
  */
 public class AnaliseAbate extends javax.swing.JFrame {
-    
+
     ResultSet rs;
     String objeto;
     String tipo;
     String dataInicio;
     String dataFim;
-    
-     Conexao c;
-     Utilidades u;
-        Statement stm;
+
+    Conexao c;
+    Utilidades u;
+    Statement stm;
 
     /**
      * Creates new form Analise
+     *
      * @param tipo
      * @param dataInicio
      * @param objeto
@@ -46,130 +47,116 @@ public class AnaliseAbate extends javax.swing.JFrame {
         initComponents();
         this.objeto = objeto;
         this.tipo = tipo;
-        
+
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.c = c;
         this.u = u;
         stm = this.c.fazerConexao().createStatement();
-        
-        setLocationRelativeTo(null);
-        
-        
-       criaTabela();
-       criaGrafico();
-       
-       if(objeto.isBlank())
-           setTitle("Análise de Abates - Todas as entradas");
-       else
-            setTitle("Análise de Abates - "+objeto);
-    }
-    
-    private void criaGrafico() throws SQLException
-    {
-        
-         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-         
-         rs = stm.executeQuery(query());
-         
-         while(rs.next())
-         {
-             //dados para inserir na tabela
-             dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
-         
-         }
-         String titulo;
-         
-         if(objeto.isBlank())
-             titulo = "Análise: Todos os abates";
-            else
-                titulo = "Análise: "+objeto;
-         
-         //define o gráfico e o tipo de dados que vai utilizar
-         JFreeChart grafico = ChartFactory.createBarChart3D(titulo+" || Entre: "+dataInicio+" - "+dataFim,"Data", "ABATES", dataset);
-         grafico.setAntiAlias(false);
-         ChartPanel panel = new ChartPanel(grafico);
-         panel.setBackground(getTabela().getBackground());
-         
-         
-         painelGrafico.setLayout(new java.awt.BorderLayout());
-         painelGrafico.add(panel, BorderLayout.CENTER);
-         painelGrafico.validate();
 
-         rs = null;
+        setLocationRelativeTo(null);
+
+        criaTabela();
+        criaGrafico();
+
+        if (objeto.isBlank()) {
+            setTitle("Análise de Abates - Todas as entradas");
+        } else {
+            setTitle("Análise de Abates - " + objeto);
+        }
     }
-    
-    /**
-     *
-     * @throws Exception
-     * Cria tabela para análise
-     */
-    private void criaTabela() throws Exception
-    {
-        try{
-             //definir a tabela
-             DefaultTableModel table = (DefaultTableModel) getTabela().getModel();
-             table.setRowCount(0);
-             
-             //criar uma query e executar
-                rs = stm.executeQuery(query());
-             
-         
-           while(rs.next())
-           {
-               //passar os dados da BD para um object
-               Object o[] = {rs.getString("NNA"),rs.getString("IC"),
-                    rs.getString("DATA"), rs.getInt("QUANTIDADE"), rs.getString("CONSUMIVEL"), rs.getString("LOCALIZACAO")};
-               //Adicionar os dados à tabela
-               table.addRow(o);
-         }
-         }
-       catch(SQLException exp)
-       {
-           throw new Exception (exp.getMessage());
-       }
+
+    private void criaGrafico() throws SQLException {
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        rs = stm.executeQuery(query());
+
+        while (rs.next()) {
+            //dados para inserir na tabela
+            dataset.setValue(rs.getInt("QUANTIDADE"), "QUANTIDADE", rs.getString("DATA"));
+
+        }
+        String titulo;
+
+        if (objeto.isBlank()) {
+            titulo = "Análise: Todos os abates";
+        } else {
+            titulo = "Análise: " + objeto;
+        }
+
+        //define o gráfico e o tipo de dados que vai utilizar
+        JFreeChart grafico = ChartFactory.createBarChart3D(titulo + " || Entre: " + dataInicio + " - " + dataFim, "Data", "ABATES", dataset);
+        grafico.setAntiAlias(false);
+        ChartPanel panel = new ChartPanel(grafico);
+        panel.setBackground(getTabela().getBackground());
+
+        painelGrafico.setLayout(new java.awt.BorderLayout());
+        painelGrafico.add(panel, BorderLayout.CENTER);
+        painelGrafico.validate();
+
         rs = null;
     }
-    
-    //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
-    public String query()
-    {
-        String q = "SELECT NNA , IC, to_char(DATA,'DD/MM/YYYY') DATA, "
-                 + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, LOCALIZACAO "
-                 + "FROM Sig a, Consumivel b, Centro_Custo c, IC d, Impressora e "
-                 + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC "
-                 + "AND DATA BETWEEN to_date('"+dataInicio+"', 'DD/MM/YYYY') AND to_date('"+dataFim+"','DD/MM/YYYY') ";
-        
-        switch(tipo){
-            case("consumivel")->{
-                String[] result =objeto.split("_");
-                    String marca = result[0];
-                    String modelo = result[1];
-                    String nome = result[2];
-            
-            q =  q + "AND MARCA LIKE '%"+marca+"%' AND MODELO LIKE '%"+modelo+"%' AND NOME LIKE '%"+nome+"%' ";
+
+    /**
+     *
+     * @throws Exception Cria tabela para análise
+     */
+    private void criaTabela() throws Exception {
+        try {
+            //definir a tabela
+            DefaultTableModel table = (DefaultTableModel) getTabela().getModel();
+            table.setRowCount(0);
+
+            //criar uma query e executar
+            rs = stm.executeQuery(query());
+
+            while (rs.next()) {
+                //passar os dados da BD para um object
+                Object o[] = {rs.getString("NNA"), rs.getString("IC"),
+                    rs.getString("DATA_UTIL"), rs.getInt("QUANTIDADE"), rs.getString("CONSUMIVEL"), rs.getString("LOCALIZACAO")};
+                //Adicionar os dados à tabela
+                table.addRow(o);
             }
-             case("centro_custo")->{
-                 
-            q =  q+ "AND LOCALIZACAO LIKE '%"+objeto+"%' ";
-             }
-             case("ic")->{
-                 
-            q =  q+ "AND IC LIKE '%"+objeto+"%' ";
-             }
-             default->{
-                 
-             }
+        } catch (SQLException exp) {
+            throw new Exception(exp.getMessage());
         }
-        q = q + "ORDER BY DATA";
-        
+        rs = null;
+    }
+
+    //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
+    public String query() {
+        String q = "SELECT NNA , IC, to_char(DATA_UTIL,'DD/MM/YYYY') DATA_UTIL, "
+                + "QUANTIDADE, (MARCA || '_' || MODELO || '_'|| NOME) AS CONSUMIVEL, LOCALIZACAO "
+                + "FROM Sig a, Consumivel b, Centro_Custo c, IC d, Impressora e "
+                + "WHERE a.ID_CONSUMIVEL = b.ID_CONSUMIVEL AND a.ID_CENTRO_CUSTO = c.ID_CENTRO_CUSTO AND b.ID_IMPRESSORA = e.ID_IMPRESSORA AND a.ID_IC = d.ID_IC "
+                + "AND DATA_UTIL BETWEEN to_date('" + dataInicio + "', 'DD/MM/YYYY') AND to_date('" + dataFim + "','DD/MM/YYYY') ";
+
+        switch (tipo) {
+            case ("consumivel") -> {
+                String[] result = objeto.split("_");
+                String marca = result[0];
+                String modelo = result[1];
+                String nome = result[2];
+
+                q = q + "AND MARCA LIKE '%" + marca + "%' AND MODELO LIKE '%" + modelo + "%' AND NOME LIKE '%" + nome + "%' ";
+            }
+            case ("centro_custo") -> {
+
+                q = q + "AND LOCALIZACAO LIKE '%" + objeto + "%' ";
+            }
+            case ("ic") -> {
+
+                q = q + "AND IC LIKE '%" + objeto + "%' ";
+            }
+        }
+        q = q + "ORDER BY DATA_UTIL";
+
         return q;
     }
-    
+
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -50,7 +50,7 @@ public class Configuracao {
 
     public boolean verificarFicheiro() throws IOException {
 
-        try (FileInputStream f = new FileInputStream(new File("config.properties"))){
+        try ( FileInputStream f = new FileInputStream(new File("config.properties"))) {
             return true;
         } catch (FileNotFoundException ex) {
             return false;

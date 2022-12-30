@@ -190,11 +190,13 @@ public class Pop_Up_Configuração extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (en) {
+            conf.guardarPropriedade("orcUrl", orcUrlS);
+            c.setUser(userS);
+
             c.setDriver(driverS);
             conf.guardarPropriedade("driver", driverS);
             c.setOrcUrl(orcUrlS);
-            conf.guardarPropriedade("orcUrl", orcUrlS);
-            c.setUser(userS);
+
             conf.guardarPropriedade("user", userS);
             c.setPass(passS);
             conf.guardarPropriedade("pass", passS);

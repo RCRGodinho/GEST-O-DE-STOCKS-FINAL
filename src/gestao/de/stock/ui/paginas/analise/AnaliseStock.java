@@ -122,14 +122,14 @@ public class AnaliseStock extends javax.swing.JFrame {
         } catch (SQLException exp) {
             throw new Exception(exp.getMessage());
         }
-        
+
         rs = null;
     }
 
     //função que devolve a query a fazer a fim de pesquisar os dados num intervalo de tempo 
     public String query() throws SQLException {
         int id = u.getIdConsumivel(consumivel);
-        
+
         System.out.println(id);
         //Inicializar a query
         String q = "SELECT NNA, to_char(DATA_REGISTO,'DD/MM/YYYY') DATA_REGISTO, "
